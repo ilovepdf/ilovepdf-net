@@ -20,4 +20,4 @@ task.DownloadFile("directory-to-download");
 Please see https://developer.ilovepdf.com/docs for up-to-date documentation.
 
 ## License
-The code package is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+The code is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
