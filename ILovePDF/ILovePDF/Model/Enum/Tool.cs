@@ -2,7 +2,7 @@
 namespace ILovePDF.Model.Enum
 {
     /// <summary>
-    /// Avialable tasks
+    /// Available tasks
     /// </summary>
     public enum TaskName
     {

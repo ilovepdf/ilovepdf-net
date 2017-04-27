@@ -29,7 +29,7 @@ namespace ILovePDF.Model.Task
         private List<FileModel> Files { get; set; }
 
         /// <summary>
-        /// Get current runing tool name
+        /// Get current running tool name
         /// </summary>
         /// <returns></returns>
         public virtual string GetToolName()
@@ -53,7 +53,7 @@ namespace ILovePDF.Model.Task
         /// Upload file to the ILovePdf server from local drive.
         /// </summary>
         /// <param name="path"></param>
-        /// <param name="taskId">if no task provided will be used last one form create task method.</param>
+        /// <param name="taskId">if no task provided will be used last one from create task method.</param>
         /// <param name="password"></param>
         /// <param name="rotate"></param>
         /// <returns>Server file name</returns>
@@ -77,7 +77,7 @@ namespace ILovePDF.Model.Task
         /// Upload file to the ILovePdf server by chunks
         /// </summary>
         /// <param name="path"></param>
-        /// <param name="taskId">if no task provided will be used last one form create task method.</param>
+        /// <param name="taskId">if no task provided will be used last one from create task method.</param>
         /// <param name="passwrod"></param>
         /// <param name="rotate"></param>
         /// <returns>Server file name</returns>
@@ -103,7 +103,7 @@ namespace ILovePDF.Model.Task
         /// Upload file to the ILovePdf server as byte array.
         /// </summary>
         /// <param name="fileBytes"></param>
-        /// <param name="taskId">if no task provided will be used last one form create task method.</param>
+        /// <param name="taskId">if no task provided will be used last one from create task method.</param>
         /// <param name="fileName">specify file name with extension otherwise file name will be the same as task id.</param>
         /// <param name="password"></param>
         /// <param name="rotate"></param>
@@ -156,7 +156,7 @@ namespace ILovePDF.Model.Task
         }
 
         /// <summary>
-        /// Download output files(s) from ILovePDF server to the specifc location.
+        /// Download output files(s) from ILovePDF server to the specific location.
         /// </summary>
         /// <param name="destination">path where file will be stored</param>
         /// <param name="task">task id</param>
@@ -192,7 +192,7 @@ namespace ILovePDF.Model.Task
         }
 
         /// <summary>
-        /// Delete specific task. If no task passed wil be deleted the las one.
+        /// Delete specific task. If no task passed wil be deleted the last one.
         /// </summary>
         /// <param name="task">task to delete.</param>
         /// <returns></returns>

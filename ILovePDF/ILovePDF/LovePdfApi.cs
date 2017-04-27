@@ -23,17 +23,17 @@ namespace ILovePDF
         /// <summary>
         /// Constructor for initialization private and public keys.
         /// </summary>
-        /// <param name="publickKey">project public key</param>
+        /// <param name="publicKey">project public key</param>
         /// <param name="privateKey">project private key</param>
-        public LovePdfApi(string publickKey, string privateKey)
+        public LovePdfApi(string publicKey, string privateKey)
         {
-            if (string.IsNullOrWhiteSpace(publickKey) || string.IsNullOrWhiteSpace(privateKey))
+            if (string.IsNullOrWhiteSpace(publicKey) || string.IsNullOrWhiteSpace(privateKey))
             {
                 throw new ArgumentOutOfRangeException("Public and private keys can't be empty.");
             }
 
             _privateKey = privateKey;
-            _publicKey = publickKey;
+            _publicKey = publicKey;
         }
 
         #endregion

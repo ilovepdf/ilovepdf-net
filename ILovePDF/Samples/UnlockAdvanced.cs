@@ -18,7 +18,7 @@ namespace Samples
             var file = task.AddFile("path/to/file/document.pdf", password: "test");
 
             //proces added files
-            //time var will contais information about time spent in process
+            //time var will contains information about time spent in process
             var time = task.Process(new UnlockParams { OutputFileName = "unloked"});
             task.DownloadFile("path");
         }

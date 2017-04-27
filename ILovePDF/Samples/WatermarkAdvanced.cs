@@ -38,7 +38,7 @@ namespace Samples
             };
 
             //proces added files
-            //time var will contais information about time spent in process
+            //time var will contains information about time spent in process
             var time = task.Process(parameters);
             task.DownloadFile("path");
         }

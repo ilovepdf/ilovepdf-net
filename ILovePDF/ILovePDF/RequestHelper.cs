@@ -187,7 +187,7 @@ namespace ILovePDF
             catch (Exception e)
             {
 
-                throw new WebException(responseContent, e);
+                throw new HttpRequestException(responseContent, e);
             }
         }
 
@@ -405,7 +405,7 @@ namespace ILovePDF
             }
             catch (Exception ex)
             {
-                throw new WebException(responeContent, ex);
+                throw new HttpRequestException(responeContent, ex);
             }
         }
 
@@ -433,7 +433,7 @@ namespace ILovePDF
             }
             catch (Exception e)
             {
-                throw new WebException(responseContent, e);
+                throw new HttpRequestException(responseContent, e);
             }
         }
 
@@ -470,7 +470,7 @@ namespace ILovePDF
             }
             catch (Exception e)
             {
-                throw new WebException(responseContent, e);
+                throw new HttpRequestException(responseContent, e);
             }
         }
 
@@ -581,7 +581,7 @@ namespace ILovePDF
                 {"aud", ""},
                 {"iat", DateTime.UtcNow.AddSeconds(-600)},
                 {"nbf", DateTime.UtcNow.AddSeconds(-600)},
-                //Aadd 2 hours of experiation
+                //Add 2 hours of expiration
                 {
                     "exp",
                     Math.Round(new TimeSpan(DateTime.UtcNow.AddSeconds(3600).AddSeconds(600).Ticks).TotalSeconds -
@@ -626,7 +626,7 @@ namespace ILovePDF
         {
             if (@params != null)
             {
-                //Serializing and deserializing to get properties from derived class, since those properties only avialable in runtime.
+                //Serializing and deserializing to get properties from derived class, since those properties only available in runtime.
                 string json = JsonConvert.SerializeObject(@params, new KeyValuePairConverter());
                 Dictionary<string, string> paramArray = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
 

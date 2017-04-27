@@ -17,7 +17,7 @@ namespace Samples
             var file = task.AddFile("path/to/file/document.pdf");
 
             //proces added files
-            //time var will contais information about time spent in process
+            //time var will contains information about time spent in process
             var time = task.Process
                 (new SplitParams(new SplitModeRanges("2-4,6-8"))
                 {

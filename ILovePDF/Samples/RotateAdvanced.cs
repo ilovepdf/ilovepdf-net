@@ -18,7 +18,7 @@ namespace Samples
             var file = task.AddFile("path/to/file/document.pdf", rotate: Rotate._90);
 
             //proces added files
-            //time var will contais information about time spent in process
+            //time var will contains information about time spent in process
             var time = task.Process(new RotateParams() { OutputFileName = "rotated"});
             task.DownloadFile("path");
         }
