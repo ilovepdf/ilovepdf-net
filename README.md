@@ -1,3 +1,6 @@
+## Requirements
+Minimum .NET Framework 4.5
+---
 ### Simple usage looks like:
 ```csharp
 var lovePdfAPi = new LovePdfApi("project_public_id", "project_secret_key");
