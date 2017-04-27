@@ -1,4 +1,4 @@
-### H3 Simple usage looks like:
+### Simple usage looks like:
 ```csharp
 var lovePdfAPi = new LovePdfApi("project_public_id", "project_secret_key");
 
