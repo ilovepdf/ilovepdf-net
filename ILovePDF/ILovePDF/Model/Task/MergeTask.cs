@@ -10,7 +10,7 @@ namespace ILovePDF.Model.Task
             return TaskName.merge.ToString();
         }
 
-        public string Process(MergeParams parameters)
+        public string Process(MergeParams parameters = null)
         {
             if (parameters == null)
                 parameters = new MergeParams();

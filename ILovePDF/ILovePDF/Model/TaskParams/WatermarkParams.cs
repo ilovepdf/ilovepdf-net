@@ -59,6 +59,10 @@ namespace ILovePDF.Model.TaskParams
         [JsonConverter(typeof(StringEnumConverter))]
         public Layer? Layer { get; set; }
 
+        /// <summary>
+        /// Constructor for watermar text mode
+        /// </summary>
+        /// <param name="mode"></param>
         public WatermarkParams(WatermarkModeText mode)
         {
             SetDefaultValues();
@@ -66,7 +70,10 @@ namespace ILovePDF.Model.TaskParams
             Text = mode.Text;
 
         }
-
+        /// <summary>
+        /// Constructor for watermark image mode
+        /// </summary>
+        /// <param name="mode"></param>
         public WatermarkParams(WatermarkModeImage mode)
         {
             SetDefaultValues();
