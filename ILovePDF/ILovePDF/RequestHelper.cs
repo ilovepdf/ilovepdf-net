@@ -25,6 +25,7 @@ namespace ILovePDF
     {
         private string _privateKey;
         private string _publicKey;
+        private readonly short jwtDelay = 5400;
 
         string GWT { get; set; }
         private string EncryptKey { get; set; }
@@ -579,12 +580,12 @@ namespace ILovePDF
             {
                 {"iss", ""},
                 {"aud", ""},
-                {"iat", DateTime.UtcNow.AddSeconds(-600)},
-                {"nbf", DateTime.UtcNow.AddSeconds(-600)},
+                {"iat", DateTime.UtcNow.AddSeconds(- jwtDelay)},
+                {"nbf", DateTime.UtcNow.AddSeconds(- jwtDelay)},
                 //Add 2 hours of expiration
                 {
                     "exp",
-                    Math.Round(new TimeSpan(DateTime.UtcNow.AddSeconds(3600).AddSeconds(600).Ticks).TotalSeconds -
+                    Math.Round(new TimeSpan(DateTime.UtcNow.AddSeconds(jwtDelay).Ticks).TotalSeconds -
                                new TimeSpan(epoch.Ticks).TotalSeconds)
                 },
                 {"jti", _publicKey }

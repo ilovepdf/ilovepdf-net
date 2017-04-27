@@ -27,7 +27,7 @@ namespace ILovePDF.Core
                 JsonWebToken.Decode(token, secret);
                 return false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
                 return true;
