@@ -18,3 +18,6 @@ task.DownloadFile("directory-to-download");
 ```
 ## Documentation
 Please see https://developer.ilovepdf.com/docs for up-to-date documentation.
+
+## License
+The nuget package is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
