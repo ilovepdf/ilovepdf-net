@@ -16,3 +16,5 @@ var file = task.AddFile("file1.pdf")
 var time = task.Process();
 task.DownloadFile("dircetory-to-download");
 ```
+## Documentation
+Please see https://developer.ilovepdf.com/docs for up-to-date documentation.
