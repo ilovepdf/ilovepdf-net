@@ -7,6 +7,11 @@ Develop and automate PDF processing tasks like Compress PDF, Merge PDF, Split PD
 ## Requirements
 Minimum .NET Framework 4.5
 
+## Install
+You can install library from [Nuget](https://www.nuget.org/packages/ILove_PDF/)
+```
+PM-> Install-Package ILove_PDF
+```
 ### Simple usage looks like:
 ```csharp
 var lovePdfAPi = new LovePdfApi("project_public_id", "project_secret_key");
