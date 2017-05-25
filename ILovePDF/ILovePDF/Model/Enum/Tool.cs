@@ -16,6 +16,10 @@ namespace ILovePDF.Model.Enum
         pagenumber = 7,
         unlock = 8,
         rotate = 9,
-        repair = 10
+        repair = 10,
+        protect = 11,
+        validatepdfa = 12,
+        pdfa = 13
+
     }
 }

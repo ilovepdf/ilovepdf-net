@@ -7,7 +7,7 @@ namespace ILovePDF.Model.Task
     {
         public override string GetToolName()
         {
-            return TaskName.pdfjpg.ToString();
+            return TaskName.pdfa.ToString();
         }
 
         public string Process(PDFtoPDFAParams parameters = null)
