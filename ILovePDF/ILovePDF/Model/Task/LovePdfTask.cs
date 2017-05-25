@@ -158,13 +158,14 @@ namespace ILovePDF.Model.Task
         /// <summary>
         /// Download output files(s) from ILovePDF server to the specific location.
         /// </summary>
-        /// <param name="destination">path where file will be stored</param>
+        /// <param name="destination">If no path is set, it will be donwloaded on current folder</param>
         /// <param name="task">task id</param>
-        public void DownloadFile(string destination, string task = null)
+        public void DownloadFile(string destination = null, string task = null)
         {
             string requestedTask = string.IsNullOrWhiteSpace(task) ? TaskId : task;
+            string requestedPath = string.IsNullOrWhiteSpace(destination) ? Environment.CurrentDirectory : destination;
 
-            RequestHelper.Instance.Download(this.ServerUrl, requestedTask, destination);
+            RequestHelper.Instance.Download(this.ServerUrl, requestedTask, requestedPath);
         }
 
         /// <summary>
