@@ -1,22 +1,31 @@
-﻿using ILovePDF.Model.Enum.Params;
+﻿using LovePdf.Model.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace ILovePDF.Model.TaskParams
+namespace LovePdf.Model.TaskParams
 {
-    public class PDFtoJPGParams : BaseParams
+    /// <summary>
+    /// Pdf To Jpg Params
+    /// </summary>
+    public class PdftoJpgParams : BaseParams
     {
+        /// <summary>
+        /// Pdf To Jpg Mode
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("pdfjpg_mode")]
-        public PdfJpgModes PdfJpgMode { get; set; }
+        public PdfToJpgModes PdfJpgMode { get; set; }
 
-        public PDFtoJPGParams()
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public PdftoJpgParams()
         {
             SetDefaultValues();
         }
         private void SetDefaultValues()
         {
-            PdfJpgMode = PdfJpgModes.pages;
+            PdfJpgMode = PdfToJpgModes.Pages;
         }
     }
 }

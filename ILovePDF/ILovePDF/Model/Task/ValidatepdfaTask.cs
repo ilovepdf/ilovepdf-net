@@ -1,21 +1,29 @@
-﻿using ILovePDF.Model.Enum;
-using ILovePDF.Model.TaskParams;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using LovePdf.Core;
+using LovePdf.Model.Enums;
+using LovePdf.Model.TaskParams;
 
-namespace ILovePDF.Model.Task
+namespace LovePdf.Model.Task
 {
-    public class ValidatepdfaTask : LovePdfTask
+    /// <summary>
+    /// Validate PDFA compliance
+    /// </summary>
+    public class ValidatePdfATask : LovePdfTask
     {
-        public override string GetToolName()
+        /// <inheritdoc />
+        public override string ToolName => EnumExtensions.GetEnumDescription(TaskName.ValidatePdfA);
+
+        /// <summary>
+        /// Process the task
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        public ExecuteTaskResponse Process(ValidatePdfAParams parameters)
         {
-            return TaskName.validatepdfa.ToString();
-        }
-        public string Process(ValidatepdfaTaskParams parameters)
-        {
+            if (parameters == null)
+                throw new ArgumentException("Parameters should not be null", nameof(parameters));
+
             return base.Process(parameters);
         }
     }

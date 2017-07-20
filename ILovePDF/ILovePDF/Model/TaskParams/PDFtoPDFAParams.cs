@@ -1,24 +1,32 @@
-﻿using ILovePDF.Model.Enum;
+﻿using LovePdf.Model.Enums;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace ILovePDF.Model.TaskParams
+namespace LovePdf.Model.TaskParams
 {
-    public class PDFtoPDFAParams : BaseParams
+    /// <summary>
+    /// Pdf to PdfA Params
+    /// </summary>
+    public class PdfToPdfAParams : BaseParams
     {
         /// <summary>
         /// Accepted values in ConformanceValues (pdfa-1b, pdfa-1a, pdfa-2b, pdfa-2u, pdfa-2a, pdfa-3b, pdfa-3u, pdfa-3a)
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("conformance")]
-        public string Conformance { get; set; }
+        public ConformanceValues Conformance { get; set; }
 
-        public PDFtoPDFAParams()
+        /// <summary>
+        /// Pdf to PdfA Params Constructor
+        /// </summary>
+        public PdfToPdfAParams()
         {
             SetDefaultValues();
         }
 
         private void SetDefaultValues()
         {
-            Conformance = this.GetEnumDescription(ConformanceValues.pdfa1a);// "pdfa-1a";
+            Conformance = ConformanceValues.PdfA1A;
         }
     }
 }

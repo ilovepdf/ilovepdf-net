@@ -1,11 +1,6 @@
-﻿using ILovePDF;
-using ILovePDF.Model.Task;
-using ILovePDF.Model.TaskParams;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LovePdf.Core;
+using LovePdf.Model.Task;
+using LovePdf.Model.TaskParams;
 
 namespace Samples
 {
@@ -23,7 +18,7 @@ namespace Samples
 
             //proces added files
             //time var will contains information about time spent in process
-            var time = task.Process(new WatermarkParams(new WatermarkModeText("text")));
+            var time = task.Process(new WaterMarkParams(new WatermarkModeText("text")));
             task.DownloadFile("path");
         }
     }

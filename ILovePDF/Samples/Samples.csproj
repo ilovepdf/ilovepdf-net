@@ -60,9 +60,9 @@
     <Compile Include="WatermarkBasic.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ILovePDF\ILovePDF.csproj">
+    <ProjectReference Include="..\ILovePDF\iLovePDF.csproj">
       <Project>{E857560B-A766-4BF5-A601-A5503CDBC825}</Project>
-      <Name>ILovePDF</Name>
+      <Name>iLovePDF</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

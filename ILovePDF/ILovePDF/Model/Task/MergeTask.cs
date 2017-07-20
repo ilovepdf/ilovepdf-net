@@ -1,22 +1,40 @@
-﻿using ILovePDF.Model.Enum;
-using ILovePDF.Model.TaskParams;
+﻿using LovePdf.Core;
+using LovePdf.Model.Enums;
+using LovePdf.Model.TaskParams;
 
-namespace ILovePDF.Model.Task
+namespace LovePdf.Model.Task
 {
+    /// <summary>
+    /// Merge Pdf Documents
+    /// </summary>
     public class MergeTask : LovePdfTask
     {
-        public override string GetToolName()
+        /// <inheritdoc />
+        public override string ToolName => EnumExtensions.GetEnumDescription(TaskName.Merge);
+
+        /// <summary>
+        /// Process the task
+        /// </summary>
+        /// <returns></returns>
+        public ExecuteTaskResponse Process()
         {
-            return TaskName.merge.ToString();
+            var parameters = new MergeParams();
+
+            return base.Process(parameters);
         }
 
-        public string Process(MergeParams parameters = null)
+        /// <summary>
+        /// Process the task
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        public ExecuteTaskResponse Process(MergeParams parameters)
         {
             if (parameters == null)
                 parameters = new MergeParams();
+
             return base.Process(parameters);
         }
     }
-
-    public class MergeParams : BaseParams { }
 }

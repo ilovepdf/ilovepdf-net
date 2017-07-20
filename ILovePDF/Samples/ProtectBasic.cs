@@ -1,11 +1,6 @@
-﻿using ILovePDF;
-using ILovePDF.Model.Task;
-using ILovePDF.Model.TaskParams;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LovePdf.Core;
+using LovePdf.Model.Task;
+using LovePdf.Model.TaskParams;
 
 namespace Samples
 {

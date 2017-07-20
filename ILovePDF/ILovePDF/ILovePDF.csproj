@@ -7,8 +7,8 @@
     <ProjectGuid>{E857560B-A766-4BF5-A601-A5503CDBC825}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ILovePDF</RootNamespace>
-    <AssemblyName>ILovePDF</AssemblyName>
+    <RootNamespace>LovePdf</RootNamespace>
+    <AssemblyName>ILovePdf</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -21,7 +21,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\ILovePDF.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\ILovePdf.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +32,12 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>iLovePdf.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="JWT, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -40,9 +48,13 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="StringInterpolationBridge, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StringInterpolationBridge.0.9.1\lib\net40\StringInterpolationBridge.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,58 +63,78 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\StartTaskResponse.cs" />
-    <Compile Include="Model\Enum\ConformanceValues.cs" />
-    <Compile Include="Model\Enum\Params\Layer.cs" />
-    <Compile Include="Model\Enum\Params\WatermarkHorizontalPositions.cs" />
-    <Compile Include="Model\Enum\Params\WatermarkVerticalPositions.cs" />
-    <Compile Include="Model\Enum\Rotate.cs" />
+    <Compile Include="Core\JwtHelper.cs" />
+    <Compile Include="Core\ExecuteTaskResponse.cs" />
+    <Compile Include="Core\StartTaskResponse.cs" />
+    <Compile Include="Core\LovePdfApi.cs" />
+    <Compile Include="Core\Validation.cs" />
+    <Compile Include="Model\Enums\ValidationStatus.cs" />
+    <Compile Include="Model\Enums\EnumExtensions.cs" />
+    <Compile Include="Model\Enums\FontFamilies.cs" />
+    <Compile Include="Model\Exception\DownloadException.cs" />
+    <Compile Include="Model\Enums\BadRequestErrors.cs" />
+    <Compile Include="Model\Enums\ConformanceValues.cs" />
+    <Compile Include="Model\Enums\Layer.cs" />
+    <Compile Include="Model\Enums\WatermarkHorizontalPositions.cs" />
+    <Compile Include="Model\Enums\WatermarkVerticalPositions.cs" />
+    <Compile Include="Model\Enums\Rotate.cs" />
+    <Compile Include="Model\Exception\ProcessingException.cs" />
+    <Compile Include="Model\Exception\UploadException.cs" />
     <Compile Include="Model\TaskParams\BaseParams.cs" />
     <Compile Include="Model\TaskParams\CompressParams.cs" />
+    <Compile Include="Model\TaskParams\PdftoJpgParams.cs" />
+    <Compile Include="Model\TaskParams\PdfToPdfAParams.cs" />
     <Compile Include="Model\TaskParams\ProtectParams.cs" />
-    <Compile Include="Model\TaskParams\ValidatepdfaTaskParams.cs" />
+    <Compile Include="Model\TaskParams\SplitModeFixedRanges.cs" />
+    <Compile Include="Model\TaskParams\SplitModeRanges.cs" />
+    <Compile Include="Model\TaskParams\SplitModeRemovePages.cs" />
+    <Compile Include="Model\TaskParams\ValidatePdfAParams.cs" />
+    <Compile Include="Model\TaskParams\WatermarkModeImage.cs" />
+    <Compile Include="Model\TaskParams\WatermarkModeText.cs" />
     <Compile Include="Model\Task\CompressTask.cs" />
-    <Compile Include="Model\Enum\Params\CompressionLevels.cs" />
-    <Compile Include="Model\Enum\Params\FontStyles.cs" />
-    <Compile Include="Model\Enum\Params\HorizontalPositions.cs" />
-    <Compile Include="Model\Enum\Params\Orientations.cs" />
-    <Compile Include="Model\Enum\Params\PageSizes.cs" />
-    <Compile Include="Model\Enum\Params\PdfJpgModes.cs" />
-    <Compile Include="Model\Enum\Params\SplitModes.cs" />
-    <Compile Include="Model\Enum\Params\VerticalPositions.cs" />
-    <Compile Include="Model\Enum\Params\WatermarkModes.cs" />
-    <Compile Include="Model\Enum\Tool.cs" />
-    <Compile Include="Core\JWTHelper.cs" />
-    <Compile Include="Core\Model\FileParameter.cs" />
-    <Compile Include="Core\TaskRequest\BaseTaskRequest.cs" />
-    <Compile Include="Core\TaskResponse\DeleteTaskResponse.cs" />
-    <Compile Include="Core\TaskResponse\StatusTaskResponse.cs" />
-    <Compile Include="Core\TaskResponse\UploadTaskResponse.cs" />
+    <Compile Include="Model\Enums\CompressionLevels.cs" />
+    <Compile Include="Model\Enums\FontStyles.cs" />
+    <Compile Include="Model\Enums\HorizontalPositions.cs" />
+    <Compile Include="Model\Enums\Orientations.cs" />
+    <Compile Include="Model\Enums\PageSizes.cs" />
+    <Compile Include="Model\Enums\PdfJpgModes.cs" />
+    <Compile Include="Model\Enums\SplitModes.cs" />
+    <Compile Include="Model\Enums\VerticalPositions.cs" />
+    <Compile Include="Model\Enums\WatermarkModes.cs" />
+    <Compile Include="Model\Enums\Tool.cs" />
+    <Compile Include="Core\FileParameter.cs" />
+    <Compile Include="Core\BaseTaskRequest.cs" />
+    <Compile Include="Core\DeleteTaskResponse.cs" />
+    <Compile Include="Core\StatusTaskResponse.cs" />
+    <Compile Include="Core\UploadTaskResponse.cs" />
     <Compile Include="Model\TaskParams\ImageToPdfParams.cs" />
+    <Compile Include="Core\FileModel.cs" />
     <Compile Include="Model\Task\ImagetoPDFTask.cs" />
-    <Compile Include="LovePdfApi.cs" />
     <Compile Include="Model\Task\LovePdfTask.cs" />
+    <Compile Include="Model\TaskParams\MergeParams.cs" />
     <Compile Include="Model\Task\MergeTask.cs" />
     <Compile Include="Model\TaskParams\PageNumbersParams.cs" />
     <Compile Include="Model\Task\PageNumbersTask.cs" />
-    <Compile Include="Model\TaskParams\PDFtoJPGParams.cs" />
-    <Compile Include="Model\Task\PDFtoJPGPTask.cs" />
-    <Compile Include="Model\TaskParams\PDFtoPDFAParams.cs" />
-    <Compile Include="Model\Task\PDFtoPDFATask.cs" />
+    <Compile Include="Model\Task\PdfToJpgTask.cs" />
+    <Compile Include="Model\Task\PdfToPdfATask.cs" />
     <Compile Include="Model\Task\ProtectTask.cs" />
     <Compile Include="Model\Task\RepairTask.cs" />
     <Compile Include="Model\Task\RotateTask.cs" />
     <Compile Include="Model\Task\UnlockTask.cs" />
-    <Compile Include="Model\Task\ValidatepdfaTask.cs" />
+    <Compile Include="Model\Exception\NotFoundException.cs" />
+    <Compile Include="Model\Task\ValidatePdfATask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestHelper.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="Core\RequestHelper.cs" />
+    <Compile Include="Model\Exception\ServerErrorException.cs" />
+    <Compile Include="Core\Settings.cs" />
     <Compile Include="Model\TaskParams\SplitParams.cs" />
     <Compile Include="Model\Task\SplitTask.cs" />
     <Compile Include="Model\TaskParams\WatermarkParams.cs" />
     <Compile Include="Model\Task\WaterMarkTask.cs" />
+    <Compile Include="Model\Exception\TooManyRequestsException.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="iLovePdf.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,21 +1,35 @@
-﻿using ILovePDF.Model.Enum;
-using ILovePDF.Model.TaskParams;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LovePdf.Core;
+using LovePdf.Model.Enums;
+using LovePdf.Model.TaskParams;
 
-namespace ILovePDF.Model.Task
+namespace LovePdf.Model.Task
 {
+    /// <summary>
+    /// Rotate PDFs
+    /// </summary>
     public class RotateTask : LovePdfTask
     {
-        public override string GetToolName()
+        /// <inheritdoc />
+        public override string ToolName => EnumExtensions.GetEnumDescription(TaskName.Rotate);
+
+        /// <summary>
+        /// Process the task
+        /// </summary>
+        /// <returns></returns>
+        public ExecuteTaskResponse Process()
         {
-            return TaskName.rotate.ToString();
+            var parameters = new RotateParams();
+
+            return base.Process(parameters);
         }
 
-        public string Process(RotateParams parameters = null)
+        /// <summary>
+        /// Process the task
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        public ExecuteTaskResponse Process(RotateParams parameters)
         {
             if (parameters == null)
                 parameters = new RotateParams();

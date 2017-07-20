@@ -1,12 +1,8 @@
-﻿using ILovePDF;
-using ILovePDF.Model.Task;
-using ILovePDF.Model.TaskParams;
+﻿using LovePdf.Model.Task;
+using LovePdf.Model.TaskParams;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+using LovePdf.Core;
 
 namespace Samples
 {
@@ -32,7 +28,7 @@ namespace Samples
             catch(HttpRequestException ex)
             {
                 var message = ex.Message;
-                string innerException = string.Empty;
+                var innerException = string.Empty;
                 if(ex.InnerException != null)
                 {
                     innerException = ex.InnerException.Message;
@@ -41,7 +37,7 @@ namespace Samples
             catch(Exception ex)
             {
                 var message = ex.Message;
-                string innerException = string.Empty;
+                var innerException = string.Empty;
                 if (ex.InnerException != null)
                 {
                     innerException = ex.InnerException.Message;

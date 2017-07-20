@@ -1,7 +1,7 @@
-﻿using ILovePDF;
-using ILovePDF.Model.Enum;
-using ILovePDF.Model.Task;
-using ILovePDF.Model.TaskParams;
+﻿using LovePdf.Core;
+using LovePdf.Model.Enums;
+using LovePdf.Model.Task;
+using LovePdf.Model.TaskParams;
 
 namespace Samples
 {
@@ -15,7 +15,7 @@ namespace Samples
             var task = api.CreateTask<RotateTask>();
 
             //file variable contains server file name
-            var file = task.AddFile("path/to/file/document.pdf", rotate: Rotate._90);
+            var file = task.AddFile("path/to/file/document.pdf", task.TaskId, Rotate.Degrees90);
 
             //proces added files
             //time var will contains information about time spent in process

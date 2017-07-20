@@ -1,7 +1,7 @@
-﻿using ILovePDF;
-using ILovePDF.Model.Enum.Params;
-using ILovePDF.Model.Task;
-using ILovePDF.Model.TaskParams;
+﻿using LovePdf.Core;
+using LovePdf.Model.Enums;
+using LovePdf.Model.Task;
+using LovePdf.Model.TaskParams;
 
 
 namespace Samples
@@ -20,12 +20,12 @@ namespace Samples
 
 
             //parameters that will be posted
-            var parameters = new WatermarkParams(
+            var parameters = new WaterMarkParams(
                 new WatermarkModeText("watermark text"))
             {
                 Pages = "1-5,7",
-                VerticalPosition = WatermarkVerticalPositions.top,
-                HorizontalPosition = WatermarkHorizontalPositions.right,
+                VerticalPosition = WaterMarkVerticalPositions.Top,
+                HorizontalPosition = WaterMarkHorizontalPositions.Right,
                 VerticalPositionAdjustment = 100,
                 HorizontalPositionAdjustment = 100,
                 FontFamily = "Arial",
@@ -33,7 +33,7 @@ namespace Samples
                 FontSize = 12,
                 FontColor = "#ff0000",
                 Transparency = 50,
-                Layer = Layer.below,
+                Layer = Layer.Below,
                 OutputFileName = "watermarked"
             };
 

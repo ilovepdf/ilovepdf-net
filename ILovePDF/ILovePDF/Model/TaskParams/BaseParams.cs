@@ -1,14 +1,21 @@
 ﻿using Newtonsoft.Json;
-using System.ComponentModel;
-using System.Reflection;
 
-namespace ILovePDF.Model.TaskParams
+namespace LovePdf.Model.TaskParams
 {
+    /// <summary>
+    /// Base Params
+    /// </summary>
     public abstract class BaseParams
     {
+        /// <summary>
+        /// Ignore Errors
+        /// </summary>
         [JsonProperty("ignore_errors")]
         public bool IgnoreErrors { get; set; }
 
+        /// <summary>
+        /// Ignore Password
+        /// </summary>
         [JsonProperty("ignore_password")]
         public bool IgnorePassword { get; set; }
 
@@ -19,9 +26,9 @@ namespace ILovePDF.Model.TaskParams
         public string OutputFileName { get; set; }
         /// <summary>
         /// If output files are more than one will be served compressed. Specify the filename of the compressed file. {date}=current date, {n}=file number,{filename}=original filename, {app}=the current processing action. Example: zipped_{n}_{date} 
-        /// Default filname: output.zip
+        /// Default filename: output.zip
         /// </summary>
-        [JsonProperty("package_filename")]
+        [JsonProperty("packaged_filename")]
         public string PackageFileName { get; set; }
 
         /// <summary>
@@ -35,8 +42,11 @@ namespace ILovePDF.Model.TaskParams
         /// When a PDF to process fails we try to repair it automatically. 
         /// </summary>
         [JsonProperty("try_pdf_repair")]
-        public bool TryPDFRepair { get; set; }
+        public bool TryPdfRepair { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         protected BaseParams()
         {
             SetDefaultProps();
@@ -44,32 +54,29 @@ namespace ILovePDF.Model.TaskParams
 
         private void SetDefaultProps()
         {
-            TryPDFRepair = true;
+            TryPdfRepair = true;
             IgnoreErrors = true;
         }
 
-        protected string GetEnumDescription(System.Enum value)
-        {
-            FieldInfo fi = value.GetType().GetField(value.ToString());
-
-            DescriptionAttribute[] attributes =
-                (DescriptionAttribute[])fi.GetCustomAttributes(
-                typeof(DescriptionAttribute),
-                false);
-
-            if (attributes != null &&
-                attributes.Length > 0)
-                return attributes[0].Description;
-            else
-                return value.ToString();
-        }
     }
 
-    public class OfficePdf : BaseParams{ }
+    /// <summary>
+    /// Office To Pdf Params
+    /// </summary>
+    public class OfficePdf : BaseParams { }
 
+    /// <summary>
+    /// Rotate Params
+    /// </summary>
     public class RotateParams : BaseParams { }
 
+    /// <summary>
+    /// Repair Params
+    /// </summary>
     public class RepairParams : BaseParams { }
 
+    /// <summary>
+    /// Unlock Params
+    /// </summary>
     public class UnlockParams : BaseParams { }
 }

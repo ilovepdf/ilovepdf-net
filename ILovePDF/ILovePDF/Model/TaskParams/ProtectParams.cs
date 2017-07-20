@@ -1,12 +1,10 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ILovePDF.Model.TaskParams
+namespace LovePdf.Model.TaskParams
 {
+    /// <summary>
+    /// Protect Params
+    /// </summary>
     public class ProtectParams : BaseParams {
 
         /// <summary>

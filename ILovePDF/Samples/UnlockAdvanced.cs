@@ -1,6 +1,6 @@
-﻿using ILovePDF;
-using ILovePDF.Model.Task;
-using ILovePDF.Model.TaskParams;
+﻿using LovePdf.Core;
+using LovePdf.Model.Task;
+using LovePdf.Model.TaskParams;
 
 namespace Samples
 {
@@ -15,11 +15,11 @@ namespace Samples
 
             //file variable contains server file name
             // set the password witch the document is locked
-            var file = task.AddFile("path/to/file/document.pdf", password: "test");
+            var file = task.AddFile("path/to/file/document.pdf", task.TaskId, "test");
 
             //proces added files
             //time var will contains information about time spent in process
-            var time = task.Process(new UnlockParams { OutputFileName = "unloked"});
+            var time = task.Process(new UnlockParams { OutputFileName = "unloked" });
             task.DownloadFile("path");
         }
     }

@@ -1,17 +1,29 @@
-﻿using ILovePDF.Model.Enum;
-using ILovePDF.Model.TaskParams;
+﻿using System;
+using LovePdf.Core;
+using LovePdf.Model.Enums;
+using LovePdf.Model.TaskParams;
 
-namespace ILovePDF.Model.Task
+namespace LovePdf.Model.Task
 {
+    /// <summary>
+    /// Split PDFs
+    /// </summary>
     public class SplitTask : LovePdfTask
     {
-        public override string GetToolName()
-        {
-            return TaskName.split.ToString();
-        }
+        /// <inheritdoc />
+        public override string ToolName => EnumExtensions.GetEnumDescription(TaskName.Split);
 
-        public string Process(SplitParams parameters)
+        /// <summary>
+        /// Process the task
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        public ExecuteTaskResponse Process(SplitParams parameters)
         {
+            if (parameters == null)
+                throw new ArgumentException("Parameters should not be null", nameof(parameters));
+
             return base.Process(parameters);
         }
     }

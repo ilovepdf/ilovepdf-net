@@ -1,12 +1,19 @@
-﻿using ILovePDF.Model.Enum.Params;
+﻿using System;
+using LovePdf.Model.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace ILovePDF.Model.TaskParams
+namespace LovePdf.Model.TaskParams
 {
+    /// <summary>
+    /// Split Params
+    /// </summary>
     public class SplitParams : BaseParams
     {
-        [JsonConverter(typeof (StringEnumConverter))]
+        /// <summary>
+        /// Split Mode
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("split_mode")]
         public SplitModes SplitMode { get; set; }
 
@@ -37,74 +44,54 @@ namespace ILovePDF.Model.TaskParams
 
         private void SetDefaultValues()
         {
-            SplitMode = SplitModes.ranges;
+            SplitMode = SplitModes.Ranges;
             Ranges = null;
             FixedRanges = 1;
             RemovePages = null;
             MergeAfter = false;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="fixedRanges"></param>
         public SplitParams(SplitModeFixedRanges fixedRanges)
         {
+            if (fixedRanges == null)
+                throw new ArgumentException("cannot be null", nameof(fixedRanges));
+
             SetDefaultValues();
-            SplitMode = SplitModes.fixed_range;
+            SplitMode = SplitModes.FixedRange;
             FixedRanges = fixedRanges.FixedRange;
         }
 
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="pages"></param>
         public SplitParams(SplitModeRemovePages pages)
         {
+            if (pages == null)
+                throw new ArgumentException("cannot be null", nameof(pages));
+
             SetDefaultValues();
-            SplitMode = SplitModes.remove_pages;
+            SplitMode = SplitModes.RemovePages;
             RemovePages = pages.RemovePages;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="ranges"></param>
         public SplitParams(SplitModeRanges ranges)
         {
-            SplitMode = SplitModes.ranges;
+            if (ranges == null)
+                throw new ArgumentException("cannot be null", nameof(ranges));
+
+            SplitMode = SplitModes.Ranges;
             Ranges = ranges.Ranges;
 
         }
     }
-
-    public class SplitModeRanges
-    {
-        public string Ranges { get; set; }
-
-        public SplitModeRanges(string ranges)
-        {
-            Ranges = ranges;
-        }
-
-
-    }
-
-    public class SplitModeFixedRanges
-    {
-        public int FixedRange { get; set; }
-
-        /// <summary>
-        /// Split the PDF file in chunks by every defined number. 
-        /// </summary>
-        /// <param name="ranges"></param>
-        public SplitModeFixedRanges(int ranges)
-        {
-            FixedRange = ranges;
-        }
-    }
-
-    public class SplitModeRemovePages
-    {
-        public string RemovePages { get; set; }
-
-        /// <summary>
-        /// Pages to remove from a PDF. Accepted format: 1,4,8-12,16. 
-        /// </summary>
-        /// <param name="removePages">Accepted format: 1,4,8-12,16. </param>
-        public SplitModeRemovePages(string removePages)
-        {
-            RemovePages = removePages;
-        }
-    }
-
 }

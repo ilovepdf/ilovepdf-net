@@ -1,19 +1,38 @@
 ﻿
-using ILovePDF.Model.Enum;
-using ILovePDF.Model.TaskParams;
+using LovePdf.Core;
+using LovePdf.Model.Enums;
+using LovePdf.Model.TaskParams;
 
-namespace ILovePDF.Model.Task
+namespace LovePdf.Model.Task
 {
+    /// <summary>
+    /// Try to repair PDFs
+    /// </summary>
     public class RepairTask : LovePdfTask
     {
-        public override string GetToolName()
+        /// <inheritdoc />
+        public override string ToolName => EnumExtensions.GetEnumDescription(TaskName.Repair);
+
+        /// <summary>
+        /// Process the task
+        /// </summary>
+        /// <returns></returns>
+        public ExecuteTaskResponse Process()
         {
-            return TaskName.repair.ToString();
+            var paramaters = new RepairParams();
+
+            return base.Process(paramaters);
         }
 
-        public string Process(RepairParams paramaters = null)
+        /// <summary>
+        /// Process the task
+        /// </summary>
+        /// <param name="paramaters"></param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        public ExecuteTaskResponse Process(RepairParams paramaters)
         {
-            if(paramaters == null)
+            if (paramaters == null)
                 paramaters = new RepairParams();
 
             return base.Process(paramaters);

@@ -1,16 +1,35 @@
-﻿using ILovePDF.Model.Enum;
-using ILovePDF.Model.TaskParams;
+﻿using LovePdf.Core;
+using LovePdf.Model.Enums;
+using LovePdf.Model.TaskParams;
 
-namespace ILovePDF.Model.Task
+namespace LovePdf.Model.Task
 {
+    /// <summary>
+    /// Unlock PDFs
+    /// </summary>
     public class UnlockTask : LovePdfTask
     {
-        public override string GetToolName()
+        /// <inheritdoc />
+        public override string ToolName => EnumExtensions.GetEnumDescription(TaskName.Unlock);
+
+        /// <summary>
+        /// Process the task
+        /// </summary>
+        /// <returns></returns>
+        public ExecuteTaskResponse Process()
         {
-            return TaskName.unlock.ToString();
+            var parameters = new UnlockParams();
+
+            return base.Process(parameters);
         }
 
-        public string Process(UnlockParams parameters = null)
+        /// <summary>
+        /// Process the task
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        public ExecuteTaskResponse Process(UnlockParams parameters)
         {
             if (parameters == null)
                 parameters = new UnlockParams();

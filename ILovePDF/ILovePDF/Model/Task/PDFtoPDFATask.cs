@@ -1,19 +1,38 @@
-﻿using ILovePDF.Model.Enum;
-using ILovePDF.Model.TaskParams;
+﻿using LovePdf.Core;
+using LovePdf.Model.Enums;
+using LovePdf.Model.TaskParams;
 
-namespace ILovePDF.Model.Task
+namespace LovePdf.Model.Task
 {
-    public class PDFATask : LovePdfTask
+    /// <summary>
+    /// Pdf To PdfA
+    /// </summary>
+    public class PdfToPdfATask : LovePdfTask
     {
-        public override string GetToolName()
+        /// <inheritdoc />
+        public override string ToolName => EnumExtensions.GetEnumDescription(TaskName.PdfToPdfA);
+
+        /// <summary>
+        /// Process the task
+        /// </summary>
+        /// <returns></returns>
+        public ExecuteTaskResponse Process()
         {
-            return TaskName.pdfa.ToString();
+            var parameters = new PdfToPdfAParams();
+
+            return base.Process(parameters);
         }
 
-        public string Process(PDFtoPDFAParams parameters = null)
+        /// <summary>
+        /// Process the task
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        public ExecuteTaskResponse Process(PdfToPdfAParams parameters)
         {
             if (parameters == null)
-                parameters = new PDFtoPDFAParams();
+                parameters = new PdfToPdfAParams();
 
             return base.Process(parameters);
         }

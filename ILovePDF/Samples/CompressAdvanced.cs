@@ -1,8 +1,7 @@
-﻿using ILovePDF;
-using ILovePDF.Model.Enum;
-using ILovePDF.Model.Enum.Params;
-using ILovePDF.Model.Task;
-using ILovePDF.Model.TaskParams;
+﻿using LovePdf.Core;
+using LovePdf.Model.Enums;
+using LovePdf.Model.Task;
+using LovePdf.Model.TaskParams;
 
 namespace Samples
 {
@@ -15,12 +14,12 @@ namespace Samples
             var task = api.CreateTask<CompressTask>();
 
             //add file, and specify rotation
-            var file = task.AddFile(path: "/path/to/document.pdf", rotate: Rotate._90);
+            var file = task.AddFile("/path/to/document.pdf", task.TaskId, Rotate.Degrees90);
 
             //set compress parameters and process files
             var time = task.Process(new CompressParams
             {
-                CompressionLevel = CompressionLevels.extreme,
+                CompressionLevel = CompressionLevels.Extreme,
                 OutputFileName = "extreme_compression"
             });
 
