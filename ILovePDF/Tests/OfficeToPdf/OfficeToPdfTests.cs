@@ -6,16 +6,16 @@ using LovePdf.Model.Task;
 using LovePdf.Model.TaskParams;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Tests.ImageToPdf
+namespace Tests.OfficeToPdf
 {
     [TestClass]
     public class OfficeToPdfTests : BaseTest
     {
-        private new ImageToPdfParams TaskParams { get; }
+        private new OfficeToPdfParams TaskParams { get; }
 
         public OfficeToPdfTests()
         {
-            TaskParams = new ImageToPdfParams
+            TaskParams = new OfficeToPdfParams
             {
                 OutputFileName = @"result.pdf"
             };
@@ -27,9 +27,9 @@ namespace Tests.ImageToPdf
             bool encryptUsingBuiltinIfNoKeyPresent)
         {
             if (string.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
-                Task = encryptUsingBuiltinIfNoKeyPresent ? Api.CreateTask<ImageToPdfTask>(null, true) : Api.CreateTask<ImageToPdfTask>();
+                Task = encryptUsingBuiltinIfNoKeyPresent ? Api.CreateTask<OfficeToPdfTask>(null, true) : Api.CreateTask<OfficeToPdfTask>();
             else
-                Task = Api.CreateTask<ImageToPdfTask>(TaskParams.FileEncryptionKey);
+                Task = Api.CreateTask<OfficeToPdfTask>(TaskParams.FileEncryptionKey);
 
             base.TaskParams = TaskParams;
 
@@ -46,103 +46,102 @@ namespace Tests.ImageToPdf
 
         [TestMethod]
         [ExpectedException(typeof(AuthenticationException), "A user with invalid credentials should not be allowed, but it was")]
-        public void ImageToPdf_WrongCredentials_ShouldThrowException()
+        public void OfficeToPdf_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
 
-            AddFile($"{Guid.NewGuid()}.jpg", Settings.GoodJpgFile);
+            AddFile($"{Guid.NewGuid()}.doc", Settings.GoodWordFile);
 
             Assert.IsFalse(RunTask());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ProcessingException), "A Damaged File should was inappropriately processed.")]
-        public void ImageToPdf_WrongJpgFile_ShouldThrowException()
+        public void OfficeToPdf_WrongWordFile_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
-            AddFile($"{Guid.NewGuid()}.jpg", Settings.BadJpgFile);
+            AddFile($"{Guid.NewGuid()}.doc", Settings.BadWordFile);
 
             Assert.IsFalse(RunTask());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ProcessingException), "A Damaged File should was inappropriately processed.")]
-        public void ImageToPdf_WrongPngFile_ShouldThrowException()
+        public void OfficeToPdf_WrongExcelFile_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
-            AddFile($"{Guid.NewGuid()}.png", Settings.BadPngFile);
+            AddFile($"{Guid.NewGuid()}.xlsx", Settings.BadExcelFile);
 
             Assert.IsFalse(RunTask());
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "A Damaged File should was inappropriately processed.")]
-        public void ImageToPdf_WrongTiffFile_ShouldThrowException()
+        public void OfficeToPdf_WordFile_DefaultParams_ShouldProcessOk()
         {
             InitApiWithRightCredentials();
 
-            AddFile($"{Guid.NewGuid()}.tiff", Settings.BadTiffFile);
-
-            Assert.IsFalse(RunTask());
-        }
-
-        [TestMethod]
-        public void ImageToPdf_DefaultParams_ShouldProcessOk()
-        {
-            InitApiWithRightCredentials();
-
-            AddFile($"{Guid.NewGuid()}.jpg", Settings.GoodJpgFile);
+            AddFile($"{Guid.NewGuid()}.doc", Settings.GoodWordFile);
 
             Assert.IsTrue(RunTask());
         }
 
         [TestMethod]
-        public void ImageToPdf_UploadFileFromServer_ShouldProcessOk()
+        public void OfficeToPdf_ExcelFile_DefaultParams_ShouldProcessOk()
         {
             InitApiWithRightCredentials();
 
-            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodJpgUrl) });
+            AddFile($"{Guid.NewGuid()}.xlsx", Settings.GoodExcelFile);
+
+            Assert.IsTrue(RunTask());
+        }
+
+        [TestMethod]
+        public void OfficeToPdf_UploadFileFromServer_ShouldProcessOk()
+        {
+            InitApiWithRightCredentials();
+
+            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodWordUrl) });
 
             Assert.IsTrue(RunTask());
         }
 
         [TestMethod]
         [ExpectedException(typeof(UploadException), "More files than allowed were inappropriately processed.")]
-        public void ImageToPdf_MaxFilesAdded_ShouldThrowException()
+        public void OfficeToPdf_MaxFilesAdded_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
             for (var i = 0; i < Settings.MaxAllowedFiLes; i++)
-                AddFile($"{Guid.NewGuid()}.jpg", Settings.GoodJpgFile);
+                AddFile($"{Guid.NewGuid()}.doc", Settings.GoodWordFile);
 
             Assert.IsFalse(RunTask());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ProcessingException), "OutputFileName bigger than allowed was inappropriately processed.")]
-        public void ImageToPdf_BigFileName_ShouldThrowException()
+        public void OfficeToPdf_BigFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
-            AddFile($"{Guid.NewGuid()}.jpg", Settings.GoodJpgFile);
+            AddFile($"{Guid.NewGuid()}.doc", Settings.GoodWordFile);
 
             var outputFileName = @"";
             for (var i = 0; i < Settings.MaxCharactersInFilename; i++)
                 outputFileName = $"{outputFileName}a";
-            TaskParams.OutputFileName = $"{outputFileName}.jpg";
+            TaskParams.OutputFileName = $"{outputFileName}.doc";
 
             Assert.IsFalse(RunTask());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), "Wrong Encryption Key was inappropriately processed.")]
-        public void ImageToPdf_WrongEncryptionKey_ShouldThrowException()
+        public void OfficeToPdf_WrongEncryptionKey_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
-            AddFile($"{Guid.NewGuid()}.jpg", Settings.GoodJpgFile);
+            AddFile($"{Guid.NewGuid()}.doc", Settings.GoodWordFile);
 
             TaskParams.FileEncryptionKey = Settings.WrongEncryptionKey;
 
@@ -150,11 +149,11 @@ namespace Tests.ImageToPdf
         }
 
         [TestMethod]
-        public void ImageToPdf_ProvidingEncryptKey_ShouldProcessOk()
+        public void OfficeToPdf_ProvidingEncryptKey_ShouldProcessOk()
         {
             InitApiWithRightCredentials();
 
-            AddFile($"{Guid.NewGuid()}.jpg", Settings.GoodJpgFile);
+            AddFile($"{Guid.NewGuid()}.doc", Settings.GoodWordFile);
 
             TaskParams.IgnoreErrors = false;
             TaskParams.FileEncryptionKey = Settings.RightEncryptionKey;
@@ -163,44 +162,17 @@ namespace Tests.ImageToPdf
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "Wrong orientation was inappropriately processed.")]
-        public void ImageToPdf_WrongOrientation_ShouldThrowException()
+        public void OfficeToPdf_ProvidingPackageName_ShouldProcessOk()
         {
             InitApiWithRightCredentials();
 
-            AddFile($"{Guid.NewGuid()}.jpg", Settings.GoodJpgFile);
+            AddFile($"{Guid.NewGuid()}.doc", Settings.GoodWordFile);
 
-            TaskParams.Orientation = (Orientations)2;
+            AddFile($"{Guid.NewGuid()}.doc", Settings.GoodWordFile);
 
-            Assert.IsFalse(RunTask());
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "Wrong page size was inappropriately processed.")]
-        public void ImageToPdf_WrongPageSize_ShouldThrowException()
-        {
-            InitApiWithRightCredentials();
-
-            AddFile($"{Guid.NewGuid()}.jpg", Settings.GoodJpgFile);
-
-            TaskParams.PageSize = (PageSizes)3;
-
-            Assert.IsFalse(RunTask());
-        }
-
-        [TestMethod]
-        public void ImageToPdf_ProvidingPackageName_ShouldProcessOk()
-        {
-            InitApiWithRightCredentials();
-
-            AddFile($"{Guid.NewGuid()}.jpg", Settings.GoodJpgFile);
-
-            AddFile($"{Guid.NewGuid()}.png", Settings.GoodPngFile);
-
-            AddFile($"{Guid.NewGuid()}.tiff", Settings.GoodTiffFile);
+            AddFile($"{Guid.NewGuid()}.xlsx", Settings.GoodExcelFile);
 
             TaskParams.PackageFileName = @"package";
-            TaskParams.MergeAfter = false;
             TaskParams.IgnoreErrors = false;
 
             Assert.IsTrue(RunTask());

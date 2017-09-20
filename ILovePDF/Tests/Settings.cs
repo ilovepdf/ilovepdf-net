@@ -19,6 +19,11 @@ namespace Tests
         public const string RightEncryptionKey = @"0123456789012345"; // 16 chars    
         public const string RightPassword = @"0123456789012345";
         public const string WrongPassword = @"wrong";
+        public const string GoodWordFile = @"should-work.doc";
+        public const string BadWordFile = @"should-fail.doc";
+        public const string GoodWordUrl = @"https://www.idee.org/Georgia_opposition_NATO-Eng-F.doc";
+        public const string GoodExcelFile = @"should-work.xlsx";
+        public const string BadExcelFile = @"should-fail.xlsx";
         public const string GoodJpgUrl = @"https://upload.wikimedia.org/wikipedia/en/a/a9/Example.jpg";
         public const string GoodJpgFile = @"should-work.jpg";
         public const string BadJpgFile = @"should-fail.jpg";

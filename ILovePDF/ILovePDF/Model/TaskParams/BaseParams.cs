@@ -63,7 +63,7 @@ namespace LovePdf.Model.TaskParams
     /// <summary>
     /// Office To Pdf Params
     /// </summary>
-    public class OfficePdf : BaseParams { }
+    public class OfficeToPdfParams : BaseParams { }
 
     /// <summary>
     /// Rotate Params

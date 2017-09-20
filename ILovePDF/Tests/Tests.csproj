@@ -55,6 +55,7 @@
     <Compile Include="FileForTest.cs" />
     <Compile Include="ImageToPdf\ImageToPdfTests.cs" />
     <Compile Include="Merge\MergeTests.cs" />
+    <Compile Include="OfficeToPdf\OfficeToPdfTests.cs" />
     <Compile Include="PageNumbers\PageNumbersTests.cs" />
     <Compile Include="PdfToJpg\PdfToJpgTests.cs" />
     <Compile Include="PdfToPdfA\PdfToPdfATests.cs" />
@@ -101,6 +102,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\should-work-multipage-password-protected-0123456789012345.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\should-fail.doc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\should-work.doc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\should-fail.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\should-work.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

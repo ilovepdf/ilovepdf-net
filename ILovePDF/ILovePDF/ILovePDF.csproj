@@ -114,6 +114,7 @@
     <Compile Include="Model\TaskParams\MergeParams.cs" />
     <Compile Include="Model\Task\MergeTask.cs" />
     <Compile Include="Model\TaskParams\PageNumbersParams.cs" />
+    <Compile Include="Model\Task\OfficeToPdfTask.cs" />
     <Compile Include="Model\Task\PageNumbersTask.cs" />
     <Compile Include="Model\Task\PdfToJpgTask.cs" />
     <Compile Include="Model\Task\PdfToPdfATask.cs" />
