@@ -1,4 +1,6 @@
 ﻿using JWT;
+using JWT.Algorithms;
+using JWT.Serializers;
 using LovePdf.Model.Enums;
 using LovePdf.Model.Exception;
 using LovePdf.Model.TaskParams;
@@ -7,14 +9,12 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Reflection;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 
@@ -564,13 +564,9 @@ namespace LovePdf.Core
         private void AddAuthorizationHeader(HttpClient httpClient)
         {
             if (string.IsNullOrEmpty(Gwt))
-            {
                 Gwt = GetJwt();
-            }
             else if (IsExpiredGwt())
-            {
                 Gwt = GetJwt();
-            }
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Gwt);
         }
@@ -581,7 +577,25 @@ namespace LovePdf.Core
         /// <returns></returns>
         private bool IsExpiredGwt()
         {
-            return JwtHelper.CheckExpired(Gwt, _privateKey);
+            try
+            {
+                IJsonSerializer serializer = new JsonNetSerializer();
+                IDateTimeProvider provider = new UtcDateTimeProvider();
+                IJwtValidator validator = new JwtValidator(serializer, provider);
+                IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
+                IJwtDecoder decoder = new JwtDecoder(serializer, validator, urlEncoder);
+
+                var json = decoder.Decode(Gwt, _privateKey, verify: true);
+                return false;
+            }
+            catch (TokenExpiredException)
+            {
+                return true;
+            }
+            catch (SignatureVerificationException)
+            {
+                return true;
+            }
         }
 
         /// <summary>
@@ -609,7 +623,13 @@ namespace LovePdf.Core
             {
                 payLoad.Add("file_encryption_key", EncryptKey);
             }
-            var token = JwtHelper.Encode(payLoad, _privateKey, JwtHashAlgorithm.HS256);
+
+            IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
+            IJsonSerializer serializer = new JsonNetSerializer();
+            IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
+            IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
+
+            var token = encoder.Encode(payLoad, _privateKey);
 
             return token;
         }
