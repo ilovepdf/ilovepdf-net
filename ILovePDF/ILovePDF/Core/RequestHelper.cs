@@ -170,9 +170,12 @@ namespace LovePdf.Core
 
                     using (var inputStream = response.Content.ReadAsStreamAsync().Result)
                     {
-                        var fileName = response.Content.Headers.ContentDisposition.FileName.Replace("\"", string.Empty);
+                        var fileName = response.Content.Headers.ContentDisposition.FileName
+                            .Replace("\"", string.Empty);
 
-                        using (var outputStream = new FileStream(destinationPath + "\\" + fileName, FileMode.Create, FileAccess.Write, FileShare.Write))
+                        using (var outputStream = new FileStream(
+                            Path.Combine(destinationPath, fileName),
+                            FileMode.Create, FileAccess.Write, FileShare.Read))
                         {
                             inputStream.CopyTo(outputStream);
                         }
