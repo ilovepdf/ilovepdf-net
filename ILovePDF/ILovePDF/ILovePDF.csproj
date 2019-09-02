@@ -85,6 +85,7 @@
     <Compile Include="Model\TaskParams\ValidatePdfAParams.cs" />
     <Compile Include="Model\TaskParams\WatermarkModeImage.cs" />
     <Compile Include="Model\TaskParams\WatermarkModeText.cs" />
+    <Compile Include="Model\TaskParams\WaterMarkParamsElement.cs" />
     <Compile Include="Model\Task\CompressTask.cs" />
     <Compile Include="Model\Enums\CompressionLevels.cs" />
     <Compile Include="Model\Enums\FontStyles.cs" />

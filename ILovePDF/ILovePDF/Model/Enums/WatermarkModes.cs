@@ -17,6 +17,12 @@ namespace LovePdf.Model.Enums
         /// Image
         /// </summary>
         [EnumMember(Value = "image")]
-        Image
+        Image,
+
+        /// <summary>
+        /// Image
+        /// </summary>
+        [EnumMember(Value = "multi")]
+        Multi
     }
 }

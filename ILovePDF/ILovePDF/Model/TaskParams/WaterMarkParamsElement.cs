@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using LovePdf.Model.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace LovePdf.Model.TaskParams
 {
-    /// <summary>
-    /// WaterMarkParams
-    /// </summary>
-    public class WaterMarkParams : BaseParams
+    public sealed class WaterMarkParamsElement
     {
         /// <summary>
         /// Mode (text || image)
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        [JsonProperty("mode")]
+        [JsonProperty("type")]
         public WaterMarkModes Mode { get; set; }
 
         /// <summary>
@@ -114,16 +109,10 @@ namespace LovePdf.Model.TaskParams
         public Layer? Layer { get; set; }
 
         /// <summary>
-        /// Position of the WaterMark above or below the original Pdf
-        /// </summary>
-        [JsonProperty("elements")]
-        public List<WaterMarkParamsElement> Elements { get; set; }
-
-        /// <summary>
         /// Params
         /// </summary>
         /// <param name="mode"></param>
-        public WaterMarkParams(WatermarkModeText mode)
+        public WaterMarkParamsElement(WatermarkModeText mode)
         {
             if (mode == null)
                 throw new ArgumentException("cannot be null", nameof(mode));
@@ -137,7 +126,7 @@ namespace LovePdf.Model.TaskParams
         /// Params
         /// </summary>
         /// <param name="mode"></param>
-        public WaterMarkParams(WatermarkModeImage mode)
+        public WaterMarkParamsElement(WatermarkModeImage mode)
         {
             if (mode == null)
                 throw new ArgumentException("cannot be null", nameof(mode));
@@ -145,20 +134,6 @@ namespace LovePdf.Model.TaskParams
             SetDefaultValues();
             Mode = WaterMarkModes.Image;
             Image = mode.ServerFileName;
-        }
-
-        /// <summary>
-        /// Params
-        /// </summary>
-        /// <param name="mode"></param>
-        public WaterMarkParams(IEnumerable<WaterMarkParamsElement> elements)
-        {
-            if (elements == null)
-                throw new ArgumentException("cannot be null", nameof(elements));
-
-            SetDefaultValues();
-            Mode = WaterMarkModes.Multi;
-            Elements = elements.ToList();
         }
 
         private void SetDefaultValues()
