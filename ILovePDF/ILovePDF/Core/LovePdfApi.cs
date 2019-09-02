@@ -76,7 +76,6 @@ namespace LovePdf.Core
 
             instance.SetServerTaskId(new Uri(serverUrl), result.TaskId);
 
-
             return instance;
         }
 
@@ -99,6 +98,18 @@ namespace LovePdf.Core
 
             instance.SetServerTaskId(new Uri(serverUrl), result.TaskId);
 
+            return instance;
+        }
+
+        internal static T ConnectTask<T>(LovePdfTask parent) where T : LovePdfTask
+        {
+            var instance = (T)Activator.CreateInstance(typeof(T));
+
+            var result = RequestHelper.Instance
+                .ConnectTask(parent.TaskId, instance.ToolName);
+
+            instance.SetServerTaskId(parent.ServerUrl, result.TaskId);
+            instance.AddFiles(result.Files);
 
             return instance;
         }
