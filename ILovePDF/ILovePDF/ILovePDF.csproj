@@ -76,6 +76,7 @@
     <Compile Include="Model\Exception\UploadException.cs" />
     <Compile Include="Model\TaskParams\BaseParams.cs" />
     <Compile Include="Model\TaskParams\CompressParams.cs" />
+    <Compile Include="Model\TaskParams\ExtractParams.cs" />
     <Compile Include="Model\TaskParams\PdftoJpgParams.cs" />
     <Compile Include="Model\TaskParams\PdfToPdfAParams.cs" />
     <Compile Include="Model\TaskParams\ProtectParams.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Core\UploadTaskResponse.cs" />
     <Compile Include="Model\TaskParams\ImageToPdfParams.cs" />
     <Compile Include="Core\FileModel.cs" />
+    <Compile Include="Model\Task\ExtractTask.cs" />
     <Compile Include="Model\Task\ImagetoPDFTask.cs" />
     <Compile Include="Model\Task\LovePdfTask.cs" />
     <Compile Include="Model\TaskParams\MergeParams.cs" />
