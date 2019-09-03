@@ -62,6 +62,7 @@
     <Compile Include="Core\StartTaskResponse.cs" />
     <Compile Include="Core\LovePdfApi.cs" />
     <Compile Include="Core\Validation.cs" />
+    <Compile Include="Model\Enums\Gravity.cs" />
     <Compile Include="Model\Enums\ValidationStatus.cs" />
     <Compile Include="Model\Enums\EnumExtensions.cs" />
     <Compile Include="Model\Enums\FontFamilies.cs" />

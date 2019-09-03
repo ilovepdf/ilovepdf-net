@@ -159,6 +159,9 @@ namespace LovePdf.Model.TaskParams
             SetDefaultValues();
             Mode = WaterMarkModes.Multi;
             Elements = elements.ToList();
+
+            if (Elements.Count == 0)
+                throw new ArgumentException("cannot be empty", nameof(elements));
         }
 
         private void SetDefaultValues()

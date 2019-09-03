@@ -102,6 +102,24 @@ namespace LovePdf.Model.TaskParams
         public int Transparency { get; set; }
 
         /// <summary>
+        /// Zoom level of the WaterMark
+        /// </summary>
+        [JsonProperty("zoom")]
+        public int Zoom { get; set; }
+
+        /// <summary>
+        /// Border width of the WaterMark
+        /// </summary>
+        [JsonProperty("border")]
+        public int Border { get; set; }
+
+        /// <summary>
+        /// Gravity of the WaterMark
+        /// </summary>
+        [JsonProperty("gravity")]
+        public Gravity Gravity { get; set; }
+
+        /// <summary>
         /// Position of the WaterMark above or below the original Pdf
         /// </summary>
         [JsonProperty("layer")]
@@ -153,6 +171,7 @@ namespace LovePdf.Model.TaskParams
             FontSize = 14;
             FontColor = "#000000";
             Transparency = 100;
+            Gravity = Enums.Gravity.Center;
             Layer = null;
         }
     }
