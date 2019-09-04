@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using LovePdf.Model.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -116,8 +115,8 @@ namespace LovePdf.Model.TaskParams
         /// <summary>
         /// Position of the WaterMark above or below the original Pdf
         /// </summary>
-        [JsonProperty("elements")]
-        public List<WaterMarkParamsElement> Elements { get; set; }
+        [JsonIgnore]
+        public List<WaterMarkParamsElement> Elements { get; private set; }
 
         /// <summary>
         /// Params
@@ -150,7 +149,7 @@ namespace LovePdf.Model.TaskParams
         /// <summary>
         /// Params
         /// </summary>
-        /// <param name="mode"></param>
+        /// <param name="elements"></param>
         public WaterMarkParams(IEnumerable<WaterMarkParamsElement> elements)
         {
             if (elements == null)
@@ -158,7 +157,7 @@ namespace LovePdf.Model.TaskParams
 
             SetDefaultValues();
             Mode = WaterMarkModes.Multi;
-            Elements = elements.ToList();
+            Elements.AddRange(elements);
 
             if (Elements.Count == 0)
                 throw new ArgumentException("cannot be empty", nameof(elements));
@@ -182,6 +181,7 @@ namespace LovePdf.Model.TaskParams
             FontColor = "#000000";
             Transparency = 100;
             Layer = null;
+            Elements = new List<WaterMarkParamsElement>();
         }
     }
 }
