@@ -139,8 +139,6 @@ namespace Tests
 
             File.Delete(resultFile);
 
-            Task.DeleteFile(Task.TaskId);
-
             Task.DeleteTask(Task.TaskId);
 
             return true;
