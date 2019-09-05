@@ -710,6 +710,24 @@ namespace LovePdf.Core
                         paramKey => new KeyValuePair<string, string>(paramKey, paramArray[paramKey])));
             }
 
+            if (@params is WaterMarkParams watermarkParams)
+            {
+                var elements = watermarkParams.Elements;
+                for (var index = 0; index < elements.Count; index++)
+                {
+                    var element = elements[index];
+
+                    //Serializing and deserializing to get properties from derived class, since those properties only available in runtime.
+                    var json = JsonConvert.SerializeObject(element, new KeyValuePairConverter());
+                    var paramArray = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+                    initialValues.AddRange(paramArray.Keys.Select(
+                            paramKey => new KeyValuePair<string, string>(
+                                StringHelpers.Invariant($"elements[{index}][{paramKey}]"),
+                                paramArray[paramKey])));
+                }
+            }
+
             for (var i = 0; i < files.Count; i++)
             {
                 initialValues.Add(new KeyValuePair<string, string>(StringHelpers.Invariant($"files[{i}][filename]"), files[i].FileName));

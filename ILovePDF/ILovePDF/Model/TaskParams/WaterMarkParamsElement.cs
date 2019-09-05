@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using LovePdf.Model.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace LovePdf.Model.TaskParams
 {
-    /// <summary>
-    /// WaterMarkParams
-    /// </summary>
-    public class WaterMarkParams : BaseParams
+    public sealed class WaterMarkParamsElement
     {
         /// <summary>
         /// Mode (text || image)
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        [JsonProperty("mode")]
+        [JsonProperty("type")]
         public WaterMarkModes Mode { get; set; }
 
         /// <summary>
@@ -106,6 +102,24 @@ namespace LovePdf.Model.TaskParams
         public int Transparency { get; set; }
 
         /// <summary>
+        /// Zoom level of the WaterMark
+        /// </summary>
+        [JsonProperty("zoom")]
+        public int Zoom { get; set; }
+
+        /// <summary>
+        /// Border width of the WaterMark
+        /// </summary>
+        [JsonProperty("border")]
+        public int Border { get; set; }
+
+        /// <summary>
+        /// Gravity of the WaterMark
+        /// </summary>
+        [JsonProperty("gravity")]
+        public Gravity Gravity { get; set; }
+
+        /// <summary>
         /// Position of the WaterMark above or below the original Pdf
         /// </summary>
         [JsonProperty("layer")]
@@ -113,16 +127,10 @@ namespace LovePdf.Model.TaskParams
         public Layer? Layer { get; set; }
 
         /// <summary>
-        /// Position of the WaterMark above or below the original Pdf
-        /// </summary>
-        [JsonIgnore]
-        public List<WaterMarkParamsElement> Elements { get; private set; }
-
-        /// <summary>
         /// Params
         /// </summary>
         /// <param name="mode"></param>
-        public WaterMarkParams(WatermarkModeText mode)
+        public WaterMarkParamsElement(WatermarkModeText mode)
         {
             if (mode == null)
                 throw new ArgumentException("cannot be null", nameof(mode));
@@ -136,7 +144,7 @@ namespace LovePdf.Model.TaskParams
         /// Params
         /// </summary>
         /// <param name="mode"></param>
-        public WaterMarkParams(WatermarkModeImage mode)
+        public WaterMarkParamsElement(WatermarkModeImage mode)
         {
             if (mode == null)
                 throw new ArgumentException("cannot be null", nameof(mode));
@@ -144,23 +152,6 @@ namespace LovePdf.Model.TaskParams
             SetDefaultValues();
             Mode = WaterMarkModes.Image;
             Image = mode.ServerFileName;
-        }
-
-        /// <summary>
-        /// Params
-        /// </summary>
-        /// <param name="elements"></param>
-        public WaterMarkParams(IEnumerable<WaterMarkParamsElement> elements)
-        {
-            if (elements == null)
-                throw new ArgumentException("cannot be null", nameof(elements));
-
-            SetDefaultValues();
-            Mode = WaterMarkModes.Multi;
-            Elements.AddRange(elements);
-
-            if (Elements.Count == 0)
-                throw new ArgumentException("cannot be empty", nameof(elements));
         }
 
         private void SetDefaultValues()
@@ -180,8 +171,8 @@ namespace LovePdf.Model.TaskParams
             FontSize = 14;
             FontColor = "#000000";
             Transparency = 100;
+            Gravity = Enums.Gravity.Center;
             Layer = null;
-            Elements = new List<WaterMarkParamsElement>();
         }
     }
 }
