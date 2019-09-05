@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Security.Authentication;
-using LovePdf.Model.Enums;
 using LovePdf.Model.Exception;
 using LovePdf.Model.Task;
 using LovePdf.Model.TaskParams;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Tests.Compress
+namespace Tests.Extract
 {
     [TestClass]
-    public class CompressTests : BaseTest
+    public sealed class ExtractTests : BaseTest
     {
-        private new CompressParams TaskParams { get; }
+        private new ExtractParams TaskParams { get; }
 
-        public CompressTests()
+        public ExtractTests()
         {
-            TaskParams = new CompressParams
+            TaskParams = new ExtractParams
             {
-                OutputFileName = @"result.pdf"
+                OutputFileName = @"result.csv",
+                Detailed = true
             };
         }
 
@@ -28,10 +28,10 @@ namespace Tests.Compress
         {
             if (string.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
                 Task = encryptUsingBuiltinIfNoKeyPresent
-                    ? Api.CreateTask<CompressTask>(null, true)
-                    : Api.CreateTask<CompressTask>();
+                    ? Api.CreateTask<ExtractTask>(null, true)
+                    : Api.CreateTask<ExtractTask>();
             else
-                Task = Api.CreateTask<CompressTask>(TaskParams.FileEncryptionKey);
+                Task = Api.CreateTask<ExtractTask>(TaskParams.FileEncryptionKey);
 
             base.TaskParams = TaskParams;
 
@@ -48,7 +48,7 @@ namespace Tests.Compress
 
         [TestMethod]
         [ExpectedException(typeof(AuthenticationException), "A user with invalid credentials should not be allowed, but it was")]
-        public void Compress_WrongCredentials_ShouldThrowException()
+        public void Extract_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
 
@@ -59,7 +59,7 @@ namespace Tests.Compress
 
         [TestMethod]
         [ExpectedException(typeof(ProcessingException), "A Damaged File should was inappropriately processed.")]
-        public void Compress_WrongFile_ShouldThrowException()
+        public void Extract_WrongFile_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
@@ -69,7 +69,7 @@ namespace Tests.Compress
         }
 
         [TestMethod]
-        public void Compress_UploadFileFromServer_ShouldProcessOk()
+        public void Extract_UploadFileFromServer_ShouldProcessOk()
         {
             InitApiWithRightCredentials();
 
@@ -80,7 +80,7 @@ namespace Tests.Compress
 
         [TestMethod]
         [ExpectedException(typeof(UploadException), "More files than allowed were inappropriately processed.")]
-        public void Compress_MaxFilesAdded_ShouldThrowException()
+        public void Extract_MaxFilesAdded_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
@@ -92,7 +92,7 @@ namespace Tests.Compress
 
         [TestMethod]
         [ExpectedException(typeof(ProcessingException), "OutputFileName bigger than allowed was inappropriately processed.")]
-        public void Compress_BigFileName_ShouldThrowException()
+        public void Extract_BigFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
@@ -107,21 +107,8 @@ namespace Tests.Compress
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "Mistaken compression level was inappropriately processed.")]
-        public void Compress_BadCompressionLevel_ShouldThrowException()
-        {
-            InitApiWithRightCredentials();
-
-            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
-
-            TaskParams.CompressionLevel = (CompressionLevels)10;
-
-            Assert.IsFalse(RunTask());
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), "Wrong Encryption Key was inappropriately processed.")]
-        public void Compress_WrongEncryptionKey_ShouldThrowException()
+        public void Extract_WrongEncryptionKey_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
@@ -133,7 +120,7 @@ namespace Tests.Compress
         }
 
         [TestMethod]
-        public void Compress_ProvidingEncryptKey_ShouldProcessOk()
+        public void Extract_ProvidingEncryptKey_ShouldProcessOk()
         {
             InitApiWithRightCredentials();
 
@@ -147,7 +134,7 @@ namespace Tests.Compress
 
         [TestMethod]
         [ExpectedException(typeof(ProcessingException), "Mistaken Password was inappropriately processed.")]
-        public void Compress_WrongPassword_ShouldThrowException()
+        public void Extract_WrongPassword_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
@@ -157,7 +144,7 @@ namespace Tests.Compress
         }
 
         [TestMethod]
-        public void Compress_RightPassword_ShouldProcessOk()
+        public void Extract_RightPassword_ShouldProcessOk()
         {
             InitApiWithRightCredentials();
 
@@ -169,7 +156,7 @@ namespace Tests.Compress
         }
 
         [TestMethod]
-        public void Compress_ProvidingPackageName_ShouldProcessOk()
+        public void Extract_ProvidingPackageName_ShouldProcessOk()
         {
             InitApiWithRightCredentials();
 
@@ -183,7 +170,7 @@ namespace Tests.Compress
         }
 
         [TestMethod]
-        public void Compress_DefaultParams_ShouldProcessOk()
+        public void Extract_DefaultParams_ShouldProcessOk()
         {
             InitApiWithRightCredentials();
 
