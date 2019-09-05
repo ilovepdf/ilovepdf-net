@@ -212,7 +212,7 @@ namespace LovePdf.Model.Task
         /// <returns>Server file name</returns>
         public UploadTaskResponse AddFile(byte[] file, string taskId)
         {
-            return AddFile(file, taskId, taskId);
+            return AddFile(file, taskId, Path.ChangeExtension(Guid.NewGuid().ToString("N"), ".pdf"));
         }
 
         /// <summary>
