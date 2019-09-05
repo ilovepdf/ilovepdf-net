@@ -53,6 +53,7 @@
     <Compile Include="BaseElementForTest.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="Compress\CompressTests.cs" />
+    <Compile Include="Extract\ExtractTests.cs" />
     <Compile Include="FileForTest.cs" />
     <Compile Include="ImageToPdf\ImageToPdfTests.cs" />
     <Compile Include="Merge\MergeTests.cs" />

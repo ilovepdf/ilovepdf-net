@@ -92,7 +92,13 @@ namespace LovePdf.Model.Enums
         /// PDFa
         /// </summary>
         [Description("pdfa")]
-        PdfToPdfA = 13
+        PdfToPdfA = 13,
+
+        /// <summary>
+        /// Extract
+        /// </summary>
+        [Description("extract")]
+        Extract = 14
 
     }
 }
