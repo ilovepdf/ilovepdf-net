@@ -22,7 +22,7 @@ namespace LovePdf.Model.Enums
         /// <summary>
         /// Center
         /// </summary>
-        [EnumMember(Value = "center")]
+        [EnumMember(Value = "middle")]
         Center
     }
 }

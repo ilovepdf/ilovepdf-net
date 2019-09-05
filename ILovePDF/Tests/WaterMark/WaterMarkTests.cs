@@ -208,5 +208,21 @@ namespace Tests.WaterMark
 
             Assert.IsTrue(RunTask());
         }
+
+        [TestMethod]
+        public void WaterMark_MultiWaterMark_ShouldProcessOk()
+        {
+            InitApiWithRightCredentials();
+
+            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
+
+            TaskParams.Mode = WaterMarkModes.Multi;
+            TaskParams.Elements.Add(new WaterMarkParamsElement(
+                new WatermarkModeImage(Settings.GoodJpgUrl)));
+            TaskParams.Elements.Add(new WaterMarkParamsElement(
+                new WatermarkModeText(Settings.WaterMarkText)));
+
+            Assert.IsTrue(RunTask());
+        }
     }
 }

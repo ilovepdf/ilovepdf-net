@@ -92,6 +92,14 @@ namespace LovePdf.Model.Task
             return AddFile(path, taskId, string.Empty, rotate);
         }
 
+        internal void AddFiles(Dictionary<string, string> files)
+        {
+            foreach (var kvp in files)
+            {
+                Files.Add(new FileModel { ServerFileName = kvp.Key, FileName = kvp.Value });
+            }
+        }
+
         /// <summary>
         /// Upload file to the ILovePdf server from local drive.
         /// </summary>
@@ -430,6 +438,22 @@ namespace LovePdf.Model.Task
             var requestedTaskId = string.IsNullOrWhiteSpace(taskId) ? TaskId : taskId;
 
             return RequestHelper.Instance.DeleteTask(ServerUrl, requestedTaskId);
+        }
+
+        /// <summary>
+        /// If you need to apply different tools on the same files, connected task resource will allows
+        /// you to execute a new task on the files resulting from the previous tool. Using this resource
+        /// you don't need to upload your files again. The response will contain the new task id and the
+        /// files (the server_filename as key and filename as value), with server filename and the file
+        /// name, you will need for the process step. Once the new connected task is created you can add,
+        /// remove files, and work like another tool.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T Next<T>()
+            where T : LovePdfTask
+        {
+            return LovePdfApi.ConnectTask<T>(this);
         }
 
         /// <summary>

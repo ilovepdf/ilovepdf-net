@@ -58,10 +58,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ConnectTaskResponse.cs" />
     <Compile Include="Core\ExecuteTaskResponse.cs" />
     <Compile Include="Core\StartTaskResponse.cs" />
     <Compile Include="Core\LovePdfApi.cs" />
     <Compile Include="Core\Validation.cs" />
+    <Compile Include="Model\Enums\Gravity.cs" />
     <Compile Include="Model\Enums\ValidationStatus.cs" />
     <Compile Include="Model\Enums\EnumExtensions.cs" />
     <Compile Include="Model\Enums\FontFamilies.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Model\TaskParams\ValidatePdfAParams.cs" />
     <Compile Include="Model\TaskParams\WatermarkModeImage.cs" />
     <Compile Include="Model\TaskParams\WatermarkModeText.cs" />
+    <Compile Include="Model\TaskParams\WaterMarkParamsElement.cs" />
     <Compile Include="Model\Task\CompressTask.cs" />
     <Compile Include="Model\Enums\CompressionLevels.cs" />
     <Compile Include="Model\Enums\FontStyles.cs" />
