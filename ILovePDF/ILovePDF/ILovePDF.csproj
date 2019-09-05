@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ConnectTaskResponse.cs" />
     <Compile Include="Core\ExecuteTaskResponse.cs" />
     <Compile Include="Core\StartTaskResponse.cs" />
     <Compile Include="Core\LovePdfApi.cs" />

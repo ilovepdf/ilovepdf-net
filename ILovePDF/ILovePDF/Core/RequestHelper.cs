@@ -98,6 +98,44 @@ namespace LovePdf.Core
 
         }
 
+        public ConnectTaskResponse ConnectTask(string parentTaskId, string tool)
+        {
+            HttpResponseMessage response = null;
+            var responseContent = string.Empty;
+
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    AddAuthorizationHeader(httpClient);
+
+                    var link = StringHelpers.Invariant($"{Settings.StartUrl}/{Settings.V1}/start/next");
+
+                    var multipartFormDataContent = new MultipartFormDataContent();
+
+                    var request = new BaseTaskRequest();
+                    request.FormData.Add("task", parentTaskId);
+                    request.FormData.Add("tool", tool);
+
+                    SetMultiPartFormData(request.FormData, multipartFormDataContent);
+
+                    response = httpClient.PostAsync(link, multipartFormDataContent).Result;
+                    responseContent = response.Content.ReadAsStringAsync().Result;
+
+                    response.EnsureSuccessStatusCode();
+
+                    return JsonConvert.DeserializeObject<ConnectTaskResponse>(responseContent);
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw ParseRequestErrors(response, responseContent, e);
+            }
+
+        }
+
         /// <summary>
         /// Execute current task
         /// </summary>
