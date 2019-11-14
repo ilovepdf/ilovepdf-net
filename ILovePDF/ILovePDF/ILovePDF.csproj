@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <RootNamespace>LovePdf</RootNamespace>
     <AssemblyName>ILovePdf</AssemblyName>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFrameworks>net45;net46</TargetFrameworks>
     <AssemblyTitle>iLovePDF</AssemblyTitle>
     <Product>iLovePDF</Product>
     <Description>Develop and automate PDF processing tasks like Compress PDF, Merge PDF, Split PDF, convert Office to PDF, PDF to JPG, Images to PDF, add Page Numbers, Rotate PDF, Unlock PDF, stamp a Watermark and Repair PDF. Each one with several settings to get your desired results.</Description>
@@ -19,29 +20,43 @@
     <PackageReleaseNotes>.Net Compliance, bug fixes</PackageReleaseNotes>
     <PackageTags>ILOVEPDF Merge PDF Split convert Office to pdf PDf JPG Images unlock Pdf repair rotate pdf</PackageTags>
   </PropertyGroup>
+  
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
     <DocumentationFile>bin\$(Configuration)\ILovePdf.xml</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
+  
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
+  
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>iLovePdf.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <PackageReference Include="JWT" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <PackageReference Include="JWT" Version="5.3.1" />
+  </ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="JWT" Version="4.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
+  
   <ItemGroup>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>
+  
   <ItemGroup>
     <None Include="iLovePdf.snk" />
   </ItemGroup>
+  
 </Project>
