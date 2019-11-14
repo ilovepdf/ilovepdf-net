@@ -1,7 +1,4 @@
-﻿using JWT;
-using JWT.Algorithms;
-using JWT.Serializers;
-using LovePdf.Model.Enums;
+﻿using LovePdf.Model.Enums;
 using LovePdf.Model.Exception;
 using LovePdf.Model.TaskParams;
 using Newtonsoft.Json;
@@ -16,13 +13,15 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Authentication;
+using System.Text;
 using System.Threading.Tasks;
+using Jose;
 
 namespace LovePdf.Core
 {
     internal class RequestHelper
     {
-        private string _privateKey;
+        private byte[] _privateKey;
         private string _publicKey;
         private readonly short _jwtDelay = 5400;
 
@@ -571,7 +570,7 @@ namespace LovePdf.Core
 
         public RequestHelper SetKeys(string privateKey, string publicKey)
         {
-            _privateKey = privateKey;
+            _privateKey = Encoding.UTF8.GetBytes(privateKey);
             _publicKey = publicKey;
             return this;
         }
@@ -620,20 +619,10 @@ namespace LovePdf.Core
         {
             try
             {
-                IJsonSerializer serializer = new JsonNetSerializer();
-                IDateTimeProvider provider = new UtcDateTimeProvider();
-                IJwtValidator validator = new JwtValidator(serializer, provider);
-                IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
-                IJwtDecoder decoder = new JwtDecoder(serializer, validator, urlEncoder);
-
-                var json = decoder.Decode(Gwt, _privateKey, verify: true);
+                JWT.Decode(Gwt, _privateKey, JwsAlgorithm.HS256);
                 return false;
             }
-            catch (TokenExpiredException)
-            {
-                return true;
-            }
-            catch (SignatureVerificationException)
+            catch (Exception)
             {
                 return true;
             }
@@ -665,12 +654,7 @@ namespace LovePdf.Core
                 payLoad.Add("file_encryption_key", EncryptKey);
             }
 
-            IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
-            IJsonSerializer serializer = new JsonNetSerializer();
-            IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
-            IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
-
-            var token = encoder.Encode(payLoad, _privateKey);
+            var token = JWT.Encode(payLoad, _privateKey, JwsAlgorithm.HS256);
 
             return token;
         }
