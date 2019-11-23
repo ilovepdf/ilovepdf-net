@@ -1,7 +1,9 @@
 ﻿namespace LovePdf.Model.TaskParams
 {
     /// <summary>
-    /// Merge Params
+    ///     Merge Params
     /// </summary>
-    public class MergeParams : BaseParams { }
+    public class MergeParams : BaseParams
+    {
+    }
 }

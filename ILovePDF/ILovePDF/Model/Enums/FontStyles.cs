@@ -3,20 +3,18 @@
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// Font Styles
+    ///     Font Styles
     /// </summary>
     public enum FontStyles
     {
         /// <summary>
-        /// Bold
+        ///     Bold
         /// </summary>
-        [EnumMember(Value = "bold")]
-        Bold,
+        [EnumMember(Value = "bold")] Bold,
 
         /// <summary>
-        /// Italic
+        ///     Italic
         /// </summary>
-        [EnumMember(Value = "italic")]
-        Italic
+        [EnumMember(Value = "italic")] Italic
     }
 }

@@ -1,22 +1,23 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace LovePdf.Core
 {
     /// <summary>
-    /// Status Task Response
+    ///     Status Task Response
     /// </summary>
     public class StatusTaskResponse
     {
         /// <summary>
-        /// Task Status
+        ///     Task Status
         /// </summary>
         [JsonProperty("status")]
-        public string TaskStatus { get; set; }
+        public String TaskStatus { get; set; }
 
         /// <summary>
-        /// Status Message
+        ///     Status Message
         /// </summary>
         [JsonProperty("status_message")]
-        public string StatusMessage { get; set; }
+        public String StatusMessage { get; set; }
     }
 }

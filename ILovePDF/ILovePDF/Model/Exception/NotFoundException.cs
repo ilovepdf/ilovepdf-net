@@ -4,36 +4,36 @@ using System.Runtime.Serialization;
 namespace LovePdf.Model.Exception
 {
     /// <summary>
-    /// Not Found Excepcion
+    ///     Not Found Excepcion
     /// </summary>
     [Serializable]
     public class NotFoundException : System.Exception
     {
         /// <summary>
-        /// Default Constructor
+        ///     Default Constructor
         /// </summary>
-        public NotFoundException() : base()
+        public NotFoundException()
         {
         }
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
-        public NotFoundException(string message) : base(message)
+        public NotFoundException(String message) : base(message)
         {
         }
-        
+
         /// <summary>
-        /// Init a new Instance of the class ILovePDF.NotFoundException
+        ///     Init a new Instance of the class ILovePDF.NotFoundException
         /// </summary>
         /// <param name="message"></param>
         /// <param name="innerException"></param>
-        public NotFoundException(string message, System.Exception innerException) : base(message, innerException)
+        public NotFoundException(String message, System.Exception innerException) : base(message, innerException)
         {
         }
 
         /// <summary>
-        /// Init a new Instance of the class ILovePDF.NotFoundException
+        ///     Init a new Instance of the class ILovePDF.NotFoundException
         /// </summary>
         /// <param name="info"></param>
         /// <param name="context"></param>

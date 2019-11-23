@@ -3,26 +3,23 @@
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// Horizontal Positions
+    ///     Horizontal Positions
     /// </summary>
     public enum HorizontalPositions
     {
         /// <summary>
-        /// Left
+        ///     Left
         /// </summary>
-        [EnumMember(Value = "left")]
-        Left,
+        [EnumMember(Value = "left")] Left,
 
         /// <summary>
-        /// Middle
+        ///     Middle
         /// </summary>
-        [EnumMember(Value = "middle")]
-        Middle,
+        [EnumMember(Value = "middle")] Middle,
 
         /// <summary>
-        /// Right
+        ///     Right
         /// </summary>
-        [EnumMember(Value = "right")]
-        Right
+        [EnumMember(Value = "right")] Right
     }
 }

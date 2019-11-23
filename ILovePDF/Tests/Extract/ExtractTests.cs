@@ -10,8 +10,6 @@ namespace Tests.Extract
     [TestClass]
     public sealed class ExtractTests : BaseTest
     {
-        private new ExtractParams TaskParams { get; }
-
         public ExtractTests()
         {
             TaskParams = new ExtractParams
@@ -21,12 +19,14 @@ namespace Tests.Extract
             };
         }
 
-        protected override bool DoRunTask(
-            bool addFilesByChunks,
-            bool downloadFileAsByteArray,
-            bool encryptUsingBuiltinIfNoKeyPresent)
+        private new ExtractParams TaskParams { get; }
+
+        protected override Boolean DoRunTask(
+            Boolean addFilesByChunks,
+            Boolean downloadFileAsByteArray,
+            Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
-            if (string.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
+            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
                 Task = encryptUsingBuiltinIfNoKeyPresent
                     ? Api.CreateTask<ExtractTask>(null, true)
                     : Api.CreateTask<ExtractTask>();
@@ -47,7 +47,8 @@ namespace Tests.Extract
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AuthenticationException), "A user with invalid credentials should not be allowed, but it was")]
+        [ExpectedException(typeof(AuthenticationException),
+            "A user with invalid credentials should not be allowed, but it was")]
         public void Extract_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
@@ -73,7 +74,7 @@ namespace Tests.Extract
         {
             InitApiWithRightCredentials();
 
-            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
+            AddFile(new UriForTest {FileUri = new Uri(Settings.GoodPdfUrl)});
 
             Assert.IsTrue(RunTask());
         }
@@ -91,7 +92,8 @@ namespace Tests.Extract
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "OutputFileName bigger than allowed was inappropriately processed.")]
+        [ExpectedException(typeof(ProcessingException),
+            "OutputFileName bigger than allowed was inappropriately processed.")]
         public void Extract_BigFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();

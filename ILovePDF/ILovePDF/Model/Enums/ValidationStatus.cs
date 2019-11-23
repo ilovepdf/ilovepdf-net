@@ -3,20 +3,18 @@
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// Validation Status
+    ///     Validation Status
     /// </summary>
     public enum ValidationStatus
     {
         /// <summary>
-        /// Conformant
+        ///     Conformant
         /// </summary>
-        [EnumMember(Value = "Conformant")]
-        Conformant,
+        [EnumMember(Value = "Conformant")] Conformant,
 
         /// <summary>
-        /// NonConformant
+        ///     NonConformant
         /// </summary>
-        [EnumMember(Value = "NonConformant")]
-        NonConformant,
+        [EnumMember(Value = "NonConformant")] NonConformant
     }
 }

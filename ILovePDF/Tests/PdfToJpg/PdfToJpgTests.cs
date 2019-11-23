@@ -11,9 +11,6 @@ namespace Tests.PdfToJpg
     [TestClass]
     public class PdfToJpgTests : BaseTest
     {
-
-        private new PdftoJpgParams TaskParams { get; }
-
         public PdfToJpgTests()
         {
             TaskParams = new PdftoJpgParams
@@ -23,12 +20,14 @@ namespace Tests.PdfToJpg
             };
         }
 
-        protected override bool DoRunTask(
-            bool addFilesByChunks,
-            bool downloadFileAsByteArray,
-            bool encryptUsingBuiltinIfNoKeyPresent)
+        private new PdftoJpgParams TaskParams { get; }
+
+        protected override Boolean DoRunTask(
+            Boolean addFilesByChunks,
+            Boolean downloadFileAsByteArray,
+            Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
-            if (string.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
+            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
                 Task = encryptUsingBuiltinIfNoKeyPresent
                     ? Api.CreateTask<PdfToJpgTask>(null, true)
                     : Api.CreateTask<PdfToJpgTask>();
@@ -49,7 +48,8 @@ namespace Tests.PdfToJpg
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AuthenticationException), "A user with invalid credentials should not be allowed, but it was")]
+        [ExpectedException(typeof(AuthenticationException),
+            "A user with invalid credentials should not be allowed, but it was")]
         public void PdfToJpg_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
@@ -75,7 +75,7 @@ namespace Tests.PdfToJpg
         {
             InitApiWithRightCredentials();
 
-            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
+            AddFile(new UriForTest {FileUri = new Uri(Settings.GoodPdfUrl)});
 
             Assert.IsTrue(RunTask());
         }
@@ -93,7 +93,8 @@ namespace Tests.PdfToJpg
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "OutputFileName bigger than allowed was inappropriately processed.")]
+        [ExpectedException(typeof(ProcessingException),
+            "OutputFileName bigger than allowed was inappropriately processed.")]
         public void PdfToJpg_BigFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
@@ -116,7 +117,7 @@ namespace Tests.PdfToJpg
 
             AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
 
-            TaskParams.PdfJpgMode = (PdfToJpgModes)255;
+            TaskParams.PdfJpgMode = (PdfToJpgModes) 255;
 
             Assert.IsFalse(RunTask());
         }

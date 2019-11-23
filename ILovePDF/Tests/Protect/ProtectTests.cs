@@ -10,9 +10,6 @@ namespace Tests.Protect
     [TestClass]
     public class ProtectTests : BaseTest
     {
-
-        private new ProtectParams TaskParams { get; }
-
         public ProtectTests()
         {
             TaskParams = new ProtectParams(Settings.RightPassword)
@@ -21,12 +18,14 @@ namespace Tests.Protect
             };
         }
 
-        protected override bool DoRunTask(
-            bool addFilesByChunks,
-            bool downloadFileAsByteArray,
-            bool encryptUsingBuiltinIfNoKeyPresent)
+        private new ProtectParams TaskParams { get; }
+
+        protected override Boolean DoRunTask(
+            Boolean addFilesByChunks,
+            Boolean downloadFileAsByteArray,
+            Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
-            if (string.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
+            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
                 Task = encryptUsingBuiltinIfNoKeyPresent
                     ? Api.CreateTask<ProtectTask>(null, true)
                     : Api.CreateTask<ProtectTask>();
@@ -47,7 +46,8 @@ namespace Tests.Protect
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AuthenticationException), "A user with invalid credentials should not be allowed, but it was")]
+        [ExpectedException(typeof(AuthenticationException),
+            "A user with invalid credentials should not be allowed, but it was")]
         public void Protect_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
@@ -73,7 +73,7 @@ namespace Tests.Protect
         {
             InitApiWithRightCredentials();
 
-            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
+            AddFile(new UriForTest {FileUri = new Uri(Settings.GoodPdfUrl)});
 
             Assert.IsTrue(RunTask());
         }
@@ -91,7 +91,8 @@ namespace Tests.Protect
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "OutputFileName bigger than allowed was inappropriately processed.")]
+        [ExpectedException(typeof(ProcessingException),
+            "OutputFileName bigger than allowed was inappropriately processed.")]
         public void Protect_BigFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();

@@ -1,19 +1,21 @@
-﻿using LovePdf.Core;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using LovePdf.Core;
 using LovePdf.Model.Enums;
 using LovePdf.Model.TaskParams;
 
 namespace LovePdf.Model.Task
 {
     /// <summary>
-    /// Unlock PDFs
+    ///     Unlock PDFs
     /// </summary>
     public class UnlockTask : LovePdfTask
     {
         /// <inheritdoc />
-        public override string ToolName => EnumExtensions.GetEnumDescription(TaskName.Unlock);
+        public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.Unlock);
 
         /// <summary>
-        /// Process the task
+        ///     Process the task
         /// </summary>
         /// <returns></returns>
         public ExecuteTaskResponse Process()
@@ -24,11 +26,11 @@ namespace LovePdf.Model.Task
         }
 
         /// <summary>
-        /// Process the task
+        ///     Process the task
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public ExecuteTaskResponse Process(UnlockParams parameters)
         {
             if (parameters == null)
@@ -37,5 +39,4 @@ namespace LovePdf.Model.Task
             return base.Process(parameters);
         }
     }
-
 }

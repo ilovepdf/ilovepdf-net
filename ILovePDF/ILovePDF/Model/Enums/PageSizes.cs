@@ -3,26 +3,23 @@
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// Page Sizes
+    ///     Page Sizes
     /// </summary>
     public enum PageSizes
     {
         /// <summary>
-        /// Fit
+        ///     Fit
         /// </summary>
-        [EnumMember(Value = "fit")]
-        Fit,
+        [EnumMember(Value = "fit")] Fit,
 
         /// <summary>
-        /// A4
+        ///     A4
         /// </summary>
-        [EnumMember(Value = "A4")]
-        A4,
+        [EnumMember(Value = "A4")] A4,
 
         /// <summary>
-        /// Letter
+        ///     Letter
         /// </summary>
-        [EnumMember(Value = "letter")]
-        Letter
+        [EnumMember(Value = "letter")] Letter
     }
 }

@@ -11,23 +11,22 @@ namespace Tests.ValidatePdfA
     [TestClass]
     public class ValidatePdfATests : BaseTest
     {
-
-        private new ValidatePdfAParams TaskParams { get; }
-
         public ValidatePdfATests()
         {
-            TaskParams = new ValidatePdfAParams()
+            TaskParams = new ValidatePdfAParams
             {
                 OutputFileName = @"result.pdf"
             };
         }
 
-        protected override bool DoRunTask(
-            bool addFilesByChunks,
-            bool downloadFileAsByteArray,
-            bool encryptUsingBuiltinIfNoKeyPresent)
+        private new ValidatePdfAParams TaskParams { get; }
+
+        protected override Boolean DoRunTask(
+            Boolean addFilesByChunks,
+            Boolean downloadFileAsByteArray,
+            Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
-            if (string.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
+            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
                 Task = encryptUsingBuiltinIfNoKeyPresent
                     ? Api.CreateTask<ValidatePdfATask>(null, true)
                     : Api.CreateTask<ValidatePdfATask>();
@@ -48,7 +47,8 @@ namespace Tests.ValidatePdfA
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AuthenticationException), "A user with invalid credentials should not be allowed, but it was")]
+        [ExpectedException(typeof(AuthenticationException),
+            "A user with invalid credentials should not be allowed, but it was")]
         public void ValidatePdfA_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
@@ -57,7 +57,7 @@ namespace Tests.ValidatePdfA
 
             Assert.IsFalse(RunTask());
         }
-        
+
         [TestMethod]
         public void ValidatePdfA_NonConformant_ShouldValidateFileAsNonConformant()
         {
@@ -75,7 +75,7 @@ namespace Tests.ValidatePdfA
         {
             InitApiWithRightCredentials();
 
-            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
+            AddFile(new UriForTest {FileUri = new Uri(Settings.GoodPdfUrl)});
 
             Assert.IsFalse(RunTask());
         }
@@ -93,7 +93,8 @@ namespace Tests.ValidatePdfA
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "OutputFileName bigger than allowed was inappropriately processed.")]
+        [ExpectedException(typeof(ProcessingException),
+            "OutputFileName bigger than allowed was inappropriately processed.")]
         public void ValidatePdfA_BigFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
@@ -133,7 +134,7 @@ namespace Tests.ValidatePdfA
 
             Assert.IsFalse(RunTask());
         }
-        
+
         [TestMethod]
         public void ValidatePdfA_NonConformant_RightPassword_ShouldValidateFileAsNonConformant()
         {
@@ -159,6 +160,5 @@ namespace Tests.ValidatePdfA
 
             Assert.IsFalse(RunTask());
         }
-
     }
 }

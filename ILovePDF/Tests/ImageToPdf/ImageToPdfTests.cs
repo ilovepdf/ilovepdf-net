@@ -11,8 +11,6 @@ namespace Tests.ImageToPdf
     [TestClass]
     public class OfficeToPdfTests : BaseTest
     {
-        private new ImageToPdfParams TaskParams { get; }
-
         public OfficeToPdfTests()
         {
             TaskParams = new ImageToPdfParams
@@ -21,13 +19,17 @@ namespace Tests.ImageToPdf
             };
         }
 
-        protected override bool DoRunTask(
-            bool addFilesByChunks,
-            bool downloadFileAsByteArray,
-            bool encryptUsingBuiltinIfNoKeyPresent)
+        private new ImageToPdfParams TaskParams { get; }
+
+        protected override Boolean DoRunTask(
+            Boolean addFilesByChunks,
+            Boolean downloadFileAsByteArray,
+            Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
-            if (string.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
-                Task = encryptUsingBuiltinIfNoKeyPresent ? Api.CreateTask<ImageToPdfTask>(null, true) : Api.CreateTask<ImageToPdfTask>();
+            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
+                Task = encryptUsingBuiltinIfNoKeyPresent
+                    ? Api.CreateTask<ImageToPdfTask>(null, true)
+                    : Api.CreateTask<ImageToPdfTask>();
             else
                 Task = Api.CreateTask<ImageToPdfTask>(TaskParams.FileEncryptionKey);
 
@@ -45,7 +47,8 @@ namespace Tests.ImageToPdf
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AuthenticationException), "A user with invalid credentials should not be allowed, but it was")]
+        [ExpectedException(typeof(AuthenticationException),
+            "A user with invalid credentials should not be allowed, but it was")]
         public void ImageToPdf_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
@@ -103,7 +106,7 @@ namespace Tests.ImageToPdf
         {
             InitApiWithRightCredentials();
 
-            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodJpgUrl) });
+            AddFile(new UriForTest {FileUri = new Uri(Settings.GoodJpgUrl)});
 
             Assert.IsTrue(RunTask());
         }
@@ -121,7 +124,8 @@ namespace Tests.ImageToPdf
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "OutputFileName bigger than allowed was inappropriately processed.")]
+        [ExpectedException(typeof(ProcessingException),
+            "OutputFileName bigger than allowed was inappropriately processed.")]
         public void ImageToPdf_BigFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
@@ -170,7 +174,7 @@ namespace Tests.ImageToPdf
 
             AddFile($"{Guid.NewGuid()}.jpg", Settings.GoodJpgFile);
 
-            TaskParams.Orientation = (Orientations)2;
+            TaskParams.Orientation = (Orientations) 2;
 
             Assert.IsFalse(RunTask());
         }
@@ -183,7 +187,7 @@ namespace Tests.ImageToPdf
 
             AddFile($"{Guid.NewGuid()}.jpg", Settings.GoodJpgFile);
 
-            TaskParams.PageSize = (PageSizes)3;
+            TaskParams.PageSize = (PageSizes) 3;
 
             Assert.IsFalse(RunTask());
         }
@@ -205,6 +209,5 @@ namespace Tests.ImageToPdf
 
             Assert.IsTrue(RunTask());
         }
-
     }
 }

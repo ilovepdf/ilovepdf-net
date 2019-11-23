@@ -1,44 +1,48 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace LovePdf.Core
 {
     /// <summary>
-    /// File Parameter
+    ///     File Parameter
     /// </summary>
     internal class FileParameter
     {
         /// <summary>
-        /// File byte[]
-        /// </summary>
-        public byte[] File { get; set; }
-        /// <summary>
-        /// File Name
-        /// </summary>
-        public string FileName { get; set; }
-        /// <summary>
-        /// File Stream
-        /// </summary>
-        public Stream FileStream { get; set; }
-
-        /// <summary>
-        /// File Parameter Constructor
+        ///     File Parameter Constructor
         /// </summary>
         /// <param name="file"></param>
         /// <param name="fileName"></param>
-        public FileParameter(Stream file, string fileName)
+        public FileParameter(Stream file, String fileName)
         {
             FileStream = file;
             FileName = fileName;
         }
+
         /// <summary>
-        /// File Parameter Constructor
+        ///     File Parameter Constructor
         /// </summary>
         /// <param name="file"></param>
         /// <param name="fileName"></param>
-        public FileParameter(byte[] file, string fileName)
+        public FileParameter(Byte[] file, String fileName)
         {
             File = file;
             FileName = fileName;
         }
+
+        /// <summary>
+        ///     File byte[]
+        /// </summary>
+        public Byte[] File { get; set; }
+
+        /// <summary>
+        ///     File Name
+        /// </summary>
+        public String FileName { get; set; }
+
+        /// <summary>
+        ///     File Stream
+        /// </summary>
+        public Stream FileStream { get; set; }
     }
 }

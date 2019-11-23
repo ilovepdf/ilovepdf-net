@@ -1,16 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace LovePdf.Core
 {
     /// <summary>
-    /// Delete Task Response
+    ///     Delete Task Response
     /// </summary>
     public class DeleteTaskResponse
     {
         /// <summary>
-        /// Upload Status
+        ///     Upload Status
         /// </summary>
         [JsonProperty("upload_status")]
-        public string UploadStatus { get; set; }
+        public String UploadStatus { get; set; }
     }
 }

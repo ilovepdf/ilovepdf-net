@@ -3,26 +3,23 @@
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// Watermark Horizontal Positions
+    ///     Watermark Horizontal Positions
     /// </summary>
     public enum WaterMarkHorizontalPositions
     {
         /// <summary>
-        /// Left
+        ///     Left
         /// </summary>
-        [EnumMember(Value = "left")]
-        Left,
+        [EnumMember(Value = "left")] Left,
 
         /// <summary>
-        /// Middle
+        ///     Middle
         /// </summary>
-        [EnumMember(Value = "center")]
-        Middle,
+        [EnumMember(Value = "center")] Middle,
 
         /// <summary>
-        /// Right
+        ///     Right
         /// </summary>
-        [EnumMember(Value = "right")]
-        Right
+        [EnumMember(Value = "right")] Right
     }
 }

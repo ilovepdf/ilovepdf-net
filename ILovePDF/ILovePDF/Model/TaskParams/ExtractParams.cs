@@ -1,19 +1,20 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace LovePdf.Model.TaskParams
 {
     public class ExtractParams : BaseParams
     {
         /// <summary>
-        /// Detailed
+        ///     Detailed
         /// </summary>
         [JsonProperty("detailed")]
-        public bool Detailed { get; set; }
+        public Boolean Detailed { get; set; }
 
         /// <summary>
-        /// Detailed
+        ///     Detailed
         /// </summary>
         [JsonProperty("by_word")]
-        public bool ByWord { get; set; }
+        public Boolean ByWord { get; set; }
     }
 }

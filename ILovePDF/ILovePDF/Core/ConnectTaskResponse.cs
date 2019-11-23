@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace LovePdf.Core
@@ -6,15 +7,15 @@ namespace LovePdf.Core
     public sealed class ConnectTaskResponse
     {
         /// <summary>
-        /// Server
+        ///     Server
         /// </summary>
         [JsonProperty("task")]
-        public string TaskId { get; set; }
+        public String TaskId { get; set; }
 
         /// <summary>
-        /// Task Id
+        ///     Task Id
         /// </summary>
         [JsonProperty("files")]
-        public Dictionary<string, string> Files { get; set; }
+        public Dictionary<String, String> Files { get; set; }
     }
 }

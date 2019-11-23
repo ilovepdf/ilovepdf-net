@@ -3,20 +3,18 @@
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// Layer
+    ///     Layer
     /// </summary>
     public enum Layer
     {
         /// <summary>
-        /// Above
+        ///     Above
         /// </summary>
-        [EnumMember(Value = "above")]
-        Above,
+        [EnumMember(Value = "above")] Above,
 
         /// <summary>
-        /// Below
+        ///     Below
         /// </summary>
-        [EnumMember(Value = "below")]
-        Below,
+        [EnumMember(Value = "below")] Below
     }
 }

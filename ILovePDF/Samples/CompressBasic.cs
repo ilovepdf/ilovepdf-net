@@ -1,14 +1,16 @@
-﻿using LovePdf.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+using LovePdf.Core;
 using LovePdf.Model.Task;
 
 namespace Samples
 {
+    [SuppressMessage("ReSharper", "UnusedVariable")]
     public class CompressBasic
     {
         public void DoTask()
         {
             var api = new LovePdfApi("PUBLIC_KEY", "SECRET_KEY");
-            
+
             //create compress task
             var task = api.CreateTask<CompressTask>();
 
@@ -22,7 +24,6 @@ namespace Samples
 
             //download files to specific folder
             task.DownloadFile("/destination/folder/path");
-
         }
     }
 }

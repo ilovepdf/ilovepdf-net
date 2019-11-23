@@ -1,23 +1,24 @@
-﻿namespace LovePdf.Model.TaskParams
+﻿using System;
+
+namespace LovePdf.Model.TaskParams
 {
     /// <summary>
-    /// WaterMark Image Mode
+    ///     WaterMark Image Mode
     /// </summary>
     public class WatermarkModeImage
     {
         /// <summary>
-        /// Server Filename To Add
-        /// </summary>
-        public string ServerFileName { get; }
-
-        /// <summary>
-        /// Constructor for setting watermark Image
+        ///     Constructor for setting watermark Image
         /// </summary>
         /// <param name="serverFileName"></param>
-        public WatermarkModeImage(string serverFileName)
+        public WatermarkModeImage(String serverFileName)
         {
             ServerFileName = serverFileName;
         }
 
+        /// <summary>
+        ///     Server Filename To Add
+        /// </summary>
+        public String ServerFileName { get; }
     }
 }

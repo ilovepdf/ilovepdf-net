@@ -10,23 +10,22 @@ namespace Tests.Rotate
     [TestClass]
     public class RotateTests : BaseTest
     {
-
-        private new RotateParams TaskParams { get; }
-
         public RotateTests()
         {
-            TaskParams = new RotateParams()
+            TaskParams = new RotateParams
             {
                 OutputFileName = @"result.pdf"
             };
         }
 
-        protected override bool DoRunTask(
-            bool addFilesByChunks,
-            bool downloadFileAsByteArray,
-            bool encryptUsingBuiltinIfNoKeyPresent)
+        private new RotateParams TaskParams { get; }
+
+        protected override Boolean DoRunTask(
+            Boolean addFilesByChunks,
+            Boolean downloadFileAsByteArray,
+            Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
-            if (string.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
+            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
                 Task = encryptUsingBuiltinIfNoKeyPresent
                     ? Api.CreateTask<RotateTask>(null, true)
                     : Api.CreateTask<RotateTask>();
@@ -47,7 +46,8 @@ namespace Tests.Rotate
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AuthenticationException), "A user with invalid credentials should not be allowed, but it was")]
+        [ExpectedException(typeof(AuthenticationException),
+            "A user with invalid credentials should not be allowed, but it was")]
         public void Rotate_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
@@ -73,7 +73,7 @@ namespace Tests.Rotate
         {
             InitApiWithRightCredentials();
 
-            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
+            AddFile(new UriForTest {FileUri = new Uri(Settings.GoodPdfUrl)});
 
             Assert.IsTrue(RunTask());
         }
@@ -91,7 +91,8 @@ namespace Tests.Rotate
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "OutputFileName bigger than allowed was inappropriately processed.")]
+        [ExpectedException(typeof(ProcessingException),
+            "OutputFileName bigger than allowed was inappropriately processed.")]
         public void Rotate_BigFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();

@@ -3,26 +3,23 @@
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// WaterMark Modes
+    ///     WaterMark Modes
     /// </summary>
     public enum WaterMarkModes
     {
         /// <summary>
-        /// Text
+        ///     Text
         /// </summary>
-        [EnumMember(Value = "text")]
-        Text,
+        [EnumMember(Value = "text")] Text,
 
         /// <summary>
-        /// Image
+        ///     Image
         /// </summary>
-        [EnumMember(Value = "image")]
-        Image,
+        [EnumMember(Value = "image")] Image,
 
         /// <summary>
-        /// Image
+        ///     Image
         /// </summary>
-        [EnumMember(Value = "multi")]
-        Multi
+        [EnumMember(Value = "multi")] Multi
     }
 }

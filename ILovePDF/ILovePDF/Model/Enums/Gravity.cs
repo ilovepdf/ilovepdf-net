@@ -3,62 +3,53 @@
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// Watermark Gravity
+    ///     Watermark Gravity
     /// </summary>
     public enum Gravity
     {
         /// <summary>
-        /// North West
+        ///     North West
         /// </summary>
-        [EnumMember(Value = "NorthWest")]
-        NorthWest,
+        [EnumMember(Value = "NorthWest")] NorthWest,
 
         /// <summary>
-        /// North
+        ///     North
         /// </summary>
-        [EnumMember(Value = "North")]
-        North,
+        [EnumMember(Value = "North")] North,
 
         /// <summary>
-        /// North East
+        ///     North East
         /// </summary>
-        [EnumMember(Value = "NorthEast")]
-        NorthEast,
+        [EnumMember(Value = "NorthEast")] NorthEast,
 
         /// <summary>
-        /// West
+        ///     West
         /// </summary>
-        [EnumMember(Value = "West")]
-        West,
+        [EnumMember(Value = "West")] West,
 
         /// <summary>
-        /// Center
+        ///     Center
         /// </summary>
-        [EnumMember(Value = "Center")]
-        Center,
+        [EnumMember(Value = "Center")] Center,
 
         /// <summary>
-        /// East
+        ///     East
         /// </summary>
-        [EnumMember(Value = "East")]
-        East,
+        [EnumMember(Value = "East")] East,
 
         /// <summary>
-        /// South West
+        ///     South West
         /// </summary>
-        [EnumMember(Value = "SouthWest")]
-        SouthWest,
+        [EnumMember(Value = "SouthWest")] SouthWest,
 
         /// <summary>
-        /// NorthWest
+        ///     NorthWest
         /// </summary>
-        [EnumMember(Value = "South")]
-        South,
+        [EnumMember(Value = "South")] South,
 
         /// <summary>
-        /// South East
+        ///     South East
         /// </summary>
-        [EnumMember(Value = "SouthEast")]
-        SouthEast
+        [EnumMember(Value = "SouthEast")] SouthEast
     }
 }

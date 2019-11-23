@@ -3,26 +3,23 @@
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// Split Modes
+    ///     Split Modes
     /// </summary>
     public enum SplitModes
     {
         /// <summary>
-        /// Ranges
+        ///     Ranges
         /// </summary>
-        [EnumMember(Value = "ranges")]
-        Ranges,
+        [EnumMember(Value = "ranges")] Ranges,
 
         /// <summary>
-        /// Fixed Rage
+        ///     Fixed Rage
         /// </summary>
-        [EnumMember(Value = "fixed_range")]
-        FixedRange,
+        [EnumMember(Value = "fixed_range")] FixedRange,
 
         /// <summary>
-        /// Remove Pages
+        ///     Remove Pages
         /// </summary>
-        [EnumMember(Value = "remove_pages")]
-        RemovePages
+        [EnumMember(Value = "remove_pages")] RemovePages
     }
 }

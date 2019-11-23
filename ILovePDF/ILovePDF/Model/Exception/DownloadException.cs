@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace LovePdf.Model.Exception
 {
     /// <summary>
-    /// Download Failed Exception.
+    ///     Download Failed Exception.
     /// </summary>
     /// <remarks>
     /// </remarks>
@@ -12,30 +12,30 @@ namespace LovePdf.Model.Exception
     public class DownloadException : System.Exception
     {
         /// <summary>
-        /// Default Constructor
+        ///     Default Constructor
         /// </summary>
-        public DownloadException() : base()
+        public DownloadException()
         {
         }
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
-        public DownloadException(string message) : base(message)
+        public DownloadException(String message) : base(message)
         {
         }
 
         /// <summary>
-        /// Init a new Instance of the class ILovePDF.DownloadException
+        ///     Init a new Instance of the class ILovePDF.DownloadException
         /// </summary>
         /// <param name="message">Message.</param>
         /// <param name="innerException">Inner Exception.</param>
-        public DownloadException(string message, System.Exception innerException) : base(message, innerException)
+        public DownloadException(String message, System.Exception innerException) : base(message, innerException)
         {
         }
 
         /// <summary>
-        /// Init a new Instance of the class ILovePDF.DownloadException
+        ///     Init a new Instance of the class ILovePDF.DownloadException
         /// </summary>
         /// <param name="info"> Serialization Information.</param>
         /// <param name="context"> Streaming Context.</param>

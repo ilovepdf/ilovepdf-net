@@ -1,6 +1,5 @@
 using System;
 using System.Security.Authentication;
-using LovePdf.Model.Enums;
 using LovePdf.Model.Exception;
 using LovePdf.Model.Task;
 using LovePdf.Model.TaskParams;
@@ -11,8 +10,6 @@ namespace Tests.OfficeToPdf
     [TestClass]
     public class OfficeToPdfTests : BaseTest
     {
-        private new OfficeToPdfParams TaskParams { get; }
-
         public OfficeToPdfTests()
         {
             TaskParams = new OfficeToPdfParams
@@ -21,13 +18,17 @@ namespace Tests.OfficeToPdf
             };
         }
 
-        protected override bool DoRunTask(
-            bool addFilesByChunks,
-            bool downloadFileAsByteArray,
-            bool encryptUsingBuiltinIfNoKeyPresent)
+        private new OfficeToPdfParams TaskParams { get; }
+
+        protected override Boolean DoRunTask(
+            Boolean addFilesByChunks,
+            Boolean downloadFileAsByteArray,
+            Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
-            if (string.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
-                Task = encryptUsingBuiltinIfNoKeyPresent ? Api.CreateTask<OfficeToPdfTask>(null, true) : Api.CreateTask<OfficeToPdfTask>();
+            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
+                Task = encryptUsingBuiltinIfNoKeyPresent
+                    ? Api.CreateTask<OfficeToPdfTask>(null, true)
+                    : Api.CreateTask<OfficeToPdfTask>();
             else
                 Task = Api.CreateTask<OfficeToPdfTask>(TaskParams.FileEncryptionKey);
 
@@ -45,7 +46,8 @@ namespace Tests.OfficeToPdf
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AuthenticationException), "A user with invalid credentials should not be allowed, but it was")]
+        [ExpectedException(typeof(AuthenticationException),
+            "A user with invalid credentials should not be allowed, but it was")]
         public void OfficeToPdf_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
@@ -102,7 +104,7 @@ namespace Tests.OfficeToPdf
         {
             InitApiWithRightCredentials();
 
-            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodWordUrl) });
+            AddFile(new UriForTest {FileUri = new Uri(Settings.GoodWordUrl)});
 
             Assert.IsTrue(RunTask());
         }
@@ -120,7 +122,8 @@ namespace Tests.OfficeToPdf
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "OutputFileName bigger than allowed was inappropriately processed.")]
+        [ExpectedException(typeof(ProcessingException),
+            "OutputFileName bigger than allowed was inappropriately processed.")]
         public void OfficeToPdf_BigFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
@@ -177,6 +180,5 @@ namespace Tests.OfficeToPdf
 
             Assert.IsTrue(RunTask());
         }
-
     }
 }

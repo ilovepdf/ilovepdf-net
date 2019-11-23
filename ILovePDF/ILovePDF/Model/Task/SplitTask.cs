@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using LovePdf.Core;
 using LovePdf.Model.Enums;
 using LovePdf.Model.TaskParams;
@@ -6,19 +7,19 @@ using LovePdf.Model.TaskParams;
 namespace LovePdf.Model.Task
 {
     /// <summary>
-    /// Split PDFs
+    ///     Split PDFs
     /// </summary>
     public class SplitTask : LovePdfTask
     {
         /// <inheritdoc />
-        public override string ToolName => EnumExtensions.GetEnumDescription(TaskName.Split);
+        public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.Split);
 
         /// <summary>
-        /// Process the task
+        ///     Process the task
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public ExecuteTaskResponse Process(SplitParams parameters)
         {
             if (parameters == null)

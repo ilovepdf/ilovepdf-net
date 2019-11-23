@@ -3,60 +3,55 @@
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// Font Families to choose from
+    ///     Font Families to choose from
     /// </summary>
     public enum FontFamilies
     {
         /// <summary>
-        /// Arial
+        ///     Arial
         /// </summary>
-        [EnumMember(Value = "Arial")]
-        Arial,
+        [EnumMember(Value = "Arial")] Arial,
 
         /// <summary>
-        /// Courier
+        ///     Courier
         /// </summary>
-        [EnumMember(Value = "Courier")]
-        Courier,
+        [EnumMember(Value = "Courier")] Courier,
 
         /// <summary>
-        /// Times new roman
+        ///     Times new roman
         /// </summary>
         [EnumMember(Value = "Times New Roman")]
         TimesNewRoman,
 
         /// <summary>
-        /// Verdana
+        ///     Verdana
         /// </summary>
-        [EnumMember(Value = "Verdana")]
-        Verdana,
+        [EnumMember(Value = "Verdana")] Verdana,
 
         /// <summary>
-        /// Comic Sans MS
+        ///     Comic Sans MS
         /// </summary>
-        [EnumMember(Value = "Comic Sans MS")]
-        ComicSansMS,
+        [EnumMember(Value = "Comic Sans MS")] ComicSansMs,
 
         /// <summary>
-        /// Wen Quan Yi Zen Hei
+        ///     Wen Quan Yi Zen Hei
         /// </summary>
         [EnumMember(Value = "WenQuanYi Zen Hei")]
-        WenQuanYIZenHei,
+        WenQuanYiZenHei,
 
         /// <summary>
-        /// Arial Unicode Ms
+        ///     Arial Unicode Ms
         /// </summary>
         [EnumMember(Value = "Arial Unicode MS")]
-        ArialUnicodeMS,
+        ArialUnicodeMs,
 
         /// <summary>
-        /// Lohit Marathi
+        ///     Lohit Marathi
         /// </summary>
-        [EnumMember(Value = "Lohit Marathi")]
-        LohitMarathi,
+        [EnumMember(Value = "Lohit Marathi")] LohitMarathi,
 
         /// <summary>
-        /// Lohit Devanagari
+        ///     Lohit Devanagari
         /// </summary>
         [EnumMember(Value = "Lohit Devanagari")]
         LohitDevanagari

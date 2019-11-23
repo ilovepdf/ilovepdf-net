@@ -1,49 +1,50 @@
-﻿using LovePdf.Model.Enums;
+﻿using System;
+using LovePdf.Model.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace LovePdf.Model.TaskParams
 {
     /// <summary>
-    /// Image To Pdf Params
+    ///     Image To Pdf Params
     /// </summary>
     public class ImageToPdfParams : BaseParams
     {
         /// <summary>
-        /// Orientation
+        ///     Constructor
+        /// </summary>
+        public ImageToPdfParams()
+        {
+            setDefaultValues();
+        }
+
+        /// <summary>
+        ///     Orientation
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("orientation")]
         public Orientations Orientation { get; set; }
 
         /// <summary>
-        /// Margin
+        ///     Margin
         /// </summary>
         [JsonProperty("margin")]
-        public int Margin { get; set; }
+        public Int32 Margin { get; set; }
 
         /// <summary>
-        /// Page Size
+        ///     Page Size
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("pagesize")]
         public PageSizes PageSize { get; set; }
 
         /// <summary>
-        /// Merge After
+        ///     Merge After
         /// </summary>
         [JsonProperty("merge_after")]
-        public bool MergeAfter { get; set; }
+        public Boolean MergeAfter { get; set; }
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public ImageToPdfParams()
-        {
-            SetDefaultValues();
-        }
-
-        private void SetDefaultValues()
+        private void setDefaultValues()
         {
             Orientation = Orientations.Portrait;
             Margin = 0;
@@ -51,6 +52,4 @@ namespace LovePdf.Model.TaskParams
             MergeAfter = true;
         }
     }
-
-
 }

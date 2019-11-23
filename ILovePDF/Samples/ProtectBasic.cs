@@ -1,9 +1,11 @@
-﻿using LovePdf.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+using LovePdf.Core;
 using LovePdf.Model.Task;
 using LovePdf.Model.TaskParams;
 
 namespace Samples
 {
+    [SuppressMessage("ReSharper", "UnusedVariable")]
     public class ProtectBasic
     {
         public void DoTask()

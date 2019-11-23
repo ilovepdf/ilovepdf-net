@@ -1,11 +1,13 @@
-﻿using LovePdf.Model.Task;
-using LovePdf.Model.TaskParams;
-using System;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using LovePdf.Core;
+using LovePdf.Model.Task;
+using LovePdf.Model.TaskParams;
 
 namespace Samples
 {
+    [SuppressMessage("ReSharper", "UnusedVariable")]
     public class TryCatchErrors
     {
         public void DoTask()
@@ -25,22 +27,20 @@ namespace Samples
                 var time = task.Process(new SplitParams(new SplitModeFixedRanges(3)));
                 task.DownloadFile("path");
             }
-            catch(HttpRequestException ex)
+            catch (HttpRequestException ex)
             {
                 var message = ex.Message;
-                var innerException = string.Empty;
-                if(ex.InnerException != null)
-                {
-                    innerException = ex.InnerException.Message;
-                }
-            }
-            catch(Exception ex)
-            {
-                var message = ex.Message;
-                var innerException = string.Empty;
                 if (ex.InnerException != null)
                 {
-                    innerException = ex.InnerException.Message;
+                    var innerException = ex.InnerException.Message;
+                }
+            }
+            catch (Exception ex)
+            {
+                var message = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    var innerException = ex.InnerException.Message;
                 }
             }
         }

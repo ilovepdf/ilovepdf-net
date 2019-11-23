@@ -1,31 +1,34 @@
-﻿using LovePdf.Model.Enums;
+﻿using System;
+using LovePdf.Model.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace LovePdf.Core
 {
     /// <summary>
-    /// File Model
+    ///     File Model
     /// </summary>
     public class FileModel
     {
+        /// <summary>
+        ///     Server File name
+        /// </summary>
+        public String ServerFileName { get; set; }
 
         /// <summary>
-        /// Server File name
+        ///     File name
         /// </summary>
-        public string ServerFileName { get; set; }
+        public String FileName { get; set; }
+
         /// <summary>
-        /// File name
-        /// </summary>
-        public string FileName { get; set; }
-        /// <summary>
-        /// Rotation
+        ///     Rotation
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public Rotate Rotate { get; set; }
+
         /// <summary>
-        /// Password
+        ///     Password
         /// </summary>
-        public string Password { get; set; }
+        public String Password { get; set; }
     }
 }

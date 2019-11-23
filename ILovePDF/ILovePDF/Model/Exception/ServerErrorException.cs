@@ -4,36 +4,36 @@ using System.Runtime.Serialization;
 namespace LovePdf.Model.Exception
 {
     /// <summary>
-    /// Server Error Exeption
+    ///     Server Error Exeption
     /// </summary>
     [Serializable]
     public class ServerErrorException : System.Exception
     {
         /// <summary>
-        /// Default Constructor
+        ///     Default Constructor
         /// </summary>
-        public ServerErrorException() : base()
+        public ServerErrorException()
         {
         }
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
-        public ServerErrorException(string message) : base(message)
+        public ServerErrorException(String message) : base(message)
         {
         }
 
         /// <summary>
-        /// Init a new Instance of the class ILovePDF.ServerErrorException
+        ///     Init a new Instance of the class ILovePDF.ServerErrorException
         /// </summary>
         /// <param name="message"></param>
         /// <param name="innerException"></param>
-        public ServerErrorException(string message, System.Exception innerException) : base(message, innerException)
+        public ServerErrorException(String message, System.Exception innerException) : base(message, innerException)
         {
         }
 
         /// <summary>
-        /// Init a new Instance of the class ILovePDF.ServerErrorException
+        ///     Init a new Instance of the class ILovePDF.ServerErrorException
         /// </summary>
         /// <param name="info"></param>
         /// <param name="context"></param>

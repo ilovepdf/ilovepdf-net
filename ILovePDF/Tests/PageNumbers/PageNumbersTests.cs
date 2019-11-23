@@ -11,9 +11,6 @@ namespace Tests.PageNumbers
     [TestClass]
     public class PageNumbersTests : BaseTest
     {
-
-        private new PageNumbersParams TaskParams { get; }
-
         public PageNumbersTests()
         {
             TaskParams = new PageNumbersParams
@@ -22,12 +19,14 @@ namespace Tests.PageNumbers
             };
         }
 
-        protected override bool DoRunTask(
-            bool addFilesByChunks,
-            bool downloadFileAsByteArray,
-            bool encryptUsingBuiltinIfNoKeyPresent)
+        private new PageNumbersParams TaskParams { get; }
+
+        protected override Boolean DoRunTask(
+            Boolean addFilesByChunks,
+            Boolean downloadFileAsByteArray,
+            Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
-            if (string.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
+            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
                 Task = encryptUsingBuiltinIfNoKeyPresent
                     ? Api.CreateTask<PageNumbersTask>(null, true)
                     : Api.CreateTask<PageNumbersTask>();
@@ -48,7 +47,8 @@ namespace Tests.PageNumbers
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AuthenticationException), "A user with invalid credentials should not be allowed, but it was")]
+        [ExpectedException(typeof(AuthenticationException),
+            "A user with invalid credentials should not be allowed, but it was")]
         public void PageNumbers_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
@@ -74,7 +74,7 @@ namespace Tests.PageNumbers
         {
             InitApiWithRightCredentials();
 
-            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
+            AddFile(new UriForTest {FileUri = new Uri(Settings.GoodPdfUrl)});
 
             Assert.IsTrue(RunTask());
         }
@@ -92,7 +92,8 @@ namespace Tests.PageNumbers
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "OutputFileName bigger than allowed was inappropriately processed.")]
+        [ExpectedException(typeof(ProcessingException),
+            "OutputFileName bigger than allowed was inappropriately processed.")]
         public void PageNumbers_BigFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
@@ -115,7 +116,7 @@ namespace Tests.PageNumbers
 
             AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
 
-            TaskParams.FontStyle = (FontStyles)3;
+            TaskParams.FontStyle = (FontStyles) 3;
 
             Assert.IsFalse(RunTask());
         }
@@ -141,7 +142,7 @@ namespace Tests.PageNumbers
 
             AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
 
-            TaskParams.FontFamily = (FontFamilies)255;
+            TaskParams.FontFamily = (FontFamilies) 255;
 
             Assert.IsFalse(RunTask());
         }
@@ -167,7 +168,7 @@ namespace Tests.PageNumbers
 
             AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
 
-            TaskParams.HorizontalPosition = (HorizontalPositions)3;
+            TaskParams.HorizontalPosition = (HorizontalPositions) 3;
 
             Assert.IsFalse(RunTask());
         }
@@ -180,7 +181,7 @@ namespace Tests.PageNumbers
 
             AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
 
-            TaskParams.VerticalPosition = (VerticalPositions)3;
+            TaskParams.VerticalPosition = (VerticalPositions) 3;
 
             Assert.IsFalse(RunTask());
         }
@@ -247,7 +248,7 @@ namespace Tests.PageNumbers
 
             Assert.IsTrue(RunTask());
         }
-        
+
         [TestMethod]
         public void PageNumbers_DefaultParams_ShouldProcessOk()
         {

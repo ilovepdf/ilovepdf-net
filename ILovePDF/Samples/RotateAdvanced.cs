@@ -1,10 +1,12 @@
-﻿using LovePdf.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+using LovePdf.Core;
 using LovePdf.Model.Enums;
 using LovePdf.Model.Task;
 using LovePdf.Model.TaskParams;
 
 namespace Samples
 {
+    [SuppressMessage("ReSharper", "UnusedVariable")]
     public class RotateAdvanced
     {
         public void DoTask()
@@ -19,7 +21,7 @@ namespace Samples
 
             //proces added files
             //time var will contains information about time spent in process
-            var time = task.Process(new RotateParams() { OutputFileName = "rotated"});
+            var time = task.Process(new RotateParams {OutputFileName = "rotated"});
             task.DownloadFile("path");
         }
     }

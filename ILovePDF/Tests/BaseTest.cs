@@ -1,23 +1,27 @@
-using LovePdf.Model.Enums;
-using LovePdf.Model.Task;
-using LovePdf.Model.TaskParams;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using LovePdf.Core;
+using LovePdf.Model.Enums;
+using LovePdf.Model.Task;
+using LovePdf.Model.TaskParams;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests
 {
     public abstract class BaseTest
     {
+        protected BaseTest()
+        {
+            Files = new List<Object>();
+        }
 
         /// <summary>
-        ///  Gets or sets the test context which provides
-        ///  information about and functionality for the current test run.
-        ///</summary>
+        ///     Gets or sets the test context which provides
+        ///     information about and functionality for the current test run.
+        /// </summary>
         protected TestContext TestContext { get; set; }
 
         protected LovePdfApi Api { get; private set; }
@@ -26,12 +30,7 @@ namespace Tests
 
         protected BaseParams TaskParams { private get; set; }
 
-        private List<object> Files { get; }
-
-        protected BaseTest()
-        {
-            Files = new List<object>();
-        }
+        private List<Object> Files { get; }
 
         protected void InitApiWithWrongCredentials()
         {
@@ -43,7 +42,7 @@ namespace Tests
             Api = new LovePdfApi(Settings.RightPublicKey, Settings.RightSecretKey);
         }
 
-        protected bool ProcessTask()
+        protected Boolean ProcessTask()
         {
             var taskResult = Task.Process(TaskParams);
 
@@ -64,38 +63,46 @@ namespace Tests
             return taskStatusResponse.TaskStatus == "TaskSuccess";
         }
 
-        protected bool AddFilesToTask(bool addFilesByChunks)
+        protected Boolean AddFilesToTask(Boolean addFilesByChunks)
         {
-            foreach (var file in Files)
+            try
             {
-                if (file is FileForTest)
+                foreach (var file in Files)
                 {
-                    var fileForTest = file as FileForTest;
+                    switch (file)
+                    {
+                        case FileForTest fileForTest when addFilesByChunks:
+                            Task.AddFileByChunks(fileForTest.FileName, Task.TaskId, fileForTest.Password,
+                                fileForTest.Rotation);
+                            break;
 
-                    if (addFilesByChunks)
-                        Task.AddFileByChunks(fileForTest.FileName, Task.TaskId, fileForTest.Password, fileForTest.Rotation);
-                    else
-                        Task.AddFile(fileForTest.FileName, Task.TaskId, fileForTest.Password, fileForTest.Rotation);
+                        case FileForTest fileForTest:
+                            Task.AddFile(fileForTest.FileName, Task.TaskId, fileForTest.Password, fileForTest.Rotation);
+                            break;
+
+                        case UriForTest uriForTest:
+                            Task.AddFile(uriForTest.FileUri, Task.TaskId, uriForTest.Password, uriForTest.Rotation);
+                            break;
+                    }
                 }
-                else if (file is UriForTest)
-                {
-                    var uriForTest = file as UriForTest;
-                    Task.AddFile(uriForTest.FileUri, Task.TaskId, uriForTest.Password, uriForTest.Rotation);
-                }
+
+                return true;
             }
-
-            return true;
+            catch (Exception )
+            {
+                return false;
+            }
         }
 
-        protected bool DownloadResult(bool downloadFileAsByteArray)
+        protected Boolean DownloadResult(Boolean downloadFileAsByteArray)
         {
-            string resultFile;
+            String resultFile;
 
             var resultShouldBeMultipage = false;
 
             if (Task.ToolName == EnumExtensions.GetEnumDescription(TaskName.Split))
             {
-                var splitParams = (SplitParams)TaskParams;
+                var splitParams = (SplitParams) TaskParams;
                 if (splitParams.SplitMode == SplitModes.FixedRange || splitParams.SplitMode == SplitModes.Ranges)
                     if (splitParams.MergeAfter != true)
                         resultShouldBeMultipage = true;
@@ -105,17 +112,13 @@ namespace Tests
                 resultShouldBeMultipage = true;
 
             if (resultShouldBeMultipage)
-            {
-                resultFile = TaskParams.PackageFileName != null ?
-                    $"{Settings.BasePath}{Path.DirectorySeparatorChar}{TaskParams.PackageFileName}.zip" :
-                    $"{Settings.BasePath}{Path.DirectorySeparatorChar}{Settings.DefaultMultipageOutput}";
-            }
+                resultFile = TaskParams.PackageFileName != null
+                    ? $"{Settings.BasePath}{Path.DirectorySeparatorChar}{TaskParams.PackageFileName}.zip"
+                    : $"{Settings.BasePath}{Path.DirectorySeparatorChar}{Settings.DefaultMultipageOutput}";
             else
-            {
-                resultFile = TaskParams.OutputFileName != null ?
-                    $"{Settings.BasePath}{Path.DirectorySeparatorChar}{TaskParams.OutputFileName}" :
-                    $"{Settings.BasePath}{Path.DirectorySeparatorChar}{Settings.DefaultSinglepageOutput}";
-            }
+                resultFile = TaskParams.OutputFileName != null
+                    ? $"{Settings.BasePath}{Path.DirectorySeparatorChar}{TaskParams.OutputFileName}"
+                    : $"{Settings.BasePath}{Path.DirectorySeparatorChar}{Settings.DefaultSinglepageOutput}";
 
             if (Task.ToolName == EnumExtensions.GetEnumDescription(TaskName.PdfToJpg))
                 if (TaskParams.OutputFileName != null)
@@ -129,10 +132,13 @@ namespace Tests
             if (downloadFileAsByteArray)
             {
                 var fileAsByteArray = Task.DownloadFileAsByteArrayAsync(Task.TaskId).Result;
-                File.WriteAllBytes($"{Settings.BasePath}{Path.DirectorySeparatorChar}{TaskParams.OutputFileName}", fileAsByteArray);
+                File.WriteAllBytes($"{Settings.BasePath}{Path.DirectorySeparatorChar}{TaskParams.OutputFileName}",
+                    fileAsByteArray);
             }
             else
+            {
                 Task.DownloadFile(Settings.BasePath, Task.TaskId);
+            }
 
             if (!File.Exists(resultFile))
                 return false;
@@ -149,7 +155,8 @@ namespace Tests
             Files.Add(originalFileUri);
         }
 
-        protected void AddFile(string addedFileName, string originalFileName, LovePdf.Model.Enums.Rotate rotation, string password = null)
+        protected void AddFile(String addedFileName, String originalFileName, LovePdf.Model.Enums.Rotate rotation,
+            String password = null)
         {
             File.Copy($"{Settings.DataPath}{Path.DirectorySeparatorChar}{originalFileName}",
                 $"{Settings.DataPath}{Path.DirectorySeparatorChar}{addedFileName}");
@@ -167,7 +174,7 @@ namespace Tests
             Files.Add(file);
         }
 
-        protected void AddFile(string addedFileName, string originalFileName, string password = null)
+        protected void AddFile(String addedFileName, String originalFileName, String password = null)
         {
             File.Copy($"{Settings.DataPath}{Path.DirectorySeparatorChar}{originalFileName}",
                 $"{Settings.DataPath}{Path.DirectorySeparatorChar}{addedFileName}");
@@ -183,58 +190,53 @@ namespace Tests
             Files.Add(file);
         }
 
-        private void CleanUsedData()
+        private void cleanUsedData()
         {
             foreach (var file in Files.Where(f => f is FileForTest))
             {
-                var fileForTest = (FileForTest)file;
+                var fileForTest = (FileForTest) file;
                 if (File.Exists(fileForTest.FileName))
                     File.Delete(fileForTest.FileName);
             }
         }
 
-        protected bool RunTask()
+        protected Boolean RunTask()
         {
-            bool taskWasOk;
+            Boolean taskWasOk;
 
             try
             {
-
                 taskWasOk = DoRunTask(false, false, false);
 
-                if (taskWasOk) DoRunTask(false, false, true);
-
-                if (taskWasOk) DoRunTask(false, true, false);
-
-                if (taskWasOk) DoRunTask(false, true, true);
-
-                if (Files.All(f => f is FileForTest))
+                if (taskWasOk)
                 {
-                    if (taskWasOk) DoRunTask(true, false, false);
+                    DoRunTask(false, false, true);
+                    DoRunTask(false, true, false);
+                    DoRunTask(false, true, true);
 
-                    if (taskWasOk) DoRunTask(true, false, true);
-
-                    if (taskWasOk) DoRunTask(true, true, false);
-
-                    if (taskWasOk) DoRunTask(true, true, true);
+                    if (Files.All(f => f is FileForTest))
+                    {
+                        DoRunTask(true, false, false);
+                        DoRunTask(true, false, true);
+                        DoRunTask(true, true, false);
+                        DoRunTask(true, true, true);
+                    }
                 }
 
-                CleanUsedData();
-
+                cleanUsedData();
             }
             catch (Exception)
             {
-                CleanUsedData();
+                cleanUsedData();
                 throw;
             }
 
             return taskWasOk;
         }
 
-        protected abstract bool DoRunTask(
-            bool addFilesByChunks,
-            bool downloadFileAsByteArray,
-            bool encryptUsingBuiltinIfNoKeyPresent);
-
+        protected abstract Boolean DoRunTask(
+            Boolean addFilesByChunks,
+            Boolean downloadFileAsByteArray,
+            Boolean encryptUsingBuiltinIfNoKeyPresent);
     }
 }

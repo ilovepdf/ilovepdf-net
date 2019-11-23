@@ -3,20 +3,18 @@
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// Vertical Positions
+    ///     Vertical Positions
     /// </summary>
     public enum VerticalPositions
     {
         /// <summary>
-        /// Bottom
+        ///     Bottom
         /// </summary>
-        [EnumMember(Value = "bottom")]
-        Bottom,
+        [EnumMember(Value = "bottom")] Bottom,
 
         /// <summary>
-        /// Top
+        ///     Top
         /// </summary>
-        [EnumMember(Value = "top")]
-        Top
+        [EnumMember(Value = "top")] Top
     }
 }

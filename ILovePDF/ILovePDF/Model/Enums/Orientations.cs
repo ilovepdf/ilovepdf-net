@@ -1,24 +1,20 @@
 ﻿using System.Runtime.Serialization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// Orientations
+    ///     Orientations
     /// </summary>
     public enum Orientations
     {
         /// <summary>
-        /// Portrait
+        ///     Portrait
         /// </summary>
-        [EnumMember(Value = "portrait")]
-        Portrait,
+        [EnumMember(Value = "portrait")] Portrait,
 
         /// <summary>
-        /// Landscape
+        ///     Landscape
         /// </summary>
-        [EnumMember(Value = "landscape")]
-        Landscape
+        [EnumMember(Value = "landscape")] Landscape
     }
 }

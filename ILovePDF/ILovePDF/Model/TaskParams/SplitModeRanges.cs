@@ -1,22 +1,24 @@
-﻿namespace LovePdf.Model.TaskParams
+﻿using System;
+
+namespace LovePdf.Model.TaskParams
 {
     /// <summary>
-    /// Split Mode Ranges
+    ///     Split Mode Ranges
     /// </summary>
     public class SplitModeRanges
     {
         /// <summary>
-        /// Ranges
-        /// </summary>
-        public string Ranges { get; set; }
-
-        /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="ranges"></param>
-        public SplitModeRanges(string ranges)
+        public SplitModeRanges(String ranges)
         {
             Ranges = ranges;
         }
+
+        /// <summary>
+        ///     Ranges
+        /// </summary>
+        public String Ranges { get; set; }
     }
 }

@@ -3,20 +3,18 @@
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// Pdf To Jpg Modes
+    ///     Pdf To Jpg Modes
     /// </summary>
     public enum PdfToJpgModes
     {
         /// <summary>
-        /// Save each page to a Jpg
+        ///     Save each page to a Jpg
         /// </summary>
-        [EnumMember(Value = "pages")]
-        Pages,
+        [EnumMember(Value = "pages")] Pages,
 
         /// <summary>
-        /// Extract images from Pdf
+        ///     Extract images from Pdf
         /// </summary>
-        [EnumMember(Value = "extract")]
-        Extract
+        [EnumMember(Value = "extract")] Extract
     }
 }

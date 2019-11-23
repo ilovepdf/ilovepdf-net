@@ -3,26 +3,23 @@
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// iLovelPdf errors
+    ///     iLovelPdf errors
     /// </summary>
     public enum LovePdfErrors
     {
         /// <summary>
-        /// Upload error
+        ///     Upload error
         /// </summary>
-        [Description("UploadError")]
-        UploadError,
+        [Description("UploadError")] UploadError,
 
         /// <summary>
-        /// Processing error
+        ///     Processing error
         /// </summary>
-        [Description("ProcessingError")]
-        ProcessingError,
+        [Description("ProcessingError")] ProcessingError,
 
         /// <summary>
-        /// Download error
+        ///     Download error
         /// </summary>
-        [Description("DownloadError")]
-        DownloadError
+        [Description("DownloadError")] DownloadError
     }
 }

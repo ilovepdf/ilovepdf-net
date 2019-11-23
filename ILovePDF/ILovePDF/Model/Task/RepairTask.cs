@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using LovePdf.Core;
 using LovePdf.Model.Enums;
 using LovePdf.Model.TaskParams;
@@ -6,15 +7,15 @@ using LovePdf.Model.TaskParams;
 namespace LovePdf.Model.Task
 {
     /// <summary>
-    /// Try to repair PDFs
+    ///     Try to repair PDFs
     /// </summary>
     public class RepairTask : LovePdfTask
     {
         /// <inheritdoc />
-        public override string ToolName => EnumExtensions.GetEnumDescription(TaskName.Repair);
+        public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.Repair);
 
         /// <summary>
-        /// Process the task
+        ///     Process the task
         /// </summary>
         /// <returns></returns>
         public ExecuteTaskResponse Process()
@@ -25,11 +26,11 @@ namespace LovePdf.Model.Task
         }
 
         /// <summary>
-        /// Process the task
+        ///     Process the task
         /// </summary>
         /// <param name="paramaters"></param>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public ExecuteTaskResponse Process(RepairParams paramaters)
         {
             if (paramaters == null)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using LovePdf.Core;
 using LovePdf.Model.Enums;
 using LovePdf.Model.TaskParams;
@@ -6,19 +7,19 @@ using LovePdf.Model.TaskParams;
 namespace LovePdf.Model.Task
 {
     /// <summary>
-    /// Validate PDFA compliance
+    ///     Validate PDFA compliance
     /// </summary>
     public class ValidatePdfATask : LovePdfTask
     {
         /// <inheritdoc />
-        public override string ToolName => EnumExtensions.GetEnumDescription(TaskName.ValidatePdfA);
+        public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.ValidatePdfA);
 
         /// <summary>
-        /// Process the task
+        ///     Process the task
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public ExecuteTaskResponse Process(ValidatePdfAParams parameters)
         {
             if (parameters == null)

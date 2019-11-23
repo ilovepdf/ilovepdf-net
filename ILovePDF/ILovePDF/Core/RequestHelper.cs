@@ -1,10 +1,4 @@
-﻿using LovePdf.Model.Enums;
-using LovePdf.Model.Exception;
-using LovePdf.Model.TaskParams;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -16,23 +10,33 @@ using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 using Jose;
+using LovePdf.Model.Enums;
+using LovePdf.Model.Exception;
+using LovePdf.Model.TaskParams;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
 
 namespace LovePdf.Core
 {
     internal class RequestHelper
     {
-        private byte[] _privateKey;
-        private string _publicKey;
-        private readonly short _jwtDelay = 5400;
-
-        private string Gwt { get; set; }
-        private string EncryptKey { get; set; }
         private static RequestHelper _instance;
-        private RequestHelper() { }
+        private readonly Int16 _jwtDelay = 5400;
+        private Byte[] _privateKey;
+        private String _publicKey;
+
+        private RequestHelper()
+        {
+        }
+
+        private String Gwt { get; set; }
+        private String EncryptKey { get; set; }
 
         public static RequestHelper Instance => _instance ?? (_instance = new RequestHelper());
 
-        private static Exception ParseRequestErrors(HttpResponseMessage response, string responseContent, Exception exception)
+        private static Exception parseRequestErrors(HttpResponseMessage response, String responseContent,
+            Exception exception)
         {
             if (response.StatusCode == HttpStatusCode.BadRequest) // 400 Bad Request
             {
@@ -56,25 +60,25 @@ namespace LovePdf.Core
             if (response.StatusCode == HttpStatusCode.NotFound) // 404 Not Found
                 return new NotFoundException(responseContent, exception);
 
-            if (response.StatusCode == (HttpStatusCode)429) // 429 Too many Requests
+            if (response.StatusCode == (HttpStatusCode) 429) // 429 Too many Requests
                 return new TooManyRequestsException(responseContent, exception);
 
-            if ((int)response.StatusCode >= 500 && (int)response.StatusCode < 600) // 5xx Server Errors
+            if ((Int32) response.StatusCode >= 500 && (Int32) response.StatusCode < 600) // 5xx Server Errors
                 return new ServerErrorException(responseContent, exception);
 
             return exception;
         }
 
-        public StartTaskResponse StartTask(string tool)
+        public StartTaskResponse StartTask(String tool)
         {
             HttpResponseMessage response = null;
-            var responseContent = string.Empty;
+            var responseContent = String.Empty;
 
             try
             {
                 using (var httpClient = new HttpClient())
                 {
-                    AddAuthorizationHeader(httpClient);
+                    addAuthorizationHeader(httpClient);
 
                     var link = StringHelpers.Invariant($"{Settings.StartUrl}/{Settings.V1}/start/{tool}");
 
@@ -86,27 +90,24 @@ namespace LovePdf.Core
                     response.EnsureSuccessStatusCode();
 
                     return JsonConvert.DeserializeObject<StartTaskResponse>(responseContent);
-
                 }
-
             }
             catch (Exception e)
             {
-                throw ParseRequestErrors(response, responseContent, e);
+                throw parseRequestErrors(response, responseContent, e);
             }
-
         }
 
-        public ConnectTaskResponse ConnectTask(string parentTaskId, string tool)
+        public ConnectTaskResponse ConnectTask(String parentTaskId, String tool)
         {
             HttpResponseMessage response = null;
-            var responseContent = string.Empty;
+            var responseContent = String.Empty;
 
             try
             {
                 using (var httpClient = new HttpClient())
                 {
-                    AddAuthorizationHeader(httpClient);
+                    addAuthorizationHeader(httpClient);
 
                     var link = StringHelpers.Invariant($"{Settings.StartUrl}/{Settings.V1}/start/next");
 
@@ -116,7 +117,7 @@ namespace LovePdf.Core
                     request.FormData.Add("task", parentTaskId);
                     request.FormData.Add("tool", tool);
 
-                    SetMultiPartFormData(request.FormData, multipartFormDataContent);
+                    setMultiPartFormData(request.FormData, multipartFormDataContent);
 
                     response = httpClient.PostAsync(link, multipartFormDataContent).Result;
                     responseContent = response.Content.ReadAsStringAsync().Result;
@@ -124,19 +125,16 @@ namespace LovePdf.Core
                     response.EnsureSuccessStatusCode();
 
                     return JsonConvert.DeserializeObject<ConnectTaskResponse>(responseContent);
-
                 }
-
             }
             catch (Exception e)
             {
-                throw ParseRequestErrors(response, responseContent, e);
+                throw parseRequestErrors(response, responseContent, e);
             }
-
         }
 
         /// <summary>
-        /// Execute current task
+        ///     Execute current task
         /// </summary>
         /// <param name="tool">tool name for current task</param>
         /// <param name="parameters">specific parameters for current task</param>
@@ -144,30 +142,31 @@ namespace LovePdf.Core
         /// <param name="taskId"> current task id</param>
         /// <param name="files">file</param>
         /// <returns>time to process the task.</returns>
-        public ExecuteTaskResponse ExecuteTask(Uri serverUrl, string taskId, List<FileModel> files, string tool, BaseParams parameters)
+        public ExecuteTaskResponse ExecuteTask(Uri serverUrl, String taskId, List<FileModel> files, String tool,
+            BaseParams parameters)
         {
             HttpResponseMessage response = null;
-            var responseContent = string.Empty;
+            var responseContent = String.Empty;
 
             try
             {
                 using (var httpClient = new HttpClient())
                 {
-                    AddAuthorizationHeader(httpClient);
+                    addAuthorizationHeader(httpClient);
 
                     var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/process");
 
-                    var initalValues = new List<KeyValuePair<string, string>>
+                    var initalValues = new List<KeyValuePair<String, String>>
                     {
-                        new KeyValuePair<string, string>("task", taskId),
-                        new KeyValuePair<string, string>("tool", tool),
-                        new KeyValuePair<string, string>("v", $"net.{Settings.NetVersion}"),
+                        new KeyValuePair<String, String>("task", taskId),
+                        new KeyValuePair<String, String>("tool", tool),
+                        new KeyValuePair<String, String>("v", $"net.{Settings.NetVersion}")
                         //new KeyValuePair<string, string>("debug", "true"),
                     };
 
                     var multipartFormDataContent = new MultipartFormDataContent();
 
-                    SetFormDataForExecuteTask(parameters, files, initalValues, multipartFormDataContent);
+                    setFormDataForExecuteTask(parameters, files, initalValues, multipartFormDataContent);
 
                     response = httpClient.PostAsync(link, multipartFormDataContent).Result;
 
@@ -176,25 +175,23 @@ namespace LovePdf.Core
                     response.EnsureSuccessStatusCode();
 
                     return JsonConvert.DeserializeObject<ExecuteTaskResponse>(responseContent);
-
                 }
             }
             catch (Exception e)
             {
-                throw ParseRequestErrors(response, responseContent, e);
+                throw parseRequestErrors(response, responseContent, e);
             }
-
         }
 
-        public void Download(Uri serverUrl, string taskId, string destinationPath)
+        public void Download(Uri serverUrl, String taskId, String destinationPath)
         {
             HttpResponseMessage response = null;
-            var responseContent = string.Empty;
+            var responseContent = String.Empty;
             try
             {
                 using (var client = new HttpClient())
                 {
-                    AddAuthorizationHeader(client);
+                    addAuthorizationHeader(client);
                     var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/download/{taskId}");
 
                     var request = new HttpRequestMessage(HttpMethod.Get, link);
@@ -208,7 +205,7 @@ namespace LovePdf.Core
                     using (var inputStream = response.Content.ReadAsStreamAsync().Result)
                     {
                         var fileName = response.Content.Headers.ContentDisposition.FileName
-                            .Replace("\"", string.Empty);
+                            .Replace("\"", String.Empty);
 
                         using (var outputStream = new FileStream(
                             Path.Combine(destinationPath, fileName),
@@ -221,20 +218,19 @@ namespace LovePdf.Core
             }
             catch (Exception e)
             {
-                throw ParseRequestErrors(response, responseContent, e);
+                throw parseRequestErrors(response, responseContent, e);
             }
-
         }
 
-        public async Task<byte[]> DownloadAsync(Uri serverUrl, string taskId)
+        public async Task<Byte[]> DownloadAsync(Uri serverUrl, String taskId)
         {
             HttpResponseMessage response = null;
-            var responseContent = string.Empty;
+            var responseContent = String.Empty;
             try
             {
                 using (var client = new HttpClient())
                 {
-                    AddAuthorizationHeader(client);
+                    addAuthorizationHeader(client);
                     var link = $"{serverUrl}{Settings.V1}/download/{taskId}";
 
                     var request = new HttpRequestMessage(HttpMethod.Get, link);
@@ -251,19 +247,19 @@ namespace LovePdf.Core
             }
             catch (Exception e)
             {
-                throw ParseRequestErrors(response, responseContent, e);
+                throw parseRequestErrors(response, responseContent, e);
             }
         }
 
-        public byte[] Download(string serverUrl, string taskId)
+        public Byte[] Download(String serverUrl, String taskId)
         {
             HttpResponseMessage response = null;
-            var responseContent = string.Empty;
+            var responseContent = String.Empty;
             try
             {
                 using (var client = new HttpClient())
                 {
-                    AddAuthorizationHeader(client);
+                    addAuthorizationHeader(client);
                     var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/download/{taskId}");
                     var request = new HttpRequestMessage(HttpMethod.Get, link);
 
@@ -275,18 +271,18 @@ namespace LovePdf.Core
                     response.EnsureSuccessStatusCode();
 
                     return response.Content.ReadAsByteArrayAsync().Result;
-
                 }
             }
             catch (Exception e)
             {
-                throw ParseRequestErrors(response, responseContent, e);
+                throw parseRequestErrors(response, responseContent, e);
             }
         }
-        public UploadTaskResponse UploadFile(Uri serverUrl, byte[] fileByteArray, string fileName, string taskId)
+
+        public UploadTaskResponse UploadFile(Uri serverUrl, Byte[] fileByteArray, String fileName, String taskId)
         {
             HttpResponseMessage response = null;
-            var responseContent = string.Empty;
+            var responseContent = String.Empty;
 
             var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/upload");
 
@@ -294,13 +290,13 @@ namespace LovePdf.Core
             {
                 using (var httpClient = new HttpClient())
                 {
-                    AddAuthorizationHeader(httpClient);
+                    addAuthorizationHeader(httpClient);
                     var multiPart = new MultipartFormDataContent();
                     var uploadRequest = new BaseTaskRequest();
 
                     uploadRequest.FormData.Add("task", taskId);
                     uploadRequest.FormData.Add("file", new FileParameter(fileByteArray, fileName));
-                    SetMultiPartFormData(uploadRequest.FormData, multiPart);
+                    setMultiPartFormData(uploadRequest.FormData, multiPart);
 
                     response = httpClient.PostAsync(link, multiPart).Result;
 
@@ -313,26 +309,26 @@ namespace LovePdf.Core
             }
             catch (Exception e)
             {
-                throw ParseRequestErrors(response, responseContent, e);
+                throw parseRequestErrors(response, responseContent, e);
             }
         }
 
-        public UploadTaskResponse UploadFile(Uri serverUrl, Uri url, string taskId)
+        public UploadTaskResponse UploadFile(Uri serverUrl, Uri url, String taskId)
         {
             HttpResponseMessage response = null;
-            var responseContent = string.Empty;
+            var responseContent = String.Empty;
 
             var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/upload");
             try
             {
                 using (var httpClient = new HttpClient())
                 {
-                    AddAuthorizationHeader(httpClient);
+                    addAuthorizationHeader(httpClient);
                     var multiPart = new MultipartFormDataContent();
                     var request = new BaseTaskRequest();
                     request.FormData.Add("cloud_file", url.AbsoluteUri);
                     request.FormData.Add("task", taskId);
-                    SetMultiPartFormData(request.FormData, multiPart);
+                    setMultiPartFormData(request.FormData, multiPart);
 
                     response = httpClient.PostAsync(link, multiPart).Result;
 
@@ -341,19 +337,18 @@ namespace LovePdf.Core
                     response.EnsureSuccessStatusCode();
 
                     return JsonConvert.DeserializeObject<UploadTaskResponse>(responseContent);
-
                 }
             }
             catch (Exception e)
             {
-                throw ParseRequestErrors(response, responseContent, e);
+                throw parseRequestErrors(response, responseContent, e);
             }
         }
 
-        public UploadTaskResponse UploadFile(Uri serverUrl, FileInfo file, string taskId)
+        public UploadTaskResponse UploadFile(Uri serverUrl, FileInfo file, String taskId)
         {
             HttpResponseMessage response = null;
-            var responseContent = string.Empty;
+            var responseContent = String.Empty;
 
             var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/upload");
 
@@ -368,9 +363,9 @@ namespace LovePdf.Core
 
                     using (var httpClient = new HttpClient())
                     {
-                        AddAuthorizationHeader(httpClient);
+                        addAuthorizationHeader(httpClient);
                         var multipartFormData = new MultipartFormDataContent();
-                        SetMultiPartFormData(uploadRequest.FormData, multipartFormData);
+                        setMultiPartFormData(uploadRequest.FormData, multipartFormData);
 
                         response = httpClient.PostAsync(link, multipartFormData).Result;
 
@@ -381,26 +376,25 @@ namespace LovePdf.Core
                         return JsonConvert.DeserializeObject<UploadTaskResponse>(responseContent);
                     }
                 }
-
             }
             catch (Exception e)
             {
-                throw ParseRequestErrors(response, responseContent, e);
+                throw parseRequestErrors(response, responseContent, e);
             }
         }
 
-        public UploadTaskResponse UploadFileByChunk(Uri serverUrl, FileInfo fileInfo, string taskId)
+        public UploadTaskResponse UploadFileByChunk(Uri serverUrl, FileInfo fileInfo, String taskId)
         {
             UploadTaskResponse results;
             HttpResponseMessage response = null;
-            var responseContent = string.Empty;
+            var responseContent = String.Empty;
 
             var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/upload");
             try
             {
                 using (var httpClient = new HttpClient())
                 {
-                    AddAuthorizationHeader(httpClient);
+                    addAuthorizationHeader(httpClient);
 
                     var uploadRequest = new BaseTaskRequest();
                     uploadRequest.FormData.Add("task", taskId);
@@ -409,23 +403,23 @@ namespace LovePdf.Core
                     uploadRequest.FormData.Add("file", "");
                     uploadRequest.FormData.Add("chunk", "");
 
-                    List<byte[]> chunksToUpload;
+                    List<Byte[]> chunksToUpload;
 
                     using (var fs = fileInfo.OpenRead())
                     {
-                        chunksToUpload = ToChunks(fs);
+                        chunksToUpload = toChunks(fs);
 
-                        uploadRequest.FormData.Add("chunks", chunksToUpload.Count.ToString(CultureInfo.InvariantCulture));
+                        uploadRequest.FormData.Add("chunks",
+                            chunksToUpload.Count.ToString(CultureInfo.InvariantCulture));
                     }
 
                     for (var i = 0; i < chunksToUpload.Count; i++)
-                    {
                         using (var multipartFormDataContent = new MultipartFormDataContent())
                         {
                             uploadRequest.FormData["chunk"] = i.ToString(CultureInfo.InvariantCulture);
                             uploadRequest.FormData["file"] = new FileParameter(chunksToUpload[i], fileInfo.Name);
 
-                            SetMultiPartFormData(uploadRequest.FormData, multipartFormDataContent);
+                            setMultiPartFormData(uploadRequest.FormData, multipartFormDataContent);
 
                             response = httpClient.PostAsync(link, multipartFormDataContent).Result;
 
@@ -433,31 +427,30 @@ namespace LovePdf.Core
 
                             response.EnsureSuccessStatusCode();
                         }
-                    }
 
                     results = JsonConvert.DeserializeObject<UploadTaskResponse>(responseContent);
                 }
             }
             catch (Exception e)
             {
-                throw ParseRequestErrors(response, responseContent, e);
+                throw parseRequestErrors(response, responseContent, e);
             }
 
             return results;
         }
 
-        public StatusTaskResponse CheckTaskStatus(Uri serverUrl, string taskId)
+        public StatusTaskResponse CheckTaskStatus(Uri serverUrl, String taskId)
         {
             var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/task/{taskId}");
 
             HttpResponseMessage response = null;
-            var responseContent = string.Empty;
+            var responseContent = String.Empty;
 
             try
             {
                 using (var client = new HttpClient())
                 {
-                    AddAuthorizationHeader(client);
+                    addAuthorizationHeader(client);
                     response = client.GetAsync(link).Result;
                     responseContent = response.Content.ReadAsStringAsync().Result;
 
@@ -468,21 +461,21 @@ namespace LovePdf.Core
             }
             catch (Exception e)
             {
-                throw ParseRequestErrors(response, responseContent, e);
+                throw parseRequestErrors(response, responseContent, e);
             }
         }
 
-        public DeleteTaskResponse DeleteTask(Uri serverUrl, string taskId)
+        public DeleteTaskResponse DeleteTask(Uri serverUrl, String taskId)
         {
             HttpResponseMessage response = null;
-            var responseContent = string.Empty;
+            var responseContent = String.Empty;
             var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/task/{taskId}");
 
             try
             {
                 using (var http = new HttpClient())
                 {
-                    AddAuthorizationHeader(http);
+                    addAuthorizationHeader(http);
 
                     response = http.DeleteAsync(link).Result;
 
@@ -491,19 +484,18 @@ namespace LovePdf.Core
                     response.EnsureSuccessStatusCode();
 
                     return JsonConvert.DeserializeObject<DeleteTaskResponse>(responseContent);
-
                 }
             }
             catch (Exception e)
             {
-                throw ParseRequestErrors(response, responseContent, e);
+                throw parseRequestErrors(response, responseContent, e);
             }
         }
 
-        public void DeleteFile(Uri serverUrl, string serverFileName, string taskId)
+        public void DeleteFile(Uri serverUrl, String serverFileName, String taskId)
         {
             HttpResponseMessage response = null;
-            var responseContent = string.Empty;
+            var responseContent = String.Empty;
 
             try
             {
@@ -511,7 +503,7 @@ namespace LovePdf.Core
 
                 using (var http = new HttpClient())
                 {
-                    AddAuthorizationHeader(http);
+                    addAuthorizationHeader(http);
 
                     var multipartFormDataContent = new MultipartFormDataContent();
 
@@ -520,7 +512,7 @@ namespace LovePdf.Core
                     deleteRequest.FormData.Add("task", taskId);
                     deleteRequest.FormData.Add("server_filename", serverFileName);
 
-                    SetMultiPartFormData(deleteRequest.FormData, multipartFormDataContent);
+                    setMultiPartFormData(deleteRequest.FormData, multipartFormDataContent);
 
                     response = http.PostAsync(link, multipartFormDataContent).Result;
 
@@ -531,44 +523,45 @@ namespace LovePdf.Core
             }
             catch (Exception e)
             {
-                throw ParseRequestErrors(response, responseContent, e);
+                throw parseRequestErrors(response, responseContent, e);
             }
         }
 
         #region Help methods
-        private static List<byte[]> ToChunks(Stream fileStream)
+
+        private static List<Byte[]> toChunks(Stream fileStream)
         {
-            byte[] incomingArray;
+            Byte[] incomingArray;
             using (var ms = new MemoryStream())
             {
                 fileStream.CopyTo(ms);
                 incomingArray = ms.ToArray();
             }
 
-            var result = new List<byte[]>();
+            var result = new List<Byte[]>();
 
             var incomingOffset = 0;
 
             while (incomingOffset < incomingArray.Length)
             {
-
                 var length =
-                   Math.Min(Settings.MaxBytesPerChunk, incomingArray.Length - incomingOffset);
-                var outboundBuffer = new byte[length];
+                    Math.Min(Settings.MaxBytesPerChunk, incomingArray.Length - incomingOffset);
+                var outboundBuffer = new Byte[length];
 
                 Buffer.BlockCopy(incomingArray, incomingOffset,
-                                 outboundBuffer, 0,
-                                 length);
+                    outboundBuffer, 0,
+                    length);
 
                 incomingOffset += length;
 
                 // Transmit outbound buffer
-                result.Add((byte[])outboundBuffer.Clone());
+                result.Add((Byte[]) outboundBuffer.Clone());
             }
+
             return result;
         }
 
-        public RequestHelper SetKeys(string privateKey, string publicKey)
+        public RequestHelper SetKeys(String privateKey, String publicKey)
         {
             _privateKey = Encoding.UTF8.GetBytes(privateKey);
             _publicKey = publicKey;
@@ -576,21 +569,22 @@ namespace LovePdf.Core
         }
 
         /// <summary>
-        /// Set file encrypt key
+        ///     Set file encrypt key
         /// </summary>
         /// <param name="encryptKey"></param>
         /// <param name="useBuildIn"></param>
         /// <returns></returns>
-        public RequestHelper SetEncryptKey(string encryptKey = "", bool useBuildIn = false)
+        public RequestHelper SetEncryptKey(String encryptKey = "", Boolean useBuildIn = false)
         {
             //if using build in skip encryptKey param even if it is provided
             if (useBuildIn)
                 encryptKey = Guid.NewGuid().ToString("n").Substring(0, 32);
 
-            if (string.IsNullOrWhiteSpace(encryptKey)) return this;
+            if (String.IsNullOrWhiteSpace(encryptKey)) return this;
 
             if (encryptKey.Length != 16 && encryptKey.Length != 24 && encryptKey.Length != 32)
-                throw new ArgumentOutOfRangeException(nameof(encryptKey), "Only keys of sizes 16, 24 or 32 are supported.");
+                throw new ArgumentOutOfRangeException(nameof(encryptKey),
+                    "Only keys of sizes 16, 24 or 32 are supported.");
 
             EncryptKey = encryptKey;
 
@@ -598,24 +592,24 @@ namespace LovePdf.Core
         }
 
         /// <summary>
-        /// Set authorization header for http client
+        ///     Set authorization header for http client
         /// </summary>
         /// <param name="httpClient"></param>
-        private void AddAuthorizationHeader(HttpClient httpClient)
+        private void addAuthorizationHeader(HttpClient httpClient)
         {
-            if (string.IsNullOrEmpty(Gwt))
-                Gwt = GetJwt();
-            else if (IsExpiredGwt())
-                Gwt = GetJwt();
+            if (String.IsNullOrEmpty(Gwt))
+                Gwt = getJwt();
+            else if (isExpiredGwt())
+                Gwt = getJwt();
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Gwt);
         }
 
         /// <summary>
-        /// Check if GWT token expired
+        ///     Check if GWT token expired
         /// </summary>
         /// <returns></returns>
-        private bool IsExpiredGwt()
+        private Boolean isExpiredGwt()
         {
             try
             {
@@ -629,69 +623,66 @@ namespace LovePdf.Core
         }
 
         /// <summary>
-        /// Generate GWT token
+        ///     Generate GWT token
         /// </summary>
         /// <returns></returns>
-        private string GetJwt()
+        private String getJwt()
         {
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            var payLoad = new Dictionary<string, object>
+            var payLoad = new Dictionary<String, Object>
             {
                 {"iss", ""},
                 {"aud", ""},
-                {"iat", DateTime.UtcNow.AddSeconds(- _jwtDelay)},
-                {"nbf", DateTime.UtcNow.AddSeconds(- _jwtDelay)},
+                {"iat", DateTime.UtcNow.AddSeconds(-_jwtDelay)},
+                {"nbf", DateTime.UtcNow.AddSeconds(-_jwtDelay)},
                 //Add 2 hours of expiration
                 {
                     "exp",
                     Math.Round(new TimeSpan(DateTime.UtcNow.AddSeconds(_jwtDelay).Ticks).TotalSeconds -
                                new TimeSpan(epoch.Ticks).TotalSeconds)
                 },
-                {"jti", _publicKey }
+                {"jti", _publicKey}
             };
-            if (!string.IsNullOrWhiteSpace(EncryptKey))
-            {
-                payLoad.Add("file_encryption_key", EncryptKey);
-            }
+            if (!String.IsNullOrWhiteSpace(EncryptKey)) payLoad.Add("file_encryption_key", EncryptKey);
 
             var token = JWT.Encode(payLoad, _privateKey, JwsAlgorithm.HS256);
 
             return token;
         }
 
-        private static void SetMultiPartFormData(Dictionary<string, object> formData, MultipartFormDataContent multiPartFormDataContent)
+        private static void setMultiPartFormData(Dictionary<String, Object> formData,
+            MultipartFormDataContent multiPartFormDataContent)
         {
             foreach (var param in formData)
-            {
-
                 if (param.Value is FileParameter file)
                 {
                     var uploadFile = file;
 
                     if (uploadFile.FileStream != null)
-                        multiPartFormDataContent.Add(new StreamContent(uploadFile.FileStream), "file", uploadFile.FileName);
+                        multiPartFormDataContent.Add(new StreamContent(uploadFile.FileStream), "file",
+                            uploadFile.FileName);
                     else
-                        multiPartFormDataContent.Add(new ByteArrayContent(uploadFile.File), "file", uploadFile.FileName);
-
+                        multiPartFormDataContent.Add(new ByteArrayContent(uploadFile.File), "file",
+                            uploadFile.FileName);
                 }
                 else
                 {
-                    multiPartFormDataContent.Add(new StringContent((string)param.Value), param.Key);
+                    multiPartFormDataContent.Add(new StringContent((String) param.Value), param.Key);
                 }
-            }
         }
 
-        private static void SetFormDataForExecuteTask(BaseParams @params, IReadOnlyList<FileModel> files, List<KeyValuePair<string, string>> initialValues, MultipartFormDataContent postMultipartFormDataContent)
+        private static void setFormDataForExecuteTask(BaseParams @params, IReadOnlyList<FileModel> files,
+            List<KeyValuePair<String, String>> initialValues, MultipartFormDataContent postMultipartFormDataContent)
         {
             if (@params != null)
             {
                 //Serializing and deserializing to get properties from derived class, since those properties only available in runtime.
                 var json = JsonConvert.SerializeObject(@params, new KeyValuePairConverter());
-                var paramArray = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                var paramArray = JsonConvert.DeserializeObject<Dictionary<String, String>>(json);
 
                 initialValues.AddRange(
                     paramArray.Keys.Select(
-                        paramKey => new KeyValuePair<string, string>(paramKey, paramArray[paramKey])));
+                        paramKey => new KeyValuePair<String, String>(paramKey, paramArray[paramKey])));
             }
 
             if (@params is WaterMarkParams watermarkParams)
@@ -703,30 +694,33 @@ namespace LovePdf.Core
 
                     //Serializing and deserializing to get properties from derived class, since those properties only available in runtime.
                     var json = JsonConvert.SerializeObject(element, new KeyValuePairConverter());
-                    var paramArray = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                    var paramArray = JsonConvert.DeserializeObject<Dictionary<String, String>>(json);
 
                     initialValues.AddRange(paramArray.Keys.Select(
-                            paramKey => new KeyValuePair<string, string>(
-                                StringHelpers.Invariant($"elements[{index}][{paramKey}]"),
-                                paramArray[paramKey])));
+                        paramKey => new KeyValuePair<String, String>(
+                            StringHelpers.Invariant($"elements[{index}][{paramKey}]"),
+                            paramArray[paramKey])));
                 }
             }
 
             for (var i = 0; i < files.Count; i++)
             {
-                initialValues.Add(new KeyValuePair<string, string>(StringHelpers.Invariant($"files[{i}][filename]"), files[i].FileName));
-                initialValues.Add(new KeyValuePair<string, string>(StringHelpers.Invariant($"files[{i}][server_filename]"), files[i].ServerFileName));
-                initialValues.Add(new KeyValuePair<string, string>(StringHelpers.Invariant($"files[{i}][rotate]"), ((int)files[i].Rotate).ToString(CultureInfo.InvariantCulture)));
-                initialValues.Add(new KeyValuePair<string, string>(StringHelpers.Invariant($"files[{i}][password]"), files[i].Password));
+                initialValues.Add(new KeyValuePair<String, String>(StringHelpers.Invariant($"files[{i}][filename]"),
+                    files[i].FileName));
+                initialValues.Add(new KeyValuePair<String, String>(
+                    StringHelpers.Invariant($"files[{i}][server_filename]"), files[i].ServerFileName));
+                initialValues.Add(new KeyValuePair<String, String>(StringHelpers.Invariant($"files[{i}][rotate]"),
+                    ((Int32) files[i].Rotate).ToString(CultureInfo.InvariantCulture)));
+                initialValues.Add(new KeyValuePair<String, String>(StringHelpers.Invariant($"files[{i}][password]"),
+                    files[i].Password));
             }
 
-            var filteredFormDataValues = initialValues.Where(x => !string.IsNullOrWhiteSpace(x.Value));
+            var filteredFormDataValues = initialValues.Where(x => !String.IsNullOrWhiteSpace(x.Value));
             foreach (var formDataValues in filteredFormDataValues)
-            {
                 postMultipartFormDataContent.Add(new StringContent(formDataValues.Value),
                     StringHelpers.Invariant($"\"{formDataValues.Key}\""));
-            }
         }
+
         #endregion
     }
 }

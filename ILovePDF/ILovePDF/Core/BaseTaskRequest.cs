@@ -1,29 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace LovePdf.Core
 {
     /// <summary>
-    /// Base class for requests.
+    ///     Base class for requests.
     /// </summary>
     public class BaseTaskRequest
     {
-
         /// <summary>
-        ///Upload form data to the server
-        /// </summary>
-        public Dictionary<string, object> FormData { get; private set; }
-
-        /// <summary>
-        /// Initialize properties
+        ///     Initialize properties
         /// </summary>
         public BaseTaskRequest()
         {
-            InitFields();
+            initFields();
         }
 
-        private void InitFields()
+        /// <summary>
+        ///     Upload form data to the server
+        /// </summary>
+        public Dictionary<String, Object> FormData { get; private set; }
+
+        private void initFields()
         {
-            FormData = new Dictionary<string, object>();
+            FormData = new Dictionary<String, Object>();
         }
     }
 }

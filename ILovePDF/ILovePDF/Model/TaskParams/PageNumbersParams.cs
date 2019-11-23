@@ -1,105 +1,106 @@
-﻿using LovePdf.Model.Enums;
+﻿using System;
+using LovePdf.Model.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace LovePdf.Model.TaskParams
 {
     /// <summary>
-    /// Page Number Params
+    ///     Page Number Params
     /// </summary>
     public class PageNumbersParams : BaseParams
     {
         /// <summary>
-        /// Facing Pages
+        ///     Constructor
+        /// </summary>
+        public PageNumbersParams()
+        {
+            setDefaultValues();
+        }
+
+        /// <summary>
+        ///     Facing Pages
         /// </summary>
         [JsonProperty("facing_pages")]
-        public bool FacingPages { get; set; }
+        public Boolean FacingPages { get; set; }
 
         /// <summary>
-        /// First Cover
+        ///     First Cover
         /// </summary>
         [JsonProperty("first_cover")]
-        public bool FirstCover { get; set; }
+        public Boolean FirstCover { get; set; }
 
         /// <summary>
-        /// Pages
+        ///     Pages
         /// </summary>
         [JsonProperty("pages")]
-        public string Pages { get; set; }
+        public String Pages { get; set; }
 
         /// <summary>
-        /// Starting Number
+        ///     Starting Number
         /// </summary>
         [JsonProperty("starting_number")]
-        public int StartingNumber { get; set; }
+        public Int32 StartingNumber { get; set; }
 
         /// <summary>
-        /// Vertical Position
+        ///     Vertical Position
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("vertical_position")]
         public VerticalPositions VerticalPosition { get; set; }
 
         /// <summary>
-        /// Horizontal Position
+        ///     Horizontal Position
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("horizontal_position")]
         public HorizontalPositions HorizontalPosition { get; set; }
 
         /// <summary>
-        /// Fine Adjustment of vertical position
+        ///     Fine Adjustment of vertical position
         /// </summary>
         [JsonProperty("vertical_position_adjustment")]
-        public int VerticalPositionAdjustment { get; set; }
+        public Int32 VerticalPositionAdjustment { get; set; }
 
         /// <summary>
-        /// Fine Adjustment of horizontal position
+        ///     Fine Adjustment of horizontal position
         /// </summary>
         [JsonProperty("horizontal_position_adjustment")]
-        public int HorizontalPositionAdjustment { get; set; }
+        public Int32 HorizontalPositionAdjustment { get; set; }
 
         /// <summary>
-        /// Font Family
+        ///     Font Family
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("font_family")]
         public FontFamilies FontFamily { get; set; }
 
         /// <summary>
-        /// Font Style
+        ///     Font Style
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("font_style")]
         public FontStyles? FontStyle { get; set; }
 
         /// <summary>
-        /// Font Size
+        ///     Font Size
         /// </summary>
         [JsonProperty("font_size")]
-        public int FontSize { get; set; }
+        public Int32 FontSize { get; set; }
 
         /// <summary>
-        /// Font Color
+        ///     Font Color
         /// </summary>
         [JsonProperty("font_color")]
-        public string FontColor { get; set; }
+        public String FontColor { get; set; }
 
         /// <summary>
-        /// Text
+        ///     Text
         /// </summary>
         [JsonProperty("text")]
-        public string Text { get; set; }
+        public String Text { get; set; }
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public PageNumbersParams()
-        {
-            SetDefaultValues();
-        }
-
-        private void SetDefaultValues()
+        private void setDefaultValues()
         {
             FacingPages = false;
             FirstCover = false;
@@ -109,7 +110,7 @@ namespace LovePdf.Model.TaskParams
             HorizontalPosition = HorizontalPositions.Middle;
             VerticalPositionAdjustment = 0;
             HorizontalPositionAdjustment = 0;
-            FontFamily = FontFamilies.ArialUnicodeMS;
+            FontFamily = FontFamilies.ArialUnicodeMs;
             FontStyle = null;
             FontColor = "#000000";
             Text = @"{n}";

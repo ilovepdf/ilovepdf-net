@@ -1,9 +1,11 @@
-﻿using LovePdf.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+using LovePdf.Core;
 using LovePdf.Model.Task;
 using LovePdf.Model.TaskParams;
 
 namespace Samples
 {
+    [SuppressMessage("ReSharper", "UnusedVariable")]
     public class SplitAdvancedMerged
     {
         public void DoTask()
@@ -19,11 +21,11 @@ namespace Samples
             //proces added files
             //time var will contains information about time spent in process
             var time = task.Process
-                (new SplitParams(new SplitModeRanges("2-4,6-8"))
-                {
-                    OutputFileName = "split",
-                    MergeAfter = true
-                });
+            (new SplitParams(new SplitModeRanges("2-4,6-8"))
+            {
+                OutputFileName = "split",
+                MergeAfter = true
+            });
             task.DownloadFile("path");
         }
     }

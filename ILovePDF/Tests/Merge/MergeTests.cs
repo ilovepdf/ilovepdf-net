@@ -10,8 +10,6 @@ namespace Tests.Merge
     [TestClass]
     public class MergeTests : BaseTest
     {
-        private new MergeParams TaskParams { get; }
-
         public MergeTests()
         {
             TaskParams = new MergeParams
@@ -20,13 +18,17 @@ namespace Tests.Merge
             };
         }
 
-        protected override bool DoRunTask(
-            bool addFilesByChunks,
-            bool downloadFileAsByteArray,
-            bool encryptUsingBuiltinIfNoKeyPresent)
+        private new MergeParams TaskParams { get; }
+
+        protected override Boolean DoRunTask(
+            Boolean addFilesByChunks,
+            Boolean downloadFileAsByteArray,
+            Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
-            if (string.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
-                Task = encryptUsingBuiltinIfNoKeyPresent ? Api.CreateTask<MergeTask>(null, true) : Api.CreateTask<MergeTask>();
+            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
+                Task = encryptUsingBuiltinIfNoKeyPresent
+                    ? Api.CreateTask<MergeTask>(null, true)
+                    : Api.CreateTask<MergeTask>();
             else
                 Task = Api.CreateTask<MergeTask>(TaskParams.FileEncryptionKey);
 
@@ -39,12 +41,13 @@ namespace Tests.Merge
 
             if (taskWasOk)
                 taskWasOk = DownloadResult(downloadFileAsByteArray);
-            
+
             return taskWasOk;
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AuthenticationException), "A user with invalid credentials should not be allowed, but it was")]
+        [ExpectedException(typeof(AuthenticationException),
+            "A user with invalid credentials should not be allowed, but it was")]
         public void Merge_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
@@ -84,7 +87,7 @@ namespace Tests.Merge
             InitApiWithRightCredentials();
 
             for (var i = 0; i < 2; i++)
-                AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
+                AddFile(new UriForTest {FileUri = new Uri(Settings.GoodPdfUrl)});
 
             Assert.IsTrue(RunTask());
         }
@@ -102,7 +105,8 @@ namespace Tests.Merge
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "OutputFileName bigger than allowed was inappropriately processed.")]
+        [ExpectedException(typeof(ProcessingException),
+            "OutputFileName bigger than allowed was inappropriately processed.")]
         public void Merge_BigFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
@@ -158,6 +162,5 @@ namespace Tests.Merge
 
             Assert.IsTrue(RunTask());
         }
-
     }
 }

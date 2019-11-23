@@ -3,56 +3,48 @@
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// Conformance Values for Pdf Versions
+    ///     Conformance Values for Pdf Versions
     /// </summary>
     public enum ConformanceValues
     {
         /// <summary>
-        /// PdfA1B
+        ///     PdfA1B
         /// </summary>
-        [EnumMember(Value = "pdfa-1b")]
-        PdfA1B,
+        [EnumMember(Value = "pdfa-1b")] PdfA1B,
 
         /// <summary>
-        /// PdfA1A
+        ///     PdfA1A
         /// </summary>
-        [EnumMember(Value = "pdfa-1a")]
-        PdfA1A,
+        [EnumMember(Value = "pdfa-1a")] PdfA1A,
 
         /// <summary>
-        /// PdfA2B
+        ///     PdfA2B
         /// </summary>
-        [EnumMember(Value = "pdfa-2b")]
-        PdfA2B,
+        [EnumMember(Value = "pdfa-2b")] PdfA2B,
 
         /// <summary>
-        /// PdfA2U
+        ///     PdfA2U
         /// </summary>
-        [EnumMember(Value = "pdfa-2u")]
-        PdfA2U,
+        [EnumMember(Value = "pdfa-2u")] PdfA2U,
 
         /// <summary>
-        /// PdfA2A
+        ///     PdfA2A
         /// </summary>
-        [EnumMember(Value = "pdfa-2a")]
-        PdfA2A,
+        [EnumMember(Value = "pdfa-2a")] PdfA2A,
 
         /// <summary>
-        /// PdfA3B
+        ///     PdfA3B
         /// </summary>
-        [EnumMember(Value = "pdfa-3b")]
-        PdfA3B,
+        [EnumMember(Value = "pdfa-3b")] PdfA3B,
 
         /// <summary>
-        /// PdfA3U
+        ///     PdfA3U
         /// </summary>
-        [EnumMember(Value = "pdfa-3u")]
-        PdfA3U,
+        [EnumMember(Value = "pdfa-3u")] PdfA3U,
 
         /// <summary>
-        /// PdfA3A
+        ///     PdfA3A
         /// </summary>
-        [EnumMember(Value = "pdfa-3a")]
-        PdfA3A,
+        [EnumMember(Value = "pdfa-3a")] PdfA3A
     }
 }

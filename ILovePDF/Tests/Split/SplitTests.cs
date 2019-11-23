@@ -11,9 +11,6 @@ namespace Tests.Split
     [TestClass]
     public class SplitTests : BaseTest
     {
-
-        private new SplitParams TaskParams { get; }
-
         public SplitTests()
         {
             TaskParams = new SplitParams(new SplitModeRemovePages("1"))
@@ -22,12 +19,14 @@ namespace Tests.Split
             };
         }
 
-        protected override bool DoRunTask(
-            bool addFilesByChunks,
-            bool downloadFileAsByteArray,
-            bool encryptUsingBuiltinIfNoKeyPresent)
+        private new SplitParams TaskParams { get; }
+
+        protected override Boolean DoRunTask(
+            Boolean addFilesByChunks,
+            Boolean downloadFileAsByteArray,
+            Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
-            if (string.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
+            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
                 Task = encryptUsingBuiltinIfNoKeyPresent
                     ? Api.CreateTask<SplitTask>(null, true)
                     : Api.CreateTask<SplitTask>();
@@ -48,7 +47,8 @@ namespace Tests.Split
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AuthenticationException), "A user with invalid credentials should not be allowed, but it was")]
+        [ExpectedException(typeof(AuthenticationException),
+            "A user with invalid credentials should not be allowed, but it was")]
         public void Split_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
@@ -74,7 +74,7 @@ namespace Tests.Split
         {
             InitApiWithRightCredentials();
 
-            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodMultipagePdfUrl) });
+            AddFile(new UriForTest {FileUri = new Uri(Settings.GoodMultipagePdfUrl)});
 
             Assert.IsTrue(RunTask());
         }
@@ -92,7 +92,8 @@ namespace Tests.Split
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "OutputFileName bigger than allowed was inappropriately processed.")]
+        [ExpectedException(typeof(ProcessingException),
+            "OutputFileName bigger than allowed was inappropriately processed.")]
         public void Split_BigFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
@@ -178,7 +179,7 @@ namespace Tests.Split
 
             AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodMultipagePdfFile);
 
-            TaskParams.SplitMode = (SplitModes)255;
+            TaskParams.SplitMode = (SplitModes) 255;
 
             Assert.IsFalse(RunTask());
         }
@@ -224,7 +225,7 @@ namespace Tests.Split
 
             Assert.IsFalse(RunTask());
         }
-        
+
         [TestMethod]
         public void Split_CorrectParams_ShouldProcessOk()
         {

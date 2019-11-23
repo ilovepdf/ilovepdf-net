@@ -1,9 +1,11 @@
-﻿using LovePdf.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+using LovePdf.Core;
 using LovePdf.Model.Enums;
 using LovePdf.Model.Task;
 
 namespace Samples
 {
+    [SuppressMessage("ReSharper", "UnusedVariable")]
     public class RotateBasic
     {
         public void DoTask()

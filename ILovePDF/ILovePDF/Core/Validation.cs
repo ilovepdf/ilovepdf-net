@@ -1,3 +1,4 @@
+using System;
 using LovePdf.Model.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -5,21 +6,20 @@ using Newtonsoft.Json.Converters;
 namespace LovePdf.Core
 {
     /// <summary>
-    /// Validation
+    ///     Validation
     /// </summary>
     public class Validation
     {
         /// <summary>
-        /// Rotation
+        ///     Rotation
         /// </summary>
         [JsonProperty("server_filename")]
-        public string ServerFileName { get; set; }
+        public String ServerFileName { get; set; }
 
         /// <summary>
-        /// Status
+        ///     Status
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public ValidationStatus Status { get; set; }
-
     }
 }

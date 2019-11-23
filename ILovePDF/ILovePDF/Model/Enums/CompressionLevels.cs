@@ -3,26 +3,23 @@
 namespace LovePdf.Model.Enums
 {
     /// <summary>
-    /// Compression Levels
+    ///     Compression Levels
     /// </summary>
     public enum CompressionLevels
     {
         /// <summary>
-        /// Extreme
+        ///     Extreme
         /// </summary>
-        [EnumMember(Value = "extreme")]
-        Extreme,
+        [EnumMember(Value = "extreme")] Extreme,
 
         /// <summary>
-        /// Recommended
+        ///     Recommended
         /// </summary>
-        [EnumMember(Value = "recommended")]
-        Recommended,
+        [EnumMember(Value = "recommended")] Recommended,
 
         /// <summary>
-        /// Low
+        ///     Low
         /// </summary>
-        [EnumMember(Value = "low")]
-        Low
+        [EnumMember(Value = "low")] Low
     }
 }

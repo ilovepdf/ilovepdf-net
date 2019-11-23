@@ -5,27 +5,20 @@ using Newtonsoft.Json.Converters;
 namespace LovePdf.Model.TaskParams
 {
     /// <summary>
-    /// Validate PdfA Params
+    ///     Validate PdfA Params
     /// </summary>
     public class ValidatePdfAParams : BaseParams
     {
         /// <summary>
-        /// Accepted values in ConformanceValues (pdfa-1b, pdfa-1a, pdfa-2b, pdfa-2u, pdfa-2a, pdfa-3b, pdfa-3u, pdfa-3a)
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        [JsonProperty("conformance")]
-        public ConformanceValues Conformance { get; set; }
-
-        /// <summary>
-        /// Validate PdfA Params Constructor
+        ///     Validate PdfA Params Constructor
         /// </summary>
         public ValidatePdfAParams()
         {
-            SetDefaultValues();
+            setDefaultValues();
         }
 
         /// <summary>
-        /// Validate PdfA Params Constructor
+        ///     Validate PdfA Params Constructor
         /// </summary>
         /// <param name="conformance">conformance level for pdf file</param>
         public ValidatePdfAParams(ConformanceValues conformance)
@@ -33,8 +26,15 @@ namespace LovePdf.Model.TaskParams
             Conformance = conformance;
         }
 
+        /// <summary>
+        ///     Accepted values in ConformanceValues (pdfa-1b, pdfa-1a, pdfa-2b, pdfa-2u, pdfa-2a, pdfa-3b, pdfa-3u, pdfa-3a)
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty("conformance")]
+        public ConformanceValues Conformance { get; set; }
 
-        private void SetDefaultValues()
+
+        private void setDefaultValues()
         {
             Conformance = ConformanceValues.PdfA1B;
         }

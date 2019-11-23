@@ -11,9 +11,6 @@ namespace Tests.WaterMark
     [TestClass]
     public class WaterMarkTests : BaseTest
     {
-
-        private new WaterMarkParams TaskParams { get; }
-
         public WaterMarkTests()
         {
             TaskParams = new WaterMarkParams(new WatermarkModeText(Settings.WaterMarkText))
@@ -22,12 +19,14 @@ namespace Tests.WaterMark
             };
         }
 
-        protected override bool DoRunTask(
-            bool addFilesByChunks,
-            bool downloadFileAsByteArray,
-            bool encryptUsingBuiltinIfNoKeyPresent)
+        private new WaterMarkParams TaskParams { get; }
+
+        protected override Boolean DoRunTask(
+            Boolean addFilesByChunks,
+            Boolean downloadFileAsByteArray,
+            Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
-            if (string.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
+            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
                 Task = encryptUsingBuiltinIfNoKeyPresent
                     ? Api.CreateTask<WaterMarkTask>(null, true)
                     : Api.CreateTask<WaterMarkTask>();
@@ -48,7 +47,8 @@ namespace Tests.WaterMark
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AuthenticationException), "A user with invalid credentials should not be allowed, but it was")]
+        [ExpectedException(typeof(AuthenticationException),
+            "A user with invalid credentials should not be allowed, but it was")]
         public void WaterMark_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
@@ -74,7 +74,7 @@ namespace Tests.WaterMark
         {
             InitApiWithRightCredentials();
 
-            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
+            AddFile(new UriForTest {FileUri = new Uri(Settings.GoodPdfUrl)});
 
             Assert.IsTrue(RunTask());
         }
@@ -92,7 +92,8 @@ namespace Tests.WaterMark
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "OutputFileName bigger than allowed was inappropriately processed.")]
+        [ExpectedException(typeof(ProcessingException),
+            "OutputFileName bigger than allowed was inappropriately processed.")]
         public void WaterMark_BigFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
@@ -152,7 +153,7 @@ namespace Tests.WaterMark
 
             AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFilePasswordProtected, Settings.WrongPassword);
 
-            TaskParams.Mode = (WaterMarkModes)255;
+            TaskParams.Mode = (WaterMarkModes) 255;
 
             Assert.IsFalse(RunTask());
         }

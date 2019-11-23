@@ -11,8 +11,6 @@ namespace Tests.Compress
     [TestClass]
     public class CompressTests : BaseTest
     {
-        private new CompressParams TaskParams { get; }
-
         public CompressTests()
         {
             TaskParams = new CompressParams
@@ -21,12 +19,14 @@ namespace Tests.Compress
             };
         }
 
-        protected override bool DoRunTask(
-            bool addFilesByChunks,
-            bool downloadFileAsByteArray,
-            bool encryptUsingBuiltinIfNoKeyPresent)
+        private new CompressParams TaskParams { get; }
+
+        protected override Boolean DoRunTask(
+            Boolean addFilesByChunks,
+            Boolean downloadFileAsByteArray,
+            Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
-            if (string.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
+            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
                 Task = encryptUsingBuiltinIfNoKeyPresent
                     ? Api.CreateTask<CompressTask>(null, true)
                     : Api.CreateTask<CompressTask>();
@@ -47,7 +47,8 @@ namespace Tests.Compress
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AuthenticationException), "A user with invalid credentials should not be allowed, but it was")]
+        [ExpectedException(typeof(AuthenticationException),
+            "A user with invalid credentials should not be allowed, but it was")]
         public void Compress_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
@@ -73,7 +74,7 @@ namespace Tests.Compress
         {
             InitApiWithRightCredentials();
 
-            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
+            AddFile(new UriForTest {FileUri = new Uri(Settings.GoodPdfUrl)});
 
             Assert.IsTrue(RunTask());
         }
@@ -91,7 +92,8 @@ namespace Tests.Compress
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "OutputFileName bigger than allowed was inappropriately processed.")]
+        [ExpectedException(typeof(ProcessingException),
+            "OutputFileName bigger than allowed was inappropriately processed.")]
         public void Compress_BigFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
@@ -114,7 +116,7 @@ namespace Tests.Compress
 
             AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
 
-            TaskParams.CompressionLevel = (CompressionLevels)10;
+            TaskParams.CompressionLevel = (CompressionLevels) 10;
 
             Assert.IsFalse(RunTask());
         }
