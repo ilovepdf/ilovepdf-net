@@ -360,7 +360,7 @@ namespace LovePdf.Model.Task
         /// </summary>
         public void DownloadFile()
         {
-            DownloadFile(Environment.CurrentDirectory);
+            DownloadFile(Directory.GetCurrentDirectory());
         }
 
         /// <summary>

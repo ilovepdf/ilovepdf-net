@@ -32,6 +32,7 @@ namespace LovePdf.Model.Exception
         {
         }
 
+#if !NETSTANDARD1_5
         /// <summary>
         ///     Init a new Instance of the class ILovePDF.NotFoundException
         /// </summary>
@@ -40,5 +41,6 @@ namespace LovePdf.Model.Exception
         protected NotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
+#endif
     }
 }

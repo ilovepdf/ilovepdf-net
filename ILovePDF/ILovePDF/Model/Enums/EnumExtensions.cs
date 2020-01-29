@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace LovePdf.Model.Enums
 {
@@ -15,7 +16,7 @@ namespace LovePdf.Model.Enums
         /// <returns></returns>
         public static String GetEnumDescription(Enum value)
         {
-            var fi = value.GetType().GetField(value.ToString());
+            var fi = value.GetType().GetRuntimeField(value.ToString());
 
             var attributes =
                 (DescriptionAttribute[]) fi.GetCustomAttributes(

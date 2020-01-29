@@ -34,6 +34,7 @@ namespace LovePdf.Model.Exception
         {
         }
 
+#if !NETSTANDARD1_5
         /// <summary>
         ///     Init a new Instance of the class ILovePDF.ProcessingException
         /// </summary>
@@ -42,5 +43,6 @@ namespace LovePdf.Model.Exception
         protected ProcessingException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
+#endif
     }
 }
