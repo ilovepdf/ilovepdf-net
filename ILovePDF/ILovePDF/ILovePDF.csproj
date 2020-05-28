@@ -8,16 +8,16 @@
     <AssemblyTitle>iLovePDF</AssemblyTitle>
     <Product>iLovePDF</Product>
     <Description>Develop and automate PDF processing tasks like Compress PDF, Merge PDF, Split PDF, convert Office to PDF, PDF to JPG, Images to PDF, add Page Numbers, Rotate PDF, Unlock PDF, stamp a Watermark and Repair PDF. Each one with several settings to get your desired results.</Description>
-    <Copyright>Copyright 2017</Copyright>
-    <Version>1.3.0</Version>
-    <AssemblyVersion>1.3.0.0</AssemblyVersion>
-    <FileVersion>1.3.0.0</FileVersion>
+    <Copyright>Copyright 2017-2020</Copyright>
+    <Version>1.3.1</Version>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <FileVersion>1.3.1.0</FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <Authors>Mario Martinez, Alexandra Kyluk, Aleksey Sidorov, Egor Krivoshapka</Authors>
     <PackageId>ILove_PDF</PackageId>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/ilovepdf/ilovepdf-net</PackageProjectUrl>
-    <PackageReleaseNotes>.NET Standard 1.5 and 2.0 support for SDK</PackageReleaseNotes>
+    <PackageReleaseNotes>- Fixed problem with the incorrect API endpoint used for tasks chaining in the `Next` method.</PackageReleaseNotes>
     <PackageTags>ILOVEPDF Merge PDF Split convert Office to pdf PDf JPG Images unlock Pdf repair rotate pdf</PackageTags>
   </PropertyGroup>
   
