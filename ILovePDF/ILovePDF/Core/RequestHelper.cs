@@ -109,7 +109,7 @@ namespace LovePdf.Core
                 {
                     addAuthorizationHeader(httpClient);
 
-                    var link = StringHelpers.Invariant($"{Settings.StartUrl}/{Settings.V1}/start/next");
+                    var link = StringHelpers.Invariant($"{Settings.StartUrl}/{Settings.V1}/task/next");
 
                     var multipartFormDataContent = new MultipartFormDataContent();
 
