@@ -15,7 +15,7 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <Authors>Mario Martinez, Alexandra Kyluk, Aleksey Sidorov, Egor Krivoshapka</Authors>
     <PackageId>ILove_PDF</PackageId>
-    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/ilovepdf/ilovepdf-net</PackageProjectUrl>
     <PackageReleaseNotes>- Fixed problem with the incorrect API endpoint used for tasks chaining in the `Next` method.</PackageReleaseNotes>
     <PackageTags>ILOVEPDF Merge PDF Split convert Office to pdf PDf JPG Images unlock Pdf repair rotate pdf</PackageTags>
@@ -25,7 +25,6 @@
     <DebugType>full</DebugType>
     <DocumentationFile>bin\$(Configuration)\ILovePdf.xml</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -35,7 +34,6 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>iLovePdf.snk</AssemblyOriginatorKeyFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

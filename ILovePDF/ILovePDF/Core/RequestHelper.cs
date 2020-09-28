@@ -21,6 +21,9 @@ namespace LovePdf.Core
 {
     internal class RequestHelper
     {
+        private static readonly DateTime epoch = 
+            new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
         private static RequestHelper _instance;
         private readonly Int16 _jwtDelay = 5400;
         private Byte[] _privateKey;
@@ -614,7 +617,9 @@ namespace LovePdf.Core
             try
             {
                 JWT.Decode(Gwt, _privateKey, JwsAlgorithm.HS256);
-                return false;
+                var expired = epoch.AddSeconds(
+                    (JObject.Parse(JWT.Payload(Gwt))["exp"] ?? 0).Value<double>());
+                return expired > DateTime.UtcNow;
             }
             catch (Exception)
             {
@@ -628,7 +633,6 @@ namespace LovePdf.Core
         /// <returns></returns>
         private String getJwt()
         {
-            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             var payLoad = new Dictionary<String, Object>
             {
                 {"iss", ""},
