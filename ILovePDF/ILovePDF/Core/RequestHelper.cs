@@ -24,6 +24,8 @@ namespace LovePdf.Core
         private static readonly DateTime epoch = 
             new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
+        private static readonly TimeSpan jwtTolerance = TimeSpan.FromMinutes(5);
+
         private static RequestHelper _instance;
         private readonly Int16 _jwtDelay = 5400;
         private Byte[] _privateKey;
@@ -600,10 +602,10 @@ namespace LovePdf.Core
         /// <param name="httpClient"></param>
         private void addAuthorizationHeader(HttpClient httpClient)
         {
-            if (String.IsNullOrEmpty(Gwt))
+            if (String.IsNullOrEmpty(Gwt) || isExpiredGwt())
+            {
                 Gwt = getJwt();
-            else if (isExpiredGwt())
-                Gwt = getJwt();
+            }
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Gwt);
         }
@@ -618,8 +620,9 @@ namespace LovePdf.Core
             {
                 JWT.Decode(Gwt, _privateKey, JwsAlgorithm.HS256);
                 var expired = epoch.AddSeconds(
-                    (JObject.Parse(JWT.Payload(Gwt))["exp"] ?? 0).Value<double>());
-                return expired > DateTime.UtcNow;
+                    (JObject.Parse(JWT.Payload(Gwt))["exp"] ?? 0).Value<double>())
+                    .Subtract(jwtTolerance);
+                return expired < DateTime.UtcNow;
             }
             catch (Exception)
             {
