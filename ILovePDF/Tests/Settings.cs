@@ -36,6 +36,9 @@ namespace Tests
         public const String BadTiffFile = @"should-fail.tiff";
         public const String GoodPdfUrl = @"http://www.orimi.com/pdf-test.pdf";
 
+        public const String GoodHtmlUrl = @"https://www.w3.org/Index.html";
+        public const String BadHtmlUrl = @"http://w6.com/";
+
         public const String GoodMultipagePdfUrl =
             @"https://www.ets.org/Media/Tests/GRE/pdf/gre_research_validity_data.pdf";
 
