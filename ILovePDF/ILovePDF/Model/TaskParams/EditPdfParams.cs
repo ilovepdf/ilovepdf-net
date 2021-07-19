@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using LovePdf.Model.Enums;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace LovePdf.Model.TaskParams
 {
@@ -19,9 +17,6 @@ namespace LovePdf.Model.TaskParams
         {
             if (elements == null)
                 throw new ArgumentException("cannot be null", nameof(elements));
-
-            if (Elements.Count == 0)
-                throw new ArgumentException("cannot be empty", nameof(elements));
 
             Elements.AddRange(elements);
         }

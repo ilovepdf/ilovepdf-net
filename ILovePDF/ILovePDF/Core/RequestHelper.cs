@@ -719,12 +719,13 @@ namespace LovePdf.Core
 
                     //Serializing and deserializing to get properties from derived class, since those properties only available in runtime.
                     var json = JsonConvert.SerializeObject(element, new KeyValuePairConverter());
-                    var paramArray = JsonConvert.DeserializeObject<Dictionary<String, String>>(json);
+                    var paramArray = JsonConvert.DeserializeObject<Dictionary<String, Object>>(json);
 
-                    initialValues.AddRange(paramArray.Keys.Select(
-                        paramKey => new KeyValuePair<String, String>(
-                            StringHelpers.Invariant($"elements[{index}][{paramKey}]"),
-                            paramArray[paramKey])));
+                    initialValues.AddRange(paramArray
+                        .Where(kvp => kvp.Value != null)
+                        .Select(kvp => new KeyValuePair<String, String>(
+                            StringHelpers.Invariant($"elements[{index}][{kvp.Key}]"),
+                            kvp.Value.ToString())));
                 }
             }
 
