@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Tests.EditPdf
 {
     [TestClass]
-    [Ignore("This endpoint returns HTTP 500 error in all cases.")]
+    [Ignore] // This endpoint returns HTTP 500 error in all cases.
     public class EditPdfTests : BaseTest
     {
         public EditPdfTests()
