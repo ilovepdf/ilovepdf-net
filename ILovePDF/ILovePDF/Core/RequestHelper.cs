@@ -10,6 +10,7 @@ using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 using Jose;
+using LovePdf.Extensions;
 using LovePdf.Model.Enums;
 using LovePdf.Model.Exception;
 using LovePdf.Model.TaskParams;
@@ -81,17 +82,14 @@ namespace LovePdf.Core
 
             try
             {
-                using (var httpClient = new HttpClient())
+                using (var client = new HttpClient())
                 {
-                    addAuthorizationHeader(httpClient);
+                    addAuthorizationHeader(client);
 
                     var link = StringHelpers.Invariant($"{Settings.StartUrl}/{Settings.V1}/start/{tool}");
 
-                    var requestMessage = new HttpRequestMessage(HttpMethod.Get, link);
-
-                    var callDownloadTask = Task.Run(() => httpClient.SendAsync(requestMessage));
-                    callDownloadTask.Wait();
-                    response = callDownloadTask.Result;
+                    var request = new HttpRequestMessage(HttpMethod.Get, link);
+                    response = client.Send(request);
 
                     responseContent = response.Content.ReadAsStringAsync().Result;
 
@@ -203,9 +201,7 @@ namespace LovePdf.Core
                     var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/download/{taskId}");
 
                     var request = new HttpRequestMessage(HttpMethod.Get, link);
-                    var callDownloadTask = Task.Run(() => client.SendAsync(request));
-                    callDownloadTask.Wait();
-                    response = callDownloadTask.Result;
+                    response = client.Send(request);
 
                     if (!response.IsSuccessStatusCode)
                         responseContent = response.Content.ReadAsStringAsync().Result;
@@ -244,7 +240,6 @@ namespace LovePdf.Core
                     var link = $"{serverUrl}{Settings.V1}/download/{taskId}";
 
                     var request = new HttpRequestMessage(HttpMethod.Get, link);
-
                     response = await client.SendAsync(request);
 
                     if (!response.IsSuccessStatusCode)
@@ -271,11 +266,8 @@ namespace LovePdf.Core
                 {
                     addAuthorizationHeader(client);
                     var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/download/{taskId}");
-                    var request = new HttpRequestMessage(HttpMethod.Get, link);
-                     
-                    var callDownloadTask = Task.Run(() => client.SendAsync(request));
-                    callDownloadTask.Wait();
-                    response = callDownloadTask.Result;
+                    var request = new HttpRequestMessage(HttpMethod.Get, link);                   
+                    response = client.Send(request);
 
                     if (!response.IsSuccessStatusCode)
                         responseContent = response.Content.ReadAsStringAsync().Result;
