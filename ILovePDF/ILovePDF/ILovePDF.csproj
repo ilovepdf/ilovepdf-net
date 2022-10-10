@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <RootNamespace>LovePdf</RootNamespace>
     <AssemblyName>ILovePdf</AssemblyName>
-    <TargetFrameworks>netstandard1.5;netstandard2.0;net45;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard1.5;netstandard2.0;net46</TargetFrameworks>
     <AssemblyTitle>iLovePDF</AssemblyTitle>
     <Product>iLovePDF</Product>
     <Description>Develop and automate PDF processing tasks like Compress PDF, Merge PDF, Split PDF, convert Office to PDF, PDF to JPG, Images to PDF, add Page Numbers, Rotate PDF, Unlock PDF, stamp a Watermark and Repair PDF. Each one with several settings to get your desired results.</Description>
