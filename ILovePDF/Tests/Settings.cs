@@ -9,12 +9,12 @@ namespace Tests
     internal static class Settings
     {
         public const String RightPublicKey =
-            @"project_public_3fedaeb8b6ff0e34a849c049422f4725_ZQHs-56404af1d4525a22201eeacc0b8e4ed0";
+            @"project_public_c0ac272c966a051c024a9efcd05e0837_lGE_M521c52f2c0421da14164986b6a281270";
 
         public const String WrongPublicKey = @"wrong";
 
         public const String RightSecretKey =
-            @"secret_key_e6e42ebc47aaa75f7161b307a3464297__tMrk149492f181e7a12e0eae08527cfa166a";
+            @"secret_key_7f1d69768ded72ab078cd21f555088b3_PUd5_0ecef4507c55c30a28c22bd42ce4f408";
 
         public const String WrongSecretKey = @"wrong";
         public const String WaterMarkText = @"WATERMARK";
