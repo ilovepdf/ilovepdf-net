@@ -42,7 +42,12 @@ namespace LovePdf.Core
 
         private static Exception parseRequestErrors(HttpResponseMessage response, String responseContent,
             Exception exception)
-        { 
+        {
+            if (response == null)
+            {
+                return exception;
+            }
+
             if (response.StatusCode == HttpStatusCode.BadRequest) // 400 Bad Request
             {
                 dynamic parsedContent = JObject.Parse(responseContent);
