@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iLovePDF", "ILovePDF\iLovePDF.csproj", "{E857560B-A766-4BF5-A601-A5503CDBC825}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iLovePDF", "ILovePDF\iLovePDF.csproj", "{E857560B-A766-4BF5-A601-A5503CDBC825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples", "Samples\Samples.csproj", "{652B4674-62CF-46A2-9FDF-F1D342FC79A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples", "Samples\Samples.csproj", "{652B4674-62CF-46A2-9FDF-F1D342FC79A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{76837053-65FD-43F0-B69D-1C6965B302E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{76837053-65FD-43F0-B69D-1C6965B302E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {568A4D86-C2E1-43FE-A8DC-2DA0D16550A2}
 	EndGlobalSection
 EndGlobal
