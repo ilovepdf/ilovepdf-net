@@ -85,9 +85,9 @@ namespace LovePdf.Core
                 {
                     addAuthorizationHeader(httpClient);
 
-                    var link = StringHelpers.Invariant($"{Settings.StartUrl}/{Settings.V1}/start/{tool}");
+                    var link = GetUri($"{Settings.StartUrl}/{Settings.V1}/start/{tool}");
 
-                    var requestMessage = new HttpRequestMessage(HttpMethod.Get, link);
+                    using var requestMessage = new HttpRequestMessage(HttpMethod.Get, link);
                     response = httpClient.SendAsync(requestMessage).Result;
 
                     responseContent = response.Content.ReadAsStringAsync().Result;
@@ -114,9 +114,9 @@ namespace LovePdf.Core
                 {
                     addAuthorizationHeader(httpClient);
 
-                    var link = StringHelpers.Invariant($"{Settings.StartUrl}/{Settings.V1}/task/next");
+                    var link = GetUri($"{Settings.StartUrl}/{Settings.V1}/task/next");
 
-                    var multipartFormDataContent = new MultipartFormDataContent();
+                    using var multipartFormDataContent = new MultipartFormDataContent();
 
                     var request = new BaseTaskRequest();
                     request.FormData.Add("task", parentTaskId);
@@ -159,7 +159,7 @@ namespace LovePdf.Core
                 {
                     addAuthorizationHeader(httpClient);
 
-                    var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/process");
+                    var link = GetUri($"{serverUrl}{Settings.V1}/process");
 
                     var initalValues = new List<KeyValuePair<String, String>>
                     {
@@ -169,7 +169,7 @@ namespace LovePdf.Core
                         //new KeyValuePair<string, string>("debug", "true"),
                     };
 
-                    var multipartFormDataContent = new MultipartFormDataContent();
+                    using var multipartFormDataContent = new MultipartFormDataContent();
 
                     setFormDataForExecuteTask(parameters, files, initalValues, multipartFormDataContent);
 
@@ -197,9 +197,9 @@ namespace LovePdf.Core
                 using (var client = new HttpClient())
                 {
                     addAuthorizationHeader(client);
-                    var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/download/{taskId}");
+                    var link = GetUri($"{serverUrl}{Settings.V1}/download/{taskId}");
 
-                    var request = new HttpRequestMessage(HttpMethod.Get, link);
+                    using var request = new HttpRequestMessage(HttpMethod.Get, link);
                     response = client.SendAsync(request).Result;
 
                     if (!response.IsSuccessStatusCode)
@@ -238,16 +238,16 @@ namespace LovePdf.Core
                     addAuthorizationHeader(client);
                     var link = $"{serverUrl}{Settings.V1}/download/{taskId}";
 
-                    var request = new HttpRequestMessage(HttpMethod.Get, link);
+                    using var request = new HttpRequestMessage(HttpMethod.Get, link);
 
-                    response = await client.SendAsync(request);
+                    response = await client.SendAsync(request).ConfigureAwait(false); ;
 
                     if (!response.IsSuccessStatusCode)
-                        responseContent = await response.Content.ReadAsStringAsync();
+                        responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false); ;
 
                     response.EnsureSuccessStatusCode();
 
-                    return await response.Content.ReadAsByteArrayAsync();
+                    return await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false); ;
                 }
             }
             catch (Exception e)
@@ -265,8 +265,8 @@ namespace LovePdf.Core
                 using (var client = new HttpClient())
                 {
                     addAuthorizationHeader(client);
-                    var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/download/{taskId}");
-                    var request = new HttpRequestMessage(HttpMethod.Get, link);
+                    var link = GetUri($"{serverUrl}{Settings.V1}/download/{taskId}");
+                    using var request = new HttpRequestMessage(HttpMethod.Get, link);
 
                     response = client.SendAsync(request).Result;
 
@@ -289,14 +289,14 @@ namespace LovePdf.Core
             HttpResponseMessage response = null;
             var responseContent = String.Empty;
 
-            var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/upload");
+            var link = GetUri($"{serverUrl}{Settings.V1}/upload");
 
             try
             {
                 using (var httpClient = new HttpClient())
                 {
                     addAuthorizationHeader(httpClient);
-                    var multiPart = new MultipartFormDataContent();
+                    using var multiPart = new MultipartFormDataContent();
                     var uploadRequest = new BaseTaskRequest();
 
                     uploadRequest.FormData.Add("task", taskId);
@@ -323,13 +323,13 @@ namespace LovePdf.Core
             HttpResponseMessage response = null;
             var responseContent = String.Empty;
 
-            var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/upload");
+            var link = GetUri($"{serverUrl}{Settings.V1}/upload");
             try
             {
                 using (var httpClient = new HttpClient())
                 {
                     addAuthorizationHeader(httpClient);
-                    var multiPart = new MultipartFormDataContent();
+                    using var multiPart = new MultipartFormDataContent();
                     var request = new BaseTaskRequest();
                     request.FormData.Add("cloud_file", url.AbsoluteUri);
                     request.FormData.Add("task", taskId);
@@ -355,7 +355,7 @@ namespace LovePdf.Core
             HttpResponseMessage response = null;
             var responseContent = String.Empty;
 
-            var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/upload");
+            var link = GetUri($"{serverUrl}{Settings.V1}/upload");
 
             try
             {
@@ -369,7 +369,7 @@ namespace LovePdf.Core
                     using (var httpClient = new HttpClient())
                     {
                         addAuthorizationHeader(httpClient);
-                        var multipartFormData = new MultipartFormDataContent();
+                        using var multipartFormData = new MultipartFormDataContent();
                         setMultiPartFormData(uploadRequest.FormData, multipartFormData);
 
                         response = httpClient.PostAsync(link, multipartFormData).Result;
@@ -394,7 +394,7 @@ namespace LovePdf.Core
             HttpResponseMessage response = null;
             var responseContent = String.Empty;
 
-            var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/upload");
+            var link = GetUri($"{serverUrl}{Settings.V1}/upload");
             try
             {
                 using (var httpClient = new HttpClient())
@@ -446,7 +446,7 @@ namespace LovePdf.Core
 
         public StatusTaskResponse CheckTaskStatus(Uri serverUrl, String taskId)
         {
-            var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/task/{taskId}");
+            var link = GetUri($"{serverUrl}{Settings.V1}/task/{taskId}");
 
             HttpResponseMessage response = null;
             var responseContent = String.Empty;
@@ -474,7 +474,7 @@ namespace LovePdf.Core
         {
             HttpResponseMessage response = null;
             var responseContent = String.Empty;
-            var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/task/{taskId}");
+            var link = GetUri($"{serverUrl}{Settings.V1}/task/{taskId}");
 
             try
             {
@@ -504,13 +504,13 @@ namespace LovePdf.Core
 
             try
             {
-                var link = StringHelpers.Invariant($"{serverUrl}{Settings.V1}/upload/delete");
+                var link = GetUri($"{serverUrl}{Settings.V1}/upload/delete");
 
                 using (var http = new HttpClient())
                 {
                     addAuthorizationHeader(http);
 
-                    var multipartFormDataContent = new MultipartFormDataContent();
+                    using var multipartFormDataContent = new MultipartFormDataContent();
 
                     var deleteRequest = new BaseTaskRequest();
 
@@ -614,6 +614,7 @@ namespace LovePdf.Core
         ///     Check if GWT token expired
         /// </summary>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031")]
         private Boolean isExpiredGwt()
         {
             try
@@ -666,15 +667,21 @@ namespace LovePdf.Core
                     var uploadFile = file;
 
                     if (uploadFile.FileStream != null)
-                        multiPartFormDataContent.Add(new StreamContent(uploadFile.FileStream), "file",
-                            uploadFile.FileName);
-                    else
-                        multiPartFormDataContent.Add(new ByteArrayContent(uploadFile.File), "file",
-                            uploadFile.FileName);
+                    {
+                        using var content = new StreamContent(uploadFile.FileStream);
+                        multiPartFormDataContent.Add(content, "file", uploadFile.FileName);
+                    }
+                    else 
+                    {
+                        using var content = new ByteArrayContent(uploadFile.File);
+                        multiPartFormDataContent.Add(content, "file", uploadFile.FileName);
+                    }
+                      
                 }
                 else
                 {
-                    multiPartFormDataContent.Add(new StringContent((String) param.Value), param.Key);
+                    using var content = new StringContent((String)param.Value);
+                    multiPartFormDataContent.Add(content, param.Key);
                 }
         }
 
@@ -761,9 +768,18 @@ namespace LovePdf.Core
             }
 
             var filteredFormDataValues = initialValues.Where(x => !String.IsNullOrWhiteSpace(x.Value));
-            foreach (var formDataValues in filteredFormDataValues)
-                postMultipartFormDataContent.Add(new StringContent(formDataValues.Value),
-                    StringHelpers.Invariant($"\"{formDataValues.Key}\""));
+            foreach (var formDataValues in filteredFormDataValues) 
+            {
+                using var content = new StringContent(formDataValues.Value);
+                postMultipartFormDataContent.Add(content, StringHelpers.Invariant($"\"{formDataValues.Key}\""));
+            }
+                
+        }
+
+
+        private static Uri GetUri(string link) 
+        {
+            return new Uri(StringHelpers.Invariant(link));
         }
 
         #endregion

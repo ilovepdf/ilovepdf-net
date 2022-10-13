@@ -4,7 +4,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <RootNamespace>LovePdf</RootNamespace>
     <AssemblyName>ILovePdf</AssemblyName>
-    <TargetFrameworks>netstandard1.5;netstandard2.0; net45; net46</TargetFrameworks> 
+    <TargetFrameworks>netstandard1.5;netstandard2.0;net45;net46;</TargetFrameworks>
+	<LangVersion>10.0</LangVersion>
     <AssemblyTitle>iLovePDF</AssemblyTitle>
     <Product>iLovePDF</Product>
     <Description>Develop and automate PDF processing tasks like Compress PDF, Merge PDF, Split PDF, convert Office to PDF, PDF to JPG, Images to PDF, add Page Numbers, Rotate PDF, Unlock PDF, stamp a Watermark and Repair PDF. Each one with several settings to get your desired results.</Description>
@@ -19,12 +20,13 @@
     <PackageProjectUrl>https://github.com/ilovepdf/ilovepdf-net</PackageProjectUrl>
     <PackageReleaseNotes>- Fixed problem (finally) with the missed JWT expiration time checking.</PackageReleaseNotes>
     <PackageTags>ILOVEPDF Merge PDF Split convert Office to pdf PDf JPG Images unlock Pdf repair rotate pdf</PackageTags>
+	<AnalysisMode>AllEnabledByDefault</AnalysisMode>
+	<AnalysisLevel>latest</AnalysisLevel>
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
     <DocumentationFile>bin\$(Configuration)\ILovePdf.xml</DocumentationFile>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -38,6 +40,10 @@
 
   <ItemGroup>
     <PackageReference Include="jose-jwt" Version="2.5.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
@@ -48,6 +54,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="iLovePdf.snk" />
   </ItemGroup>
 

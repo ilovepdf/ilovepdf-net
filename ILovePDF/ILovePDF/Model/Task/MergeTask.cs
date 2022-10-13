@@ -29,12 +29,10 @@ namespace LovePdf.Model.Task
         ///     Process the task
         /// </summary>
         /// <param name="parameters"></param>
-        /// <returns></returns>
-        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        /// <returns></returns> 
         public ExecuteTaskResponse Process(MergeParams parameters)
         {
-            if (parameters == null)
-                parameters = new MergeParams();
+            parameters ??= new MergeParams();
 
             return base.Process(parameters);
         }
