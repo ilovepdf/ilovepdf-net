@@ -16,6 +16,11 @@ namespace LovePdf.Model.Enums
         /// <returns></returns>
         public static String GetEnumDescription(Enum value)
         {
+            if(value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             var fi = value.GetType().GetRuntimeField(value.ToString());
 
             var attributes =
