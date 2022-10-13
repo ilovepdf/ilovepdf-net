@@ -76,6 +76,16 @@ namespace Tests.Edit
 
             AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
       
+            TaskParams.AddElement(new TextElement()
+            {
+                Text = "dasd",
+                Coordinates = new Coordinate(10, 10),
+                Pages = 1,
+                Align = LovePdf.Model.Enums.TextAligments.Left,
+                FontColor = "#FB8B24",
+                FontStyle = LovePdf.Model.Enums.TextFontStyles.Bold
+            });
+
             Assert.IsTrue(RunTask());
         }
 
