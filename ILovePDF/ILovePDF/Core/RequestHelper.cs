@@ -10,6 +10,7 @@ using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 using Jose;
+using LovePdf.Helpers;
 using LovePdf.Model.Enums;
 using LovePdf.Model.Exception;
 using LovePdf.Model.TaskParams;
@@ -728,33 +729,19 @@ namespace LovePdf.Core
                 {
                     var element = elements[index];
 
-                    //Serializing and deserializing to get properties from derived class, since those properties only available in runtime.
-                    var json = JsonConvert.SerializeObject(element, new KeyValuePairConverter());
-                    var paramArray = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-
-                    initialValues.AddRange(paramArray.Keys.Select(
-                        paramKey => new KeyValuePair<string, string>(
-                            StringHelpers.Invariant($"elements[{index}][{paramKey}]"),
-                            paramArray[paramKey])));
-
+                    initialValues.AddRange(
+                        InitialValueHelper.GetInitialValues(element, $"elements[{index}]"));
+     
                     if (element.Coordinates != null)
-                    {
-                        initialValues.Add(new KeyValuePair<string, string>(
-                            StringHelpers.Invariant($"elements[{index}][coordinates][x]"), 
-                            element.Coordinates.X.ToString()));
-                        initialValues.Add(new KeyValuePair<string, string>(
-                            StringHelpers.Invariant($"elements[{index}][coordinates][y]"), 
-                            element.Coordinates.Y.ToString()));
+                    { 
+                        initialValues.AddRange(
+                            InitialValueHelper.GetInitialValues(element.Coordinates, $"elements[{index}][coordinates]"));
                     }
 
                     if (element.Dimensions != null)
-                    {
-                        initialValues.Add(new KeyValuePair<string, string>(
-                            StringHelpers.Invariant($"elements[{index}][dimensions][w]"), 
-                            element.Dimensions.Width.ToString()));
-                        initialValues.Add(new KeyValuePair<string, string>(
-                            StringHelpers.Invariant($"elements[{index}][dimensions][h]"), 
-                            element.Dimensions.Height.ToString()));
+                    { 
+                        initialValues.AddRange(
+                            InitialValueHelper.GetInitialValues(element.Dimensions, $"elements[{index}][dimensions]"));
                     }
                 }
             }

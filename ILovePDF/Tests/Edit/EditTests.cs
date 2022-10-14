@@ -102,7 +102,11 @@ namespace Tests.Edit
             CreateApiTask(false);
             var upload = AddFileToTask(new UriForTest { FileUri = new Uri(Settings.GoodJpgUrl) }, false);
             
-            TaskParams.AddElement(new ImageElement(upload.ServerFileName));
+            TaskParams.AddElement(new ImageElement(upload.ServerFileName)
+            { 
+                Coordinates = new Coordinate(100, 100),
+                Dimensions = new Dimension(200, 200)
+            });
             
             Assert.IsTrue(RunTask());
         }
