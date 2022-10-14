@@ -335,6 +335,21 @@ namespace LovePdf.Model.Task
 
             //TODO check filename
             var fileName = Path.GetFileName(cloudLink.AbsoluteUri);
+
+            if (string.IsNullOrEmpty(fileName)) 
+            {
+                var host = cloudLink.Host;
+                if (host.Contains("."))
+                {
+                    var parts = cloudLink.Host.Split('.');
+                    fileName = parts[parts.Length - 2];
+                }
+                else 
+                {
+                    fileName = host;
+                } 
+            }
+
             Files.Add(new FileModel
                 {ServerFileName = response.ServerFileName, FileName = fileName, Password = password, Rotate = rotate});
 

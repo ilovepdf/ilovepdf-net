@@ -35,6 +35,8 @@ namespace Tests
         public const String GoodTiffFile = @"should-work.tiff";
         public const String BadTiffFile = @"should-fail.tiff";
         public const String GoodPdfUrl = @"http://www.orimi.com/pdf-test.pdf";
+        public const String GoodHtmlUrl = @"http://www.orimi.com/";
+        public const String BadHtmlUrl = @"http://www.orimi.com:8888/";
 
         public const String GoodMultipagePdfUrl =
             @"https://www.ets.org/Media/Tests/GRE/pdf/gre_research_validity_data.pdf";
