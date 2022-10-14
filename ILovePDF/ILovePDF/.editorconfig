@@ -174,3 +174,4 @@ dotnet_style_parentheses_in_other_operators = never_if_unnecessary:silent
 dotnet_style_require_accessibility_modifiers = for_non_interface_members:silent
 dotnet_diagnostic.CA1002.severity = silent
 dotnet_diagnostic.CA2227.severity = silent
+dotnet_diagnostic.CA2000.severity = silent
