@@ -12,9 +12,9 @@ namespace LovePdf.Model.TaskParams.Edit
     /// </summary>
     public class Element
     {
-        private int rotation = 0;
+        private int rotation;
         private int opacity = 100;
-        private int pages = 1;
+        private int pages = 1; 
 
         /// <summary>
         /// Type of element to be added.
