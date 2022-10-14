@@ -28,7 +28,7 @@ namespace Samples
             var imageElement = new ImageElement()
             {
                 Coordinates = new Coordinate(300, 600),
-                Pages = "3",
+                Pages = 3,
                 Opacity = 40,
                 ServerFileName = imageFile.ServerFileName
             };
@@ -38,7 +38,7 @@ namespace Samples
             {
                 Text = "This is a sample text",
                 Coordinates = new Coordinate(300, 600),
-                Pages = "2",
+                Pages = 2,
                 Align = TextAligments.Center,
                 FontFamily = FontFamilies.TimesNewRoman,
                 FontColor = "#FB8B24", // Orange

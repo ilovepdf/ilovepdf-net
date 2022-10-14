@@ -26,12 +26,7 @@ namespace Tests.Edit
             Boolean downloadFileAsByteArray,
             Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
-            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
-                Task = encryptUsingBuiltinIfNoKeyPresent
-                    ? Api.CreateTask<EditTask>(null, true)
-                    : Api.CreateTask<EditTask>();
-            else
-                Task = Api.CreateTask<EditTask>(TaskParams.FileEncryptionKey);
+            CreateApiTask(encryptUsingBuiltinIfNoKeyPresent);
 
             base.TaskParams = TaskParams;
 
@@ -44,6 +39,19 @@ namespace Tests.Edit
                 taskWasOk = DownloadResult(downloadFileAsByteArray);
 
             return taskWasOk;
+        }
+
+        protected void CreateApiTask(Boolean encryptUsingBuiltinIfNoKeyPresent) 
+        {
+            if (!IsTaskSetted)
+            {
+                if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
+                    Task = encryptUsingBuiltinIfNoKeyPresent
+                        ? Api.CreateTask<EditTask>(null, true)
+                        : Api.CreateTask<EditTask>();
+                else
+                    Task = Api.CreateTask<EditTask>(TaskParams.FileEncryptionKey);
+            }           
         }
 
         [TestMethod]
@@ -70,22 +78,32 @@ namespace Tests.Edit
         }
 
         [TestMethod]
-        public void Edit_UploadFileFromServer_ShouldProcessOk()
+        public void Edit_UploadFileFromServer_AndAddTextElement_ShouldProcessOk()
         {
             InitApiWithRightCredentials();
 
             AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
-      
+
             TaskParams.AddElement(new TextElement()
             {
-                Text = "dasd",
-                Coordinates = new Coordinate(10, 10),
-                Pages = 1,
-                Align = LovePdf.Model.Enums.TextAligments.Left,
-                FontColor = "#FB8B24",
-                FontStyle = LovePdf.Model.Enums.TextFontStyles.Bold
+                Text = "TestText",
             });
 
+            Assert.IsTrue(RunTask());
+        }
+
+        [TestMethod]
+        public void Edit_UploadFileFromServer_AndAddImageElement_ShouldProcessOk()
+        {
+            InitApiWithRightCredentials();
+
+            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
+
+            CreateApiTask(false);
+            var upload = AddFileToTask(new UriForTest { FileUri = new Uri(Settings.GoodJpgUrl) }, false);
+            
+            TaskParams.AddElement(new ImageElement(upload.ServerFileName));
+            
             Assert.IsTrue(RunTask());
         }
 
@@ -182,7 +200,8 @@ namespace Tests.Edit
         } 
 
         [TestMethod]
-        public void Edit_DefaultParams_ShouldProcessOk()
+        [ExpectedException(typeof(ProcessingException), "Elements cannot be blank.")]
+        public void Edit_DefaultParams_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
