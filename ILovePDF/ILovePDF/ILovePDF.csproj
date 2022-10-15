@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <RootNamespace>LovePdf</RootNamespace>
     <AssemblyName>ILovePdf</AssemblyName>
-    <TargetFrameworks>netstandard1.5;netstandard2.0;net46;</TargetFrameworks>
+    <TargetFrameworks>netstandard1.5;netstandard2.0;net45;net46;</TargetFrameworks>
 	<LangVersion>10.0</LangVersion>
     <AssemblyTitle>iLovePDF</AssemblyTitle>
     <Product>iLovePDF</Product>
