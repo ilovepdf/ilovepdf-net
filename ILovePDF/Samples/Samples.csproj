@@ -2,12 +2,10 @@
   <PropertyGroup>
     <ProjectGuid>{652B4674-62CF-46A2-9FDF-F1D342FC79A5}</ProjectGuid>
     <TargetFramework>net46</TargetFramework>
+	<LangVersion>9.0</LangVersion>
     <AssemblyTitle>Samples</AssemblyTitle>
     <Product>Samples</Product>
-    <Copyright>Copyright ©  2017</Copyright>
-    <AssemblyTitle>Samples</AssemblyTitle>
-    <Product>Samples</Product>
-    <Copyright>Copyright ©  2017</Copyright>
+    <Copyright>Copyright ©  2017</Copyright> 
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
