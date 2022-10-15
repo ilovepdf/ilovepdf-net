@@ -76,9 +76,9 @@ namespace Tests
 
                 return true;
             }
-            catch (Exception )
+            catch
             {
-                return false;
+                throw;
             }
         }
 
