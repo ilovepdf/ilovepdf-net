@@ -21,6 +21,6 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ILovePDF\iLovePDF.csproj" />
+    <ProjectReference Include="..\src\ILovePDF\iLovePDF.csproj" />
   </ItemGroup>
 </Project>
