@@ -6,7 +6,7 @@ namespace LovePdf.Model.TaskParams.Edit
     /// <summary>
     /// SVG element
     /// </summary>
-    public class SvgElement : Element
+    public class SvgElement : EditElement
     {
         /// <summary>
         /// Construct SvgElement

@@ -25,7 +25,7 @@ namespace LovePdf.Model.TaskParams.Edit
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("Element width must be a number greater or equal to 0");
+                    throw new ArgumentOutOfRangeException(nameof(Width), "Element width must be a number greater or equal to 0");
                 }
                 width = value;
             }
@@ -44,7 +44,7 @@ namespace LovePdf.Model.TaskParams.Edit
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("Element height must be a number greater or equal to 0");
+                    throw new ArgumentOutOfRangeException(nameof(Height), "Element height must be a number greater or equal to 0");
                 }
                 height = value;
             }

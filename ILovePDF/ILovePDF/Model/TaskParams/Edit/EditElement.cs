@@ -3,18 +3,22 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Security.Cryptography;
 
 namespace LovePdf.Model.TaskParams.Edit
 {
     /// <summary>
     /// Class Element
     /// </summary>
-    public class Element
+    public abstract class EditElement
     {
         private int rotation;
         private int opacity = 100;
-        private int pages = 1; 
+        private int pages = 1;
+
+        public EditElement()
+        {
+
+        }
 
         /// <summary>
         /// Type of element to be added.
@@ -36,7 +40,7 @@ namespace LovePdf.Model.TaskParams.Edit
             {
                 if (value < 1)
                 {
-                    throw new ArgumentOutOfRangeException("Pages must be no less than 1.");
+                    throw new ArgumentOutOfRangeException(nameof(Pages), "Pages must be no less than 1.");
                 }
                 pages = value;
             }
@@ -72,7 +76,7 @@ namespace LovePdf.Model.TaskParams.Edit
             {
                 if (value < 0 || value > 360)
                 {
-                    throw new ArgumentOutOfRangeException("Rotation must be an integer between 0 and 360");
+                    throw new ArgumentOutOfRangeException(nameof(Rotation), "Rotation must be an integer between 0 and 360");
                 }
                 rotation = value;
             }
@@ -90,7 +94,7 @@ namespace LovePdf.Model.TaskParams.Edit
             {
                 if (value < 0 || value > 100)
                 {
-                    throw new ArgumentOutOfRangeException("Opacity must be an integer between 0 and 100");
+                    throw new ArgumentOutOfRangeException(nameof(Opacity), "Opacity must be an integer between 0 and 100");
                 }
                 opacity = value;
             }

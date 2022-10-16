@@ -1,7 +1,9 @@
 ﻿using LovePdf.Core;
 using LovePdf.Model.Enums;
 using LovePdf.Model.TaskParams;
+using LovePdf.Model.TaskParams.Edit;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace LovePdf.Model.Task
@@ -18,9 +20,9 @@ namespace LovePdf.Model.Task
         /// Process the task
         /// </summary>
         /// <returns></returns>
-        public ExecuteTaskResponse Process()
+        public ExecuteTaskResponse Process(List<EditElement> elements)
         {
-            var paramaters = new EditParams();
+            var paramaters = new EditParams(elements);
 
             return base.Process(paramaters);
         }
@@ -34,7 +36,7 @@ namespace LovePdf.Model.Task
         public ExecuteTaskResponse Process(EditParams paramaters)
         {
             if (paramaters == null)
-                paramaters = new EditParams();
+                paramaters = new EditParams(null);
 
             return base.Process(paramaters);
         }
