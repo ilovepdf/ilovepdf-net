@@ -15,7 +15,7 @@ namespace LovePdf.Model.TaskParams
         /// Elements to be added into the PDF. They can have several properties including the element type.
         /// </summary> 
         [JsonIgnore]
-        private List<EditElement> _elements;
+        private List<EditElement> _elements = new List<EditElement>();
 
         public EditParams(List<EditElement> elements)
         {
