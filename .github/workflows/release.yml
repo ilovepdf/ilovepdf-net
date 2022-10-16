@@ -20,7 +20,8 @@ env:
   VERSION_REPLACE_PATTERN: '"version": "\1",' 
   TMP_SUFFIX: _updated
   VERSION: ''
-
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+  
 jobs: 
   build_and_publish:
     runs-on: ubuntu-latest  
