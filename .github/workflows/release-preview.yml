@@ -12,9 +12,9 @@ name: Release Preview (RC)
 
 on:
   push:
-    branches: [ ci-cd ]
-  pull_request:
-    branches: [ master ]
+    branches: 
+      - "develop"
+      - "CI+CD" 
     
 env:
   VERSION_FILE: build-config.json
@@ -66,7 +66,7 @@ jobs:
         
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
-          title: v${{ env.NEXT_RELEASE_VERSION }}
+          title: v${{ env.RELEASE_VERSION }}
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: true
