@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using LovePdf.Core;
 using LovePdf.Model.Enums;
@@ -338,8 +339,8 @@ namespace LovePdf.Model.Task
 
             if (string.IsNullOrEmpty(fileName)) 
             {
-                var host = cloudLink.Host;
-                if (host.Contains("."))
+                var host = cloudLink.Host; 
+                if (host.Contains('.'))
                 {
                     var parts = cloudLink.Host.Split('.');
                     fileName = parts[parts.Length - 2];
