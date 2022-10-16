@@ -19,6 +19,7 @@ env:
   VERSION_EXTRACT_PATTERN: '"version": "([^"]+)",'
   VERSION_REPLACE_PATTERN: '"version": "\1",' 
   TMP_SUFFIX: _updated
+  VERSION: ''
 
 jobs: 
   build_and_publish:
@@ -40,8 +41,12 @@ jobs:
         version-file: ${{ env.VERSION_FILE }}
         version-file-extraction-pattern: ${{ env.VERSION_EXTRACT_PATTERN }}
         
+    - name: Set VERSION
+      run: echo ::set-env name=VERSION::${{ env.RELEASE_VERSION_MAJOR }}.${{ env.RELEASE_VERSION_MINOR }}.${{ env.RELEASE_VERSION_PATCH }}
+
     - name: VersionInfo   
       run: |
+       echo "CURRENT_VERSION: ${{ env.VERSION }}"
        echo "CURRENT_VERSION: ${{ env.CURRENT_VERSION }}"
        echo "RELEASE_VERSION: ${{ env.RELEASE_VERSION }}"
        echo "NEXT_VERSION: ${{ env.NEXT_VERSION }}"
@@ -51,7 +56,7 @@ jobs:
       uses: actions/setup-dotnet@v1 
       
     - name: Build
-      run: dotnet build -c Release -p:Version=${{ env.RELEASE_VERSION }}
+      run: dotnet build -c Release -p:Version=${{ env.VERSION }}
       
     - name: Push to NuGet
       run: dotnet nuget push "*src/**/*.nupkg" --api-key ${{secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json
@@ -65,7 +70,7 @@ jobs:
     - name: Create github release
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
-          title: v${{ env.RELEASE_VERSION }}
+          title: v${{ env.VERSION }}
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: false
