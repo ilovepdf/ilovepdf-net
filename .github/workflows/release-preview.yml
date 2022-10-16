@@ -1,0 +1,86 @@
+name: Release Preview (RC)
+
+# This workflow:
+# - automatically increments the Prerelease (RC, beta, alfa) version of the library
+# - will create a new NuGet package
+# - publishes to nuget.org
+# - will create a release on github with a NuGet package attachment
+#
+# Docs:
+# Configuring version: https://github.com/HardNorth/github-version-generate/blob/main/.github/workflows/release.yml
+# Configuring release: https://github.com/marvinpinto/action-automatic-releases
+
+on:
+  push:
+    branches: [ ci-cd ]
+  pull_request:
+    branches: [ master ]
+    
+env:
+  VERSION_FILE: build-config.json
+  VERSION_EXTRACT_PATTERN: '"version": "([^"]+)",'
+  VERSION_REPLACE_PATTERN: '"version": "\1",' 
+  TMP_SUFFIX: _updated
+
+jobs: 
+  build_and_publish:
+    runs-on: ubuntu-latest  
+    steps:     
+    - name: Checkout
+      uses: actions/checkout@v3
+      
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        
+    - name: Generate versions
+      uses: HardNorth/github-version-generate@v1.2.0
+      with:      
+        next-version-increment-prerelease: true
+        version-source: file
+        version-file: ${{ env.VERSION_FILE }}
+        version-file-extraction-pattern: ${{ env.VERSION_EXTRACT_PATTERN }}
+        
+    - name: VersionInfo   
+      run: |
+       echo "CURRENT_VERSION: ${{ env.CURRENT_VERSION }}"
+       echo "RELEASE_VERSION: ${{ env.RELEASE_VERSION }}"
+       echo "NEXT_VERSION: ${{ env.NEXT_VERSION }}"
+       echo "NEXT_RELEASE_VERSION:  ${{ env.NEXT_RELEASE_VERSION }}"
+            
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v1 
+      
+    - name: Build
+      run: dotnet build -c Release -p:Version=${{ env.NEXT_RELEASE_VERSION }}
+      
+    - name: Push to NuGet
+      run: dotnet nuget push "*src/**/*.nupkg" --api-key ${{secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json
+
+    - name: Setup git credentials
+      run: |
+        git config user.name 'abberdeen'
+        git config user.email 'abdurahim.khudoyberdiev@gmail.com'
+        git config user.password ${{ secrets.GITHUB_TOKEN }}
+        
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+          title: v${{ env.NEXT_RELEASE_VERSION }}
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          files: |
+            *src/**/*.*nupkg
+          
+    - name: Update version file
+      id: versionFileUpdate
+      run: |
+        export CURRENT_VERSION_VALUE=`echo '${{ env.CURRENT_VERSION }}' | sed -E 's/(.*)/${{ env.VERSION_REPLACE_PATTERN }}/'`
+        export NEXT_VERSION_VALUE=`echo '${{ env.NEXT_VERSION }}' | sed -E 's/(.*)/${{ env.VERSION_REPLACE_PATTERN }}/'`
+        sed "s/${CURRENT_VERSION_VALUE}/${NEXT_VERSION_VALUE}/g" ${{ env.VERSION_FILE }} > ${{ env.VERSION_FILE }}${{ env.TMP_SUFFIX }}
+        rm ${{ env.VERSION_FILE }}
+        mv ${{ env.VERSION_FILE }}${{ env.TMP_SUFFIX }} ${{ env.VERSION_FILE }}
+        git add ${{ env.VERSION_FILE }}
+        git commit -m "Version update"
+        git push

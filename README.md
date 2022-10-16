@@ -1,3 +1,10 @@
+![iLovePDF](https://www.ilovepdf.com/img/ilovepdf.svg)
+
+[![CI](https://ci.appveyor.com/api/projects/status/ous9pmh1qc3d6q1t?svg=true)](https://github.com/ilovepdf/ilovepdf-net/actions)
+[![NuGet](https://img.shields.io/nuget/vpre/ILove_PDF.svg?label=NuGet)](https://www.nuget.org/packages/ILove_PDF/)
+[![ILove_PDF_test on fuget.org](https://www.fuget.org/packages/ILove_PDF/badge.svg)](https://www.fuget.org/packages/ILove_PDF)
+![GitHub](https://img.shields.io/github/license/ilovepdf/ilovepdf-net)
+
 ## iLovePDF Api - C# Library
 A library in C# for iLovePDF Api
 You can sign up for a iLovePDF account at https://developer.ilovepdf.com
