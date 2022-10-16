@@ -24,7 +24,7 @@
 		<Title>iLovePDF</Title>
 		<Summary>Develop and automate PDF processing tasks like Compress PDF, Merge PDF, Split PDF, convert Office to PDF, PDF to JPG, Images to PDF, add Page Numbers, Rotate PDF, Unlock PDF, stamp a Watermark and Repair PDF. Each one with several settings to get your desired results.</Summary>
 		<Copyright>Copyright © 2017-2022</Copyright>
-		<PackageId>ILove_PDF_test</PackageId>
+		<PackageId>ILove_PDF</PackageId>
 		<PackageProjectUrl>https://www.ilovepdf.com/</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/ilovepdf/ilovepdf-net</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
