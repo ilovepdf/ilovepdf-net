@@ -12,7 +12,7 @@ name: Release Preview (RC)
 
 on:
   push:
-    branches: [ develop, 'CI+CD' ] 
+    branches: [ '**', develop, 'CI+CD' ] 
     
 env:
   VERSION_FILE: build-config.json
