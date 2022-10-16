@@ -51,7 +51,7 @@ jobs:
       uses: actions/setup-dotnet@v1 
       
     - name: Build
-      run: dotnet build -c Release -p:Version=${{ env.NEXT_RELEASE_VERSION }}
+      run: dotnet build -c Release -p:Version=${{ env.RELEASE_VERSION }}
       
     - name: Push to NuGet
       run: dotnet nuget push "*src/**/*.nupkg" --api-key ${{secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json
