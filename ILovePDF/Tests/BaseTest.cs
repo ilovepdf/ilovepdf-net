@@ -28,6 +28,8 @@ namespace Tests
 
         protected LovePdfTask Task { private get; set; }
 
+        protected Boolean IsTaskSetted => Task != null;
+
         protected BaseParams TaskParams { private get; set; }
 
         private List<Object> Files { get; }
@@ -69,21 +71,7 @@ namespace Tests
             {
                 foreach (var file in Files)
                 {
-                    switch (file)
-                    {
-                        case FileForTest fileForTest when addFilesByChunks:
-                            Task.AddFileByChunks(fileForTest.FileName, Task.TaskId, fileForTest.Password,
-                                fileForTest.Rotation);
-                            break;
-
-                        case FileForTest fileForTest:
-                            Task.AddFile(fileForTest.FileName, Task.TaskId, fileForTest.Password, fileForTest.Rotation);
-                            break;
-
-                        case UriForTest uriForTest:
-                            Task.AddFile(uriForTest.FileUri, Task.TaskId, uriForTest.Password, uriForTest.Rotation);
-                            break;
-                    }
+                    AddFileToTask(file, addFilesByChunks);
                 }
 
                 return true;
@@ -92,6 +80,27 @@ namespace Tests
             {
                 return false;
             }
+        }
+
+        protected UploadTaskResponse AddFileToTask(object file, Boolean addFilesByChunks)
+        {
+            UploadTaskResponse response = null;
+            switch (file)
+            {
+                case FileForTest fileForTest when addFilesByChunks:
+                    response = Task.AddFileByChunks(fileForTest.FileName, Task.TaskId, fileForTest.Password,
+                            fileForTest.Rotation);
+                    break;
+
+                case FileForTest fileForTest:
+                    response = Task.AddFile(fileForTest.FileName, Task.TaskId, fileForTest.Password, fileForTest.Rotation);
+                    break;
+
+                case UriForTest uriForTest:
+                    response = Task.AddFile(uriForTest.FileUri, Task.TaskId, uriForTest.Password, uriForTest.Rotation);
+                    break;
+            }
+            return response;
         }
 
         protected Boolean DownloadResult(Boolean downloadFileAsByteArray)

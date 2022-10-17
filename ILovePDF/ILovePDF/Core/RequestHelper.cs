@@ -10,6 +10,7 @@ using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 using Jose;
+using LovePdf.Helpers;
 using LovePdf.Model.Enums;
 using LovePdf.Model.Exception;
 using LovePdf.Model.TaskParams;
@@ -178,8 +179,7 @@ namespace LovePdf.Core
 
                     setFormDataForExecuteTask(parameters, files, initalValues, multipartFormDataContent);
 
-                    response = httpClient.PostAsync(link, multipartFormDataContent).Result;
-
+                    response = httpClient.PostAsync(link, multipartFormDataContent).Result; 
                     responseContent = response.Content.ReadAsStringAsync().Result;
 
                     response.EnsureSuccessStatusCode();
@@ -673,19 +673,19 @@ namespace LovePdf.Core
 
                     if (uploadFile.FileStream != null)
                     {
-                        using var content = new StreamContent(uploadFile.FileStream);
+                        var content = new StreamContent(uploadFile.FileStream);
                         multiPartFormDataContent.Add(content, "file", uploadFile.FileName);
                     }
                     else 
                     {
-                        using var content = new ByteArrayContent(uploadFile.File);
+                        var content = new ByteArrayContent(uploadFile.File);
                         multiPartFormDataContent.Add(content, "file", uploadFile.FileName);
                     }
                       
                 }
                 else
                 {
-                    using var content = new StringContent((String)param.Value);
+                    var content = new StringContent((String)param.Value);
                     multiPartFormDataContent.Add(content, param.Key);
                 }
         }
@@ -695,7 +695,7 @@ namespace LovePdf.Core
         {
             if (@params != null)
             {
-                //Serializing and deserializing to get properties from derived class, since those properties only available in runtime.
+                // Serializing and deserializing to get properties from derived class, since those properties only available in runtime.
                 var json = JsonConvert.SerializeObject(@params, new KeyValuePairConverter());
                 var paramArray = JsonConvert.DeserializeObject<Dictionary<String, String>>(json);
 
@@ -722,6 +722,30 @@ namespace LovePdf.Core
                 }
             }
 
+            if (@params is EditParams editParams) 
+            {
+                var elements = editParams.Elements;
+                for (var index = 0; index < elements.Count; index++)
+                {
+                    var element = elements[index];
+
+                    initialValues.AddRange(
+                        InitialValueHelper.GetInitialValues(element, $"elements[{index}]"));
+     
+                    if (element.Coordinates != null)
+                    { 
+                        initialValues.AddRange(
+                            InitialValueHelper.GetInitialValues(element.Coordinates, $"elements[{index}][coordinates]"));
+                    }
+
+                    if (element.Dimensions != null)
+                    { 
+                        initialValues.AddRange(
+                            InitialValueHelper.GetInitialValues(element.Dimensions, $"elements[{index}][dimensions]"));
+                    }
+                }
+            }
+
             for (var i = 0; i < files.Count; i++)
             {
                 initialValues.Add(new KeyValuePair<String, String>(StringHelpers.Invariant($"files[{i}][filename]"),
@@ -737,7 +761,7 @@ namespace LovePdf.Core
             var filteredFormDataValues = initialValues.Where(x => !String.IsNullOrWhiteSpace(x.Value));
             foreach (var formDataValues in filteredFormDataValues) 
             {
-                using var content = new StringContent(formDataValues.Value);
+                var content = new StringContent(formDataValues.Value);
                 postMultipartFormDataContent.Add(content, StringHelpers.Invariant($"\"{formDataValues.Key}\""));
             }
                 
