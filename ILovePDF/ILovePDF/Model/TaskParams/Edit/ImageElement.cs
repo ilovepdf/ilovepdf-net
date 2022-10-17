@@ -6,7 +6,7 @@ namespace LovePdf.Model.TaskParams.Edit
     /// <summary>
     /// Image element
     /// </summary>
-    public class ImageElement : Element
+    public class ImageElement : EditElement
     {
         /// <summary>
         /// Construct ImageElement

@@ -11,7 +11,7 @@ namespace LovePdf.Model.TaskParams.Edit
     /// <summary>
     /// Text element
     /// </summary>
-    public class TextElement : Element
+    public class TextElement : EditElement
     {
         private int fontSize;
         private string fontColor;
@@ -69,7 +69,7 @@ namespace LovePdf.Model.TaskParams.Edit
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("Font size must be a float greater than 0");
+                    throw new ArgumentOutOfRangeException(nameof(FontSize), "Font size must be a float greater than 0");
                 }
                 fontSize = value;
             }
@@ -111,7 +111,7 @@ namespace LovePdf.Model.TaskParams.Edit
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("Letter spacing must be a number greater or equal to 0");
+                    throw new ArgumentOutOfRangeException(nameof(LetterSpacing), "Letter spacing must be a number greater or equal to 0");
                 }
                 letterSpacing = value;
             }

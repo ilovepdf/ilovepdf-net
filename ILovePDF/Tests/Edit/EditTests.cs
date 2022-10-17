@@ -5,6 +5,8 @@ using LovePdf.Model.Task;
 using LovePdf.Model.TaskParams;
 using LovePdf.Model.TaskParams.Edit;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Security.Authentication;
 
 namespace Tests.Edit
 {
@@ -41,7 +43,7 @@ namespace Tests.Edit
             return taskWasOk;
         }
 
-        protected void CreateApiTask(Boolean encryptUsingBuiltinIfNoKeyPresent) 
+        protected void CreateApiTask(Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
             if (!IsTaskSetted)
             {
@@ -51,7 +53,7 @@ namespace Tests.Edit
                         : Api.CreateTask<EditTask>();
                 else
                     Task = Api.CreateTask<EditTask>(TaskParams.FileEncryptionKey);
-            }           
+            }
         }
 
         [TestMethod]
@@ -84,10 +86,8 @@ namespace Tests.Edit
 
             AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
 
-            TaskParams.AddElement(new TextElement()
-            {
-                Text = "TestText",
-            });
+            var textElement = TaskParams.AddText("");
+            textElement.Text = "Sample text";
 
             Assert.IsTrue(RunTask());
         }
@@ -101,13 +101,10 @@ namespace Tests.Edit
 
             CreateApiTask(false);
             var upload = AddFileToTask(new UriForTest { FileUri = new Uri(Settings.GoodJpgUrl) }, false);
-            
-            TaskParams.AddElement(new ImageElement(upload.ServerFileName)
-            { 
-                Coordinates = new Coordinate(100, 100),
-                Dimensions = new Dimension(200, 200)
-            });
-            
+
+            var image = TaskParams.AddImage(upload.ServerFileName);
+            image.Dimensions = new Dimension(200, 200);
+
             Assert.IsTrue(RunTask());
         }
 
@@ -127,7 +124,7 @@ namespace Tests.Edit
         [ExpectedException(typeof(ProcessingException),
             "OutputFileName bigger than allowed was inappropriately processed.")]
         public void Edit_BigFileName_ShouldThrowException()
-        { 
+        {
             InitApiWithRightCredentials();
 
             AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
@@ -201,7 +198,7 @@ namespace Tests.Edit
             TaskParams.IgnoreErrors = false;
 
             Assert.IsTrue(RunTask());
-        } 
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ProcessingException), "Elements cannot be blank.")]

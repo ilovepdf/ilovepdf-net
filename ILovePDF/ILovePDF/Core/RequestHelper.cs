@@ -575,6 +575,30 @@ namespace LovePdf.Core
                 }
             }
 
+            if (@params is EditParams editParams) 
+            {
+                var elements = editParams.Elements;
+                for (var index = 0; index < elements.Count; index++)
+                {
+                    var element = elements[index];
+
+                    initialValues.AddRange(
+                        InitialValueHelper.GetInitialValues(element, $"elements[{index}]"));
+     
+                    if (element.Coordinates != null)
+                    { 
+                        initialValues.AddRange(
+                            InitialValueHelper.GetInitialValues(element.Coordinates, $"elements[{index}][coordinates]"));
+                    }
+
+                    if (element.Dimensions != null)
+                    { 
+                        initialValues.AddRange(
+                            InitialValueHelper.GetInitialValues(element.Dimensions, $"elements[{index}][dimensions]"));
+                    }
+                }
+            }
+
             for (var i = 0; i < files.Count; i++)
             {
                 initialValues.AddItem($"files[{i}][filename]", files[i].FileName);

@@ -25,7 +25,7 @@ namespace LovePdf.Model.TaskParams.Edit
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("Coordinate X must be a number greater or equal to 0");
+                    throw new ArgumentOutOfRangeException(nameof(X), "Coordinate X must be a number greater or equal to 0");
                 }
                 x = value;
             }
@@ -44,7 +44,7 @@ namespace LovePdf.Model.TaskParams.Edit
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("Coordinate Y must be a number greater or equal to 0");
+                    throw new ArgumentOutOfRangeException(nameof(Y), "Coordinate Y must be a number greater or equal to 0");
                 }
                 y = value;
             }
