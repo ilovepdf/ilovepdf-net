@@ -2,7 +2,7 @@ name: CI Build
 
 on:
   push:
-    branches-ignore: [ master, develop, CI+CD]
+    branches-ignore: [ main, master, develop ]
 jobs:
   build:
     strategy:
@@ -21,10 +21,10 @@ jobs:
           dotnet-version: 6.0.x
             
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore src/ILovePDF
         
       - name: Build  ${{ matrix.dotnet }}
-        run: dotnet build --configuration Release src/ILovePDF/iLovePDF.csproj --no-restore --framework  ${{ matrix.dotnet }}
+        run: dotnet build --configuration Release src/ILovePDF --no-restore --framework  ${{ matrix.dotnet }}
 
   test:
     needs: [build]
@@ -39,7 +39,7 @@ jobs:
           dotnet-version: 6.0.x
             
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore ILovePDF.sln
 
       - name: Test
-        run: dotnet test --no-restore --verbosity normal
+        run: dotnet test ILovePDF.sln --no-restore --verbosity normal
