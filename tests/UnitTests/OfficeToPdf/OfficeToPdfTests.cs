@@ -122,20 +122,15 @@ namespace Tests.OfficeToPdf
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException),
-            "OutputFileName bigger than allowed was inappropriately processed.")]
-        public void OfficeToPdf_BigFileName_ShouldThrowException()
+        public void OfficeToPdf_BigOutputFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
             AddFile($"{Guid.NewGuid()}.doc", Settings.GoodWordFile);
 
-            var outputFileName = @"";
-            for (var i = 0; i < Settings.MaxCharactersInFilename; i++)
-                outputFileName = $"{outputFileName}a";
-            TaskParams.OutputFileName = $"{outputFileName}.doc";
+            TaskParams.OutputFileName = Arrange_BigOutputFileName();
 
-            Assert.IsFalse(RunTask());
+            AssertThrowsException_BigOutputFileName(() => RunTask());
         }
 
         [TestMethod]

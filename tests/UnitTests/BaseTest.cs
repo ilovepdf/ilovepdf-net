@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests
 {
-    public abstract class BaseTest
+    public abstract partial class BaseTest
     {
         protected BaseTest()
         {

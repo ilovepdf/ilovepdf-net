@@ -93,20 +93,15 @@ namespace Tests.ValidatePdfA
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException),
-            "OutputFileName bigger than allowed was inappropriately processed.")]
-        public void ValidatePdfA_BigFileName_ShouldThrowException()
+        public void ValidatePdfA_BigOutputFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
             AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
 
-            var outputFileName = @"";
-            for (var i = 0; i < Settings.MaxCharactersInFilename; i++)
-                outputFileName = $"{outputFileName}a";
-            TaskParams.OutputFileName = $"{outputFileName}.pdf";
+            TaskParams.OutputFileName = Arrange_BigOutputFileName();
 
-            Assert.IsFalse(RunTask());
+            AssertThrowsException_BigOutputFileName(() => RunTask());
         }
 
         [TestMethod]
