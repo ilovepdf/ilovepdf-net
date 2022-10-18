@@ -60,8 +60,8 @@ namespace Tests.HtmlToPdf
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "A Damaged File should was inappropriately processed.")]
-        public void HtmlToPdf_WrongFile_ShouldThrowException()
+        [ExpectedException(typeof(ServerErrorException), "A wrong file url wath passed.")]
+        public void HtmlToPdf_WrongFileUri_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 

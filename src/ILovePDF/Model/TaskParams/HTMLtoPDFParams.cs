@@ -45,7 +45,7 @@ namespace LovePdf.Model.TaskParams
             set
             {
                 if (value < 0 || value > 20) {
-                    throw new ArgumentOutOfRangeException("Navigation timeout must be under 20 seconds");
+                    throw new ArgumentOutOfRangeException(nameof(NavigationTimeout), "Navigation timeout must be under 20 seconds");
                 }
                 navigationTimeout = value;
             }
@@ -64,7 +64,7 @@ namespace LovePdf.Model.TaskParams
             {
                 if (value < 0 || value > 5)
                 {
-                   throw new ArgumentOutOfRangeException("Delay must be under 5 seconds");
+                   throw new ArgumentOutOfRangeException(nameof(Delay), "Delay must be under 5 seconds");
                 }
                 delay = value;
             }
