@@ -34,12 +34,12 @@ namespace Tests
         public const String BadPngFile = @"should-fail.png";
         public const String GoodTiffFile = @"should-work.tiff";
         public const String BadTiffFile = @"should-fail.tiff";
-        public const String GoodPdfUrl = @"http://www.orimi.com/pdf-test.pdf";
+        public const String GoodPdfUrl = @"https://www.gemini.com/documents/credit/Test_PDF.pdf";
         public const String GoodHtmlUrl = @"http://www.orimi.com/";
         public const String BadHtmlUrl = @"http://www.orimi.com:8888/";
 
         public const String GoodMultipagePdfUrl =
-            @"https://www.ets.org/Media/Tests/GRE/pdf/gre_research_validity_data.pdf";
+            @"https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf";
 
         public const String GoodPdfFile = @"should-work.pdf";
         public const String GoodMultipagePdfFile = @"should-work-multipage.pdf";
