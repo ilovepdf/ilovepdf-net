@@ -37,10 +37,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up .NET SDK
-        uses: actions/setup-dotnet@v3 
-        with: 
-          dotnet-version: 6.0.x
+      # - name: Set up .NET SDK
+        # uses: actions/setup-dotnet@v3 
+        # with: 
+          # dotnet-version: 6.0.x
             
       - name: Install dependencies
         run: dotnet restore 
@@ -63,5 +63,5 @@ jobs:
       # - name: Install dependencies
         # run: dotnet restore ILovePDF.sln
 
-      #- name: Test
-      #  run: dotnet test ILovePDF.sln --no-restore --verbosity normal
+      # - name: Test
+        # run: dotnet test ILovePDF.sln --no-restore --verbosity normal
