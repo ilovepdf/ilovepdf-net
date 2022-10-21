@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace LovePdf.Model.TaskParams
 {
@@ -17,61 +18,17 @@ namespace LovePdf.Model.TaskParams
         [JsonIgnore]
         private List<EditElement> _elements = new List<EditElement>();
 
-        public EditParams(List<EditElement> elements)
-        {
-            SetElements(elements);
-        }
-
-        private EditParams()
-        {
-        }
-
-        public static EditParams New()
-        {
-            return new EditParams();
-        }
-
         [JsonIgnore]
         public List<EditElement> Elements => _elements;
 
-        public void SetElements(List<EditElement> elements)
+        public EditParams(EditParamBuilder builder)
         {
-            if (elements == null || elements.Count == 0)
+            if (builder?.Elements == null || builder.Elements.Count == 0)
             {
                 throw new ArgumentException(
                     $"Editpdf task should have at least one element (text, image or svg).");
             }
-            _elements = elements;
-        }
-
-        public EditElement AddElement(EditElement element)
-        {
-            _elements.Add(element);
-            return _elements.First(x => x == element);
-        }
-
-        public TextElement AddText(string text)
-        {
-            var element = new TextElement()
-            {
-                Text = text
-            };
-            _elements.Add(element);
-            return _elements.First(x => x == element) as TextElement;
-        }
-
-        public ImageElement AddImage(string serverFileName)
-        {
-            var element = new ImageElement(serverFileName);
-            _elements.Add(element);
-            return (ImageElement)_elements.First(x => x == element);
-        }
-
-        public SvgElement AddSvg(string serverFileName)
-        {
-            var element = new SvgElement(serverFileName);
-            _elements.Add(element);
-            return (SvgElement)_elements.First(x => x == element);
-        }
+            _elements = builder.Elements;
+        } 
     }
 }

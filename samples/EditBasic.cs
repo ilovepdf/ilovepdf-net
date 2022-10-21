@@ -23,15 +23,15 @@ namespace Samples
             // Upload Image file to Ilovepdf servers
             var imageFile = task.AddFile("your_image.jpg");
 
-            // Create ImageElement
-            var imageElement = new ImageElement(imageFile.ServerFileName);
-           
-            var elements = new List<EditElement>();
-            elements.Add(imageElement);
+            // Create param builder
+            var builder = new EditParamBuilder();
 
+            // Create ImageElement
+            var imageElement = builder.AddImage(imageFile.ServerFileName);
+         
             // Create edit task params
-            var editParams = new EditParams(elements);
-             
+            var editParams = new EditParams(builder);
+            
             editParams.OutputFileName = "editpdf-basic";
             
             // Proces added files,
