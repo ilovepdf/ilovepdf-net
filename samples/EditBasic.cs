@@ -16,7 +16,7 @@ namespace Samples
 
             // Create edit task
             var task = api.CreateTask<EditTask>();
-            
+
             // File variable contains server file name
             var file = task.AddFile("path/to/file/document.pdf");
 

@@ -175,3 +175,7 @@ dotnet_style_require_accessibility_modifiers = for_non_interface_members:silent
 dotnet_diagnostic.CA1002.severity = silent
 dotnet_diagnostic.CA2227.severity = silent
 dotnet_diagnostic.CA2000.severity = silent
+
+# Default severity for all analyzer diagnostics
+dotnet_analyzer_diagnostic.severity = none
+dotnet_diagnostic.CA2007.severity = silent

@@ -28,6 +28,13 @@ namespace LovePdf.Extensions
         }
 
         /// <returns>HttpResponseMessage</returns>
+        /// <inheritdoc cref="HttpClient.PutAsync(string, HttpContent)"/>
+        public static HttpResponseMessage Put(this HttpClient client, Uri uri, HttpContent httpContent)
+        {
+            return TaskHelper.RunAsSync(client.PostAsync(uri, httpContent));
+        }
+
+        /// <returns>HttpResponseMessage</returns>
         /// <inheritdoc cref="HttpClient.DeleteAsync(Uri)"/>
         public static HttpResponseMessage Delete(this HttpClient client, Uri uri)
         {
