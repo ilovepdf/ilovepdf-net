@@ -14,21 +14,51 @@ namespace LovePdf.Model.TaskParams
     {
         /// <summary>
         /// Elements to be added into the PDF. They can have several properties including the element type.
-        /// </summary> 
+        /// </summary>  
         [JsonIgnore]
-        private List<EditElement> _elements = new List<EditElement>();
+        public List<EditElement> Elements { get; private set; } = new List<EditElement>();
 
-        [JsonIgnore]
-        public List<EditElement> Elements => _elements;
-
-        public EditParams(EditParamBuilder builder)
+        public EditParams(List<EditElement> elements = null)
         {
-            if (builder?.Elements == null || builder.Elements.Count == 0)
+            if (elements != null) 
             {
-                throw new ArgumentException(
-                    $"Editpdf task should have at least one element (text, image or svg).");
+                Elements = elements;
             }
-            _elements = builder.Elements;
-        } 
+        }
+
+        public EditElement AddElement(EditElement element)
+        {
+            Elements.Add(element);
+            return element;
+        }
+
+        public TextElement AddText(string text)
+        {
+            var element = new TextElement()
+            {
+                Text = text
+            };
+            Elements.Add(element);
+            return element;
+        }
+
+        public ImageElement AddImage(string serverFileName)
+        {
+            var element = new ImageElement(serverFileName);
+            Elements.Add(element);
+            return element;
+        }
+
+        public SvgElement AddSvg(string serverFileName)
+        {
+            var element = new SvgElement(serverFileName);
+            Elements.Add(element);
+            return element;
+        }
+
+        public void Clear()
+        {
+            Elements.Clear();
+        }
     }
 }

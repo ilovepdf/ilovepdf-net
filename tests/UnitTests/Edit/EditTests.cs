@@ -4,6 +4,8 @@ using LovePdf.Model.TaskParams;
 using LovePdf.Model.TaskParams.Edit;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
+using System.Runtime.ConstrainedExecution;
 using System.Security.Authentication;
 
 namespace Tests.Edit
@@ -12,9 +14,12 @@ namespace Tests.Edit
     public class EditTests : BaseTest
     {
         public EditTests()
-        {
-            TaskParams = EditParams.New();
+        {  
+            TaskParams = new EditParams();
+
+            // Add basic element 
             TaskParams.AddText("Text for test");
+
             TaskParams.OutputFileName = @"result.pdf";
         }
 
@@ -83,9 +88,9 @@ namespace Tests.Edit
 
             AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
 
-            var textElement = TaskParams.AddText("");
-            textElement.Text = "Sample text";
-
+            TaskParams.Clear();
+            TaskParams.AddText("Text for test");
+              
             Assert.IsTrue(RunTask());
         }
 
@@ -99,6 +104,7 @@ namespace Tests.Edit
             CreateApiTask(false);
             var upload = AddFileToTask(new UriForTest { FileUri = new Uri(Settings.GoodJpgUrl) }, false);
 
+            TaskParams.Clear();
             var image = TaskParams.AddImage(upload.ServerFileName);
             image.Dimensions = new Dimension(200, 200);
 
