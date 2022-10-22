@@ -43,7 +43,7 @@ jobs:
           dotnet-version: 6.0.x
             
       - name: Install dependencies
-        run: dotnet restore src/ILovePDF
+        run: dotnet restore 
         
       - name: Build  ${{ matrix.dotnet }}
         run: dotnet build --configuration Release --no-restore --framework  ${{ matrix.dotnet }}
