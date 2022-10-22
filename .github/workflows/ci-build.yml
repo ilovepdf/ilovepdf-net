@@ -26,7 +26,7 @@ jobs:
       - name: Build  ${{ matrix.dotnet }}
         run: dotnet build --configuration Release src/ILovePDF --no-restore --framework  ${{ matrix.dotnet }}
         
-    build_test_and_samples:
+  build_test_and_samples:
     strategy:
       matrix:
         os: [ubuntu-latest]
