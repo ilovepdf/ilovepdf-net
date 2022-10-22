@@ -1,12 +1,23 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace LovePdf.Model.TaskParams.Sign
 {
     public class ListRequest
     {
+        public ListRequest()
+        {
+        }
+
+        public ListRequest(int page, int perPage)
+        { 
+            this.Page = page;
+            this.PerPage = perPage; 
+        }
+
         private int perPage = 20;
 
         /// <summary>
@@ -31,7 +42,6 @@ namespace LovePdf.Model.TaskParams.Sign
                 }
                 perPage = value;
             }
-        }
-
+        } 
     }
 }

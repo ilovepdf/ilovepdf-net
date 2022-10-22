@@ -1,21 +1,17 @@
 ﻿using LovePdf.Model.Enums;
-using LovePdf.Model.TaskParams.Sign.Elements;
-using LovePdf.Model.TaskParams.Sign.Signers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml.Linq;
+using System.IO;
 
-namespace LovePdf.Model.TaskParams.Sign.Receivers
+namespace LovePdf.Model.TaskParams.Sign.Signers
 {
     /// <inheritdoc cref="SignSignerType.Signer"/>
     public class Signer : BaseSignSigner
     {
-        public Signer(string name, string email) : base(SignSignerType.Signer,   name,   email)
+        public Signer(string name, string email) : base(SignSignerType.Signer, name, email)
         {
-            
+
         }
 
         /// <summary> 
@@ -36,5 +32,24 @@ namespace LovePdf.Model.TaskParams.Sign.Receivers
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("force_signature_type")]
         public ForceSignatureType ForceSignatureType { set; get; } = ForceSignatureType.All;
+
+        /// <summary> 
+        /// Files that a receiver of type signer needs to sign.
+        /// </summary>
+        [JsonProperty("files")]
+        public List<SignerFile> Files { get; set; } = new List<SignerFile>();
+
+        /// <summary>
+        /// File that a receiver of type signer needs to sign.
+        /// </summary>
+        /// <param name="serverFileName"></param>
+        /// <returns></returns>
+        public SignerFile AddFile(string serverFileName) 
+        {
+            var file = new SignerFile();
+            file.ServerFilename = serverFileName;
+            Files.Add(file);
+            return file;
+        }
     }
 }

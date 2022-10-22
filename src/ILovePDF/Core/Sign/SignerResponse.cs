@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LovePdf.Core.Sign
 { 
-    public class Signer
+    public class SignerResponse
     {
         [JsonProperty("uuid")]
         public string Uuid { get; set; }

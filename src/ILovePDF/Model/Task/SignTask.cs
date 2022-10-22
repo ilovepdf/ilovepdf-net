@@ -1,10 +1,11 @@
 ﻿using LovePdf.Core;
 using LovePdf.Model.Enums;
-using LovePdf.Model.TaskParams; 
+using LovePdf.Model.TaskParams;
 using System;
-using System.Collections.Generic;  
+using System.Collections.Generic;
 using LovePdf.Core.Sign;
-using LovePdf.Model.TaskParams.Sign; 
+using LovePdf.Model.TaskParams.Sign;
+using System.Globalization;
 
 namespace LovePdf.Model.Task
 {
@@ -17,7 +18,7 @@ namespace LovePdf.Model.Task
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.Sign);
 
         /// <inheritdoc cref="RequestHelper.CreateSignatureRequestAsync"/>
-        public async System.Threading.Tasks.Task<SignatureResponse> CreateSignatureRequestAsync(SignParams parameters)
+        public async System.Threading.Tasks.Task<SignatureResponse> RequestSignatureAsync(SignParams parameters)
         {
             var signatureResponse = await RequestHelper.Instance
                 .CreateSignatureRequestAsync(ServerUrl, TaskId, Files, ToolName, parameters);
@@ -29,7 +30,7 @@ namespace LovePdf.Model.Task
         }
 
         /// <inheritdoc cref="RequestHelper.DownloadAuditAsync"/>
-        public System.Threading.Tasks.Task DownloadAuditAsync(string tokenRequester, string destinationPath) 
+        public System.Threading.Tasks.Task DownloadAuditFileAsync(string tokenRequester, string destinationPath)
         {
             return RequestHelper.Instance.DownloadAuditAsync(ServerUrl, tokenRequester, destinationPath);
         }
@@ -48,8 +49,8 @@ namespace LovePdf.Model.Task
 
         /// <inheritdoc cref="RequestHelper.FixReceiverEmailAsync"/>
         public System.Threading.Tasks.Task<ReceiverInfoResponse> FixReceiverEmailAsync(string receiverTokenRequester, string email)
-        { 
-           return  RequestHelper.Instance.FixReceiverEmailAsync(ServerUrl, receiverTokenRequester, email);
+        {
+            return RequestHelper.Instance.FixReceiverEmailAsync(ServerUrl, receiverTokenRequester, email);
         }
 
         /// <inheritdoc cref="RequestHelper.FixSignerPhoneAsync"/>
@@ -61,37 +62,42 @@ namespace LovePdf.Model.Task
         /// <inheritdoc cref="RequestHelper.GetReceiverInfoAsync"/>
         public System.Threading.Tasks.Task<ReceiverInfoResponse> GetReceiverInfoAsync(string receiverTokenRequester)
         {
-           return  RequestHelper.Instance.GetReceiverInfoAsync(ServerUrl, receiverTokenRequester);
+            return RequestHelper.Instance.GetReceiverInfoAsync(ServerUrl, receiverTokenRequester);
         }
 
         /// <inheritdoc cref="RequestHelper.GetSignatureStatusAsync"/>
         public System.Threading.Tasks.Task<SignatureResponse> GetSignatureStatusAsync(string tokenRequester)
         {
-           return  RequestHelper.Instance.GetSignatureStatusAsync(ServerUrl, tokenRequester);
+            return RequestHelper.Instance.GetSignatureStatusAsync(ServerUrl, tokenRequester);
         }
 
         /// <inheritdoc cref="RequestHelper.IncreaseExpirationDaysAsync"/>
-        public System.Threading.Tasks.Task<ReceiverInfoResponse> IncreaseExpirationDaysAsync(string tokenRequester, string days)
+        public System.Threading.Tasks.Task<ReceiverInfoResponse> IncreaseExpirationDaysAsync(string tokenRequester, int days)
         {
-           return  RequestHelper.Instance.IncreaseExpirationDaysAsync(ServerUrl, tokenRequester, days);
+            return RequestHelper.Instance.IncreaseExpirationDaysAsync(ServerUrl, tokenRequester, days.ToString(CultureInfo.InvariantCulture));
         }
 
         /// <inheritdoc cref="RequestHelper.ListSignaturesAsync"/>
-        public System.Threading.Tasks.Task<List<SignatureResponse>> ListSignaturesAsync(ListRequest request)
+        public System.Threading.Tasks.Task<List<SignatureResponse>> GetSignaturesAsync(ListRequest request = null)
         {
             if (request == null)
             {
-                throw new ArgumentNullException(nameof(request), "Request params should not be null");
+                request = new ListRequest();
             }
 
-           return  RequestHelper.Instance.ListSignaturesAsync(ServerUrl, request);
+            return RequestHelper.Instance.ListSignaturesAsync(ServerUrl, request);
         }
 
         /// <inheritdoc cref="RequestHelper.VoidSignatureAsync"/>
         public System.Threading.Tasks.Task<SignatureResponse> VoidSignatureAsync(string tokenRequester)
         {
-           return  RequestHelper.Instance.VoidSignatureAsync(ServerUrl, tokenRequester);
-        } 
+            return RequestHelper.Instance.VoidSignatureAsync(ServerUrl, tokenRequester);
+        }
+
+        public System.Threading.Tasks.Task<ReceiverInfoResponse> SendRemindersAsync(string tokenRequester)
+        {
+            return RequestHelper.Instance.SendRemindersAsync(ServerUrl, tokenRequester);
+        }
 
         #region Unsupported methods 
 
@@ -107,14 +113,14 @@ namespace LovePdf.Model.Task
         public new void DownloadFile(String destination) => throw new NotImplementedException("Don't use!!");
 
         [Obsolete("This is not supported in this class.", true)]
-        public new void DownloadFile(String destination, String taskId)  => throw new NotImplementedException("Don't use!!");
+        public new void DownloadFile(String destination, String taskId) => throw new NotImplementedException("Don't use!!");
 
         [Obsolete("This is not supported in this class.", true)]
         public new System.Threading.Tasks.Task<Byte[]> DownloadFileAsByteArrayAsync() => throw new NotImplementedException("Don't use!!");
 
         [Obsolete("This is not supported in this class.", true)]
         public new System.Threading.Tasks.Task<Byte[]> DownloadFileAsByteArrayAsync(String taskId) => throw new NotImplementedException("Don't use!!");
-  
+
         #endregion
     }
 }

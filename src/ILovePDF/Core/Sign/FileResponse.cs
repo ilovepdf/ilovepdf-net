@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LovePdf.Core.Sign
 {
-    public class File
+    public class FileResponse
     { 
         [JsonProperty("filename")]
         public string Filename { get; set; }

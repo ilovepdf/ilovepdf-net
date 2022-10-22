@@ -21,7 +21,7 @@ namespace LovePdf.Model.TaskParams.Sign.Elements
         /// <summary>
         /// It specifies the date format.
         /// <para> Allowed formats: "dd-MM-YYYY", "dd/MM/YYYY", "dd.MM.YYYY", "YYYY-MM-dd", "YYYY/MM/dd", "YYYY.MM.dd", "MM-dd-YYYY", "MM/dd/YYYY", "MM.dd.YYYY"</para>
-        /// /// </summary>
+        /// </summary>
         [JsonProperty("content")]
         public string Content 
         { 

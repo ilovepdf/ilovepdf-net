@@ -16,11 +16,11 @@ namespace LovePdf.Model.TaskParams
         private string logoServerFileName;
         private int expirationDays = 120;
 
-        public SignParams(List<ISignElement> elements = null)
+        public SignParams(List<ISignSigner> signers = null)
         {
-            if (elements != null)
+            if (signers != null)
             {
-                Elements = elements;
+                Signers = signers;
             }
         }
 
@@ -100,22 +100,16 @@ namespace LovePdf.Model.TaskParams
         }
 
         /// <summary>
-        /// Use this if you want to change the body of the initial email sent to the receivers.
+        /// Message Signer. Use this if you want to change the body of the initial email sent to the receivers.
         /// </summary>
         [JsonProperty("message_signer")]
         public string MessageSigner { get; set; }
 
         /// <summary>
-        /// Use this if you want to change the subject of the initial email sent to the receivers.
+        /// SubjectSigner. Use this if you want to change the subject of the initial email sent to the receivers.
         /// </summary>
         [JsonProperty("subject_signer")]
         public string SubjectSigner { get; set; }
-
-        /// <summary>
-        /// Definition of the elements in a PDF document.
-        /// </summary>  
-        [JsonIgnore]
-        public List<ISignElement> Elements { get; private set; } = new List<ISignElement>();
 
         /// <summary>
         /// Receivers that participate in the signature process. 

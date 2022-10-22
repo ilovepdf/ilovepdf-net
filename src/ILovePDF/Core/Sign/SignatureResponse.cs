@@ -79,9 +79,9 @@ namespace LovePdf.Core.Sign
         public string Status { get; set; }
 
         [JsonProperty("signers")]
-        public List<Signer> Signers { get; set; }
+        public List<SignerResponse> Signers { get; set; }
 
         [JsonProperty("files")]
-        public List<File> Files { get; set; }
+        public List<FileResponse> Files { get; set; }
     }
 }

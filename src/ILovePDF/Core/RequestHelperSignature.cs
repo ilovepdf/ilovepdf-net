@@ -4,6 +4,7 @@ using LovePdf.Model.TaskParams;
 using LovePdf.Model.TaskParams.Sign;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace LovePdf.Core
         /// <param name="tool"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public Task<SignatureResponse> CreateSignatureRequestAsync(Uri serverUrl, string taskId, List<FileModel> files, string tool,
+        public async Task<SignatureResponse> CreateSignatureRequestAsync(Uri serverUrl, string taskId, List<FileModel> files, string tool,
             BaseParams parameters)
         {
             var link = GetUri($"{serverUrl}{Settings.V1}/signature");
@@ -36,8 +37,32 @@ namespace LovePdf.Core
 
                 SetFormDataForExecuteTask(parameters, files, initalValues, multipartFormDataContent);
 
-                var response = HttpClient.Post(link, multipartFormDataContent);
-                return ProccessHttpResponseAsync<SignatureResponse>(response);
+                var response = await HttpClient.PostAsync(link, multipartFormDataContent);
+                return await ProccessHttpResponseAsync<SignatureResponse>(response);
+            }
+        }
+
+        /// <summary>
+        /// When this endpoint is called, sends an email reminder to the receivers that did not finished its action.
+        /// <para>It is only available if the following conditions are met:</para>
+        /// <list type="bullet">
+        /// <item>The signature status is <b>sent</b></item>
+        /// <item>Signature mode is <b>multiple</b>. If you created the signature request from the API, then this value is always set to multiple</item>
+        /// </list>
+        /// <para>NOTE: There is a daily limit of 2 calls</para>
+        /// </summary>
+        /// <param name="serverUrl"></param>
+        /// <param name="tokenRequester"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<ReceiverInfoResponse> SendRemindersAsync(Uri serverUrl, string tokenRequester)
+        {
+            var link = GetUri($"{serverUrl}{Settings.V1}/signature/sendReminder/{tokenRequester}");
+
+            using (var multipartFormDataContent = new MultipartFormDataContent())
+            { 
+                var response = await HttpClient.PostAsync(link, multipartFormDataContent);
+                return await ProccessHttpResponseAsync<ReceiverInfoResponse>(response);
             }
         }
 

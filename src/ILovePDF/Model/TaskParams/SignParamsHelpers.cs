@@ -1,88 +1,64 @@
-﻿using LovePdf.Model.Enums;
+﻿using LovePdf.Core.Sign;
+using LovePdf.Model.Enums;
 using LovePdf.Model.TaskParams.Sign.Elements;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using LovePdf.Model.TaskParams.Sign.Signers;
 
 namespace LovePdf.Model.TaskParams
 {
     /// <summary>
-    /// EditParams
+    ///  
     /// </summary>
-    public partial class SignParams 
+    public partial class SignParams
     {
-        /// <summary>
-        /// <para>
-        /// Use one of this elements: 
-        /// <see cref="DateElement" />, 
-        /// <see cref="TextElement" />, 
-        /// <see cref="InitialsElement" />, 
-        /// <see cref="InputElement" />, 
-        /// <see cref="NameElement" />, 
-        /// <see cref="SignatureElement" /> 
-        /// </para>
+        /// <summary> 
+        /// Use one of this signer types: 
+        /// <list type="bullet"> 
+        /// <item> <see cref="SignSignerType.Signer" /></item> 
+        /// <item><see cref="SignSignerType.Validator" /></item> 
+        /// <item><see cref="SignSignerType.Viewer" /></item>  
+        /// </list>
         /// </summary>
         /// <param name="element"></param>
         /// <returns></returns>
-        public ISignElement AddElement(ISignElement element)
+        public ISignSigner AddSigner(ISignSigner element)
         {
-            Elements.Add(element);
-            return element;
-        } 
-
-        /// <inheritdoc cref="SignElementTypes.Text"/>
-        public TextElement AddText(string text)
-        {
-            var element = new TextElement(text, "1", new Position (50, -50));
-            Elements.Add(element);
+            Signers.Add(element);
             return element;
         }
 
-        /// <inheritdoc cref="SignElementTypes.Date"/>
-        public DateElement AddDate(string date)
+        /// <inheritdoc cref="SignSignerType.Signer"/>
+        /// <param name="name">Receiver full name.</param>
+        /// <param name="email">Receiver email.</param>
+        public Signer AddSigner(string name, string email)
         {
-            var element = new DateElement(date, "1", new Position(50, -50));
-            Elements.Add(element);
-            return element;
+            var signer = new Signer(name, email);
+            Signers.Add(signer);
+            return signer;
         }
 
-        /// <inheritdoc cref="SignElementTypes.Initials"/>
-        public InitialsElement AddInitials()
+        /// <inheritdoc cref="SignSignerType.Validator"/>
+        /// <param name="name">Receiver full name.</param>
+        /// <param name="email">Receiver email.</param>
+        public Validator AddValidator(string name, string email)
         {
-            var element = new InitialsElement("1", new Position(50, -50));
-            Elements.Add(element);
-            return element;
+            var signer = new Validator(name, email);
+            Signers.Add(signer);
+            return signer;
         }
 
-        /// <inheritdoc cref="SignElementTypes.Input"/>
-        public InputElement AddInput()
+        /// <inheritdoc cref="SignSignerType.Viewer"/>
+        /// <param name="name">Receiver full name.</param>
+        /// <param name="email">Receiver email.</param>
+        public Viewer AddViewer(string name, string email)
         {
-            var element = new InputElement("1", new Position(50, -50));
-            Elements.Add(element);
-            return element;
+            var signer = new Viewer(name, email);
+            Signers.Add(signer);
+            return signer;
         }
 
-        /// <inheritdoc cref="SignElementTypes.Name"/>
-        public NameElement AddName()
+        public void ClearSigners()
         {
-            var element = new NameElement("1", new Position(50, -50));
-            Elements.Add(element);
-            return element;
-        }
-
-        /// <inheritdoc cref="SignElementTypes.Signature"/>
-        public SignatureElement AddSignature()
-        {
-            var element = new SignatureElement("1", new Position(50, -50));
-            Elements.Add(element);
-            return element;
-        }
-          
-        public void Clear()
-        {
-            Elements.Clear();
+            Signers.Clear();
         }
     }
 }

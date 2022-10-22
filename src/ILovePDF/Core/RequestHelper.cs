@@ -664,7 +664,7 @@ namespace LovePdf.Core
                 return new ServerErrorException(responseContent, exception);
 
             return exception;
-        }
+        } 
 
         #endregion
     }

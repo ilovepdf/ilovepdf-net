@@ -2,9 +2,6 @@
 using LovePdf.Model.TaskParams.Sign.Elements;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LovePdf.Model.TaskParams.Sign.Signers
 {
@@ -41,6 +38,6 @@ namespace LovePdf.Model.TaskParams.Sign.Signers
         /// Otherwise the receiver will not be able to access the document
         /// </summary>
         [JsonProperty("access_code")]
-        public string AccessCode { get; set; } 
+        public string AccessCode { get; set; }
     }
 }
