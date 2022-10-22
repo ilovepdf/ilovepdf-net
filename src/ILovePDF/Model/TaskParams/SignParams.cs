@@ -121,7 +121,7 @@ namespace LovePdf.Model.TaskParams
         /// Receivers that participate in the signature process. 
         /// </summary>
         [JsonIgnore]
-        public List<ISignReciever> Signers { get; private set; } = new List<ISignReciever>();
+        public List<ISignSigner> Signers { get; private set; } = new List<ISignSigner>();
          
         /// <summary>
         /// Displayed brand name and logo in email notifications. 
