@@ -158,9 +158,7 @@ namespace LovePdf.Core
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, link))
             {
-                var response = HttpClient.Send(request);
-
-                var responseContent = GetContent(response);
+                var response = await HttpClient.SendAsync(request); 
                 response.EnsureSuccessStatusCode();
 
                 var responseContentStream =  await response.Content.ReadAsStreamAsync().ConfigureAwait(false);

@@ -11,7 +11,6 @@ namespace LovePdf.Model.TaskParams.Sign.Signers
     {
         public Signer(string name, string email) : base(SignSignerType.Signer, name, email)
         {
-
         }
 
         /// <summary> 
