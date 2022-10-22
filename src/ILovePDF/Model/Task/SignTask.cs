@@ -30,19 +30,19 @@ namespace LovePdf.Model.Task
         }
 
         /// <inheritdoc cref="RequestHelper.DownloadAuditAsync"/>
-        public System.Threading.Tasks.Task DownloadAuditFileAsync(string tokenRequester, string destinationPath)
+        public System.Threading.Tasks.Task<string> DownloadAuditFileAsync(string tokenRequester, string destinationPath)
         {
             return RequestHelper.Instance.DownloadAuditAsync(ServerUrl, tokenRequester, destinationPath);
         }
 
         /// <inheritdoc cref="RequestHelper.DownloadOriginalFilesAsync"/>
-        public System.Threading.Tasks.Task DownloadOriginalFilesAsync(string tokenRequester, string destinationPath)
+        public System.Threading.Tasks.Task<string> DownloadOriginalFilesAsync(string tokenRequester, string destinationPath)
         {
             return RequestHelper.Instance.DownloadOriginalFilesAsync(ServerUrl, tokenRequester, destinationPath);
         }
 
         /// <inheritdoc cref="RequestHelper.DownloadSignedFilesAsync"/>
-        public System.Threading.Tasks.Task DownloadSignedFilesAsync(string tokenRequester, string destinationPath)
+        public System.Threading.Tasks.Task<string> DownloadSignedFilesAsync(string tokenRequester, string destinationPath)
         {
             return RequestHelper.Instance.DownloadSignedFilesAsync(ServerUrl, tokenRequester, destinationPath);
         }

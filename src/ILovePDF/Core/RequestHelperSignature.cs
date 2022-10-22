@@ -144,7 +144,7 @@ namespace LovePdf.Core
         /// <param name="tokenRequester"></param>
         /// <param name="destinationPath"></param>
         /// <returns></returns>
-        public Task DownloadAuditAsync(Uri serverUrl, string tokenRequester, string destinationPath) =>
+        public Task<string> DownloadAuditAsync(Uri serverUrl, string tokenRequester, string destinationPath) =>
             DownloadAsync(serverUrl, $"{tokenRequester}/download-audit", destinationPath);
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace LovePdf.Core
         /// <param name="tokenRequester"></param>
         /// <param name="destinationPath"></param>
         /// <returns></returns>
-        public Task DownloadOriginalFilesAsync(Uri serverUrl, string tokenRequester, string destinationPath) =>
+        public Task<string> DownloadOriginalFilesAsync(Uri serverUrl, string tokenRequester, string destinationPath) =>
             DownloadAsync(serverUrl, $"{tokenRequester}/download-original", destinationPath);
 
         /// <summary>
@@ -174,12 +174,12 @@ namespace LovePdf.Core
         /// <param name="tokenRequester"></param>
         /// <param name="destinationPath"></param>
         /// <returns></returns>
-        public Task DownloadSignedFilesAsync(Uri serverUrl, string tokenRequester, string destinationPath) =>
+        public Task<string> DownloadSignedFilesAsync(Uri serverUrl, string tokenRequester, string destinationPath) =>
             DownloadAsync(serverUrl, $"{tokenRequester}/download-signed", destinationPath);
 
         #region PrivateHttpHelpers
 
-        private Task DownloadAsync(Uri serverUrl, string path, string destinationPath)
+        private Task<string> DownloadAsync(Uri serverUrl, string path, string destinationPath)
         {
             var link = GetUri($"{serverUrl}{Settings.V1}/${path}");
             return DownloadFileAsync(link, destinationPath);

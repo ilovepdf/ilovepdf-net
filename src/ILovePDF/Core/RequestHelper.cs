@@ -154,7 +154,7 @@ namespace LovePdf.Core
             TaskHelper.RunAsSync(DownloadFileAsync(link, destinationPath));
         }
 
-        public async Task DownloadFileAsync(Uri link, string destinationPath)
+        public async Task<string> DownloadFileAsync(Uri link, string destinationPath)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, link))
             {
@@ -168,12 +168,13 @@ namespace LovePdf.Core
                 var fileName = response.Content.Headers.ContentDisposition.FileName
                     .Replace("\"", string.Empty);
 
+                var filePath = Path.Combine(destinationPath, fileName);
                 using (var outputStream = new FileStream(
-                    Path.Combine(destinationPath, fileName),
-                    FileMode.Create, FileAccess.Write, FileShare.Read))
+                    filePath, FileMode.Create, FileAccess.Write, FileShare.Read))
                 {
                     await responseContentStream.CopyToAsync(outputStream).ConfigureAwait(false);
                 }
+                return filePath;
             }
         }
 

@@ -36,13 +36,20 @@ namespace Samples
                 await request.GetReceiverInfoAsync(receiverToken);
 
             // Download the audit file on the filesystem
-            await request.DownloadAuditFileAsync(signatureToken, "./audit3.pdf");
+            var auditFilePath = 
+                await request.DownloadAuditFileAsync(signatureToken, "./save_path");
 
             // Download the original files on the filesystem:
-            await request.DownloadOriginalFilesAsync(signatureToken, "./original3.pdf");
+            // It downloads a PDF file if a single file was uploaded. 
+            // Otherwise a zip file with all uploaded files is downloaded.
+            var originalFilesPath = 
+                await request.DownloadOriginalFilesAsync(signatureToken, "./save_path");
 
             // Download the created signed files on the filesystem:
-            await request.DownloadSignedFilesAsync(signatureToken, "./signed4.pdf");
+            // It downloads a PDF file if a single file was uploaded. 
+            // Otherwise a zip file with all uploaded files is downloaded.
+            var signedFilesPath = 
+                await request.DownloadSignedFilesAsync(signatureToken, "./save_path");
 
             // Correct the email address of a receiver in
             // the event that the email was delivered to an
