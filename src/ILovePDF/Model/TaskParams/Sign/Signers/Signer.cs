@@ -44,7 +44,7 @@ namespace LovePdf.Model.TaskParams.Sign.Signers
         /// </summary>
         /// <param name="serverFileName"></param>
         /// <returns></returns>
-        public SignerFile AddFile(string serverFileName) 
+        public SignerFile AddFile(string serverFileName)
         {
             var file = new SignerFile();
             file.ServerFilename = serverFileName;
