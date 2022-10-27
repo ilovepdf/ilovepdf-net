@@ -25,6 +25,7 @@ jobs:
         
       - name: Build  ${{ matrix.dotnet }}
         run: dotnet build --configuration Release src/ILovePDF --no-restore --framework  ${{ matrix.dotnet }}
+ 
         
   build_all_in_net46:
     strategy:
@@ -35,13 +36,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3 
 
-      # - name: Set up .NET SDK
-        # uses: actions/setup-dotnet@v3 
-        # with: 
-          # dotnet-version: 6.0.x
-            
+      - name: Set up .NET SDK
+        uses: actions/setup-dotnet@v3 
+        with: 
+          dotnet-version: 6.0.x
+             
       - name: Install dependencies
         run: dotnet restore 
         
@@ -58,8 +59,8 @@ jobs:
       # - name: Set up .NET SDK
         # uses: actions/setup-dotnet@v3 
         # with: 
-          # dotnet-version: 6.0.x
-            
+          # dotnet-version: 6.0.x  
+          
       # - name: Install dependencies
         # run: dotnet restore ILovePDF.sln
 

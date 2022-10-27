@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace LovePdf.Model.TaskParams
 {
@@ -13,41 +14,22 @@ namespace LovePdf.Model.TaskParams
     {
         /// <summary>
         /// Elements to be added into the PDF. They can have several properties including the element type.
-        /// </summary> 
+        /// </summary>  
         [JsonIgnore]
-        private List<EditElement> _elements = new List<EditElement>();
+        public List<EditElement> Elements { get; private set; } = new List<EditElement>();
 
-        public EditParams(List<EditElement> elements)
+        public EditParams(List<EditElement> elements = null)
         {
-            SetElements(elements);
-        }
-
-        private EditParams()
-        {
-        }
-
-        public static EditParams New()
-        {
-            return new EditParams();
-        }
-
-        [JsonIgnore]
-        public List<EditElement> Elements => _elements;
-
-        public void SetElements(List<EditElement> elements)
-        {
-            if (elements == null || elements.Count == 0)
+            if (elements != null) 
             {
-                throw new ArgumentException(
-                    $"Editpdf task should have at least one element (text, image or svg).");
+                Elements = elements;
             }
-            _elements = elements;
         }
 
         public EditElement AddElement(EditElement element)
         {
-            _elements.Add(element);
-            return _elements.First(x => x == element);
+            Elements.Add(element);
+            return element;
         }
 
         public TextElement AddText(string text)
@@ -56,22 +38,27 @@ namespace LovePdf.Model.TaskParams
             {
                 Text = text
             };
-            _elements.Add(element);
-            return _elements.First(x => x == element) as TextElement;
+            Elements.Add(element);
+            return element;
         }
 
         public ImageElement AddImage(string serverFileName)
         {
             var element = new ImageElement(serverFileName);
-            _elements.Add(element);
-            return (ImageElement)_elements.First(x => x == element);
+            Elements.Add(element);
+            return element;
         }
 
         public SvgElement AddSvg(string serverFileName)
         {
             var element = new SvgElement(serverFileName);
-            _elements.Add(element);
-            return (SvgElement)_elements.First(x => x == element);
+            Elements.Add(element);
+            return element;
+        }
+
+        public void Clear()
+        {
+            Elements.Clear();
         }
     }
 }

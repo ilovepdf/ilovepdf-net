@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using LovePdf.Core;
 using LovePdf.Model.Enums;
 using LovePdf.Model.Task;
@@ -24,11 +25,12 @@ namespace Samples
             // Upload Image files to Ilovepdf servers
             var imageFile = task.AddFile("your_image.jpg");
             var svgFile = task.AddFile("your_image.svg");
+             
+            // Add elements to Editpdf task in order of drawing (important if elements overlap!)
 
             // Create edit task params
-            var editParams = EditParams.New();
+            var editParams = new EditParams();
 
-            // Add elements to Editpdf task in order of drawing (important if elements overlap!)
             // Create ImageElement
             var imageElement = editParams.AddImage(imageFile.ServerFileName);
             imageElement.Coordinates = new Coordinate(300, 600);
@@ -45,13 +47,9 @@ namespace Samples
             textElement.FontStyle = TextFontStyles.Bold;
 
             // Create SvgElement
-            var svgElement = new SvgElement(svgFile.ServerFileName) 
-            {
-                Coordinates = new Coordinate(300, 300)
-            };
-            editParams.AddElement(svgElement);
-
-            //
+            var svgElement = editParams.AddSvg(svgFile.ServerFileName);
+            svgElement.Coordinates = new Coordinate(300, 300);
+             
             editParams.OutputFileName = "editpdf-advanced";
             
             // Proces added files,
