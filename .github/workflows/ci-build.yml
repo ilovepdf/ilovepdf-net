@@ -63,5 +63,5 @@ jobs:
       # - name: Install dependencies
         # run: dotnet restore ILovePDF.sln
 
-      - name: Test
-        run: dotnet test ILovePDF.sln --no-restore --verbosity normal
+      #- name: Test
+      #  run: dotnet test ILovePDF.sln --no-restore --verbosity normal
