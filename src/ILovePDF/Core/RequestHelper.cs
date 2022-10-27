@@ -1,4 +1,13 @@
-﻿using Jose;
+﻿// Any resource can be called with an additional parameter debug.
+// When sending the debug parameter equal true the resource won't
+// process the request but it will output the parameters received
+// by the server.
+// https://developer.ilovepdf.com/docs/api-reference#testing
+// To enable just uncomment this directive:
+//
+// #define REMOTE_API_DEBUG_ENABLED
+//
+using Jose;
 using LovePdf.Extensions;
 using LovePdf.Helpers;
 using LovePdf.Model.Enums;
@@ -8,6 +17,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -21,7 +31,7 @@ using System.Threading.Tasks;
 namespace LovePdf.Core
 {
     internal class RequestHelper
-    {
+    { 
         private readonly Int16 _jwtDelay = 5400;
         private byte[] _privateKey;
         private string _publicKey;
@@ -109,8 +119,7 @@ namespace LovePdf.Core
                 {
                     new ("task", taskId),
                     new ("tool", tool),
-                    new ("v", $"net.{Settings.NetVersion}")
-                    // new ("debug", "true"),
+                    new ("v", $"net.{Settings.NetVersion}") 
                 };
 
                 SetFormDataForExecuteTask(parameters, files, initalValues, multipartFormDataContent);
@@ -207,7 +216,7 @@ namespace LovePdf.Core
                 request.FormData.Add("task", taskId);
                 SetMultiPartFormData(request.FormData, multiPart);
 
-                var response = HttpClient.PostAsync(link, multiPart).Result;
+                var response = HttpClient.Post(link, multiPart);
                 return ProccessHttpResponse<UploadTaskResponse>(response);
             }
         }
@@ -222,12 +231,11 @@ namespace LovePdf.Core
                 var uploadRequest = new BaseTaskRequest();
                 uploadRequest.FormData.Add("file", new FileParameter(fs, file.Name));
                 uploadRequest.FormData.Add("task", taskId);
-                //uploadRequest.FormData.Add("debug", "true");
 
                 SetMultiPartFormData(uploadRequest.FormData, multipartFormData);
 
                 var response = HttpClient.Post(link, multipartFormData);
-                return ProccessHttpResponse<UploadTaskResponse>(response);
+               return ProccessHttpResponse<UploadTaskResponse>(response);
             }
         }
 
@@ -343,7 +351,7 @@ namespace LovePdf.Core
 
         private static T ProccessHttpResponse<T>(HttpResponseMessage response)
         {
-
+            
             T checkType = default(T);
 
             if (response == null)
@@ -506,7 +514,14 @@ namespace LovePdf.Core
         private static void SetMultiPartFormData(Dictionary<string, Object> formData,
             MultipartFormDataContent multiPartFormDataContent)
         {
+
+#if REMOTE_API_DEBUG_ENABLED  
+           formData.Add("debug", "true");
+#warning   RequestHelper sending the "debug" parameter equal true the iLovePdf server won't process the request but it will output the parameters received by the server. You can disable it on Core/RequestHelper.cs file by commenting REMOTE_API_DEBUG_ENABLED directive at top of file.
+#endif
+
             foreach (var param in formData)
+            {
                 if (param.Value is FileParameter file)
                 {
                     var uploadFile = file;
@@ -517,17 +532,17 @@ namespace LovePdf.Core
                         multiPartFormDataContent.Add(content, "file", uploadFile.FileName);
                     }
                     else
-                    {
+                    { 
                         var content = new ByteArrayContent(uploadFile.File);
                         multiPartFormDataContent.Add(content, "file", uploadFile.FileName);
                     }
-
                 }
                 else
                 {
                     var content = new StringContent((string)param.Value);
                     multiPartFormDataContent.Add(content, param.Key);
                 }
+            }
         }
 
         private static void SetFormDataForExecuteTask(BaseParams @params, IReadOnlyList<FileModel> files,

@@ -92,20 +92,15 @@ namespace Tests.Split
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException),
-            "OutputFileName bigger than allowed was inappropriately processed.")]
-        public void Split_BigFileName_ShouldThrowException()
+        public void Split_BigOutputFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
             AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodMultipagePdfFile);
 
-            var outputFileName = @"";
-            for (var i = 0; i < Settings.MaxCharactersInFilename; i++)
-                outputFileName = $"{outputFileName}a";
-            TaskParams.OutputFileName = $"{outputFileName}.pdf";
+            TaskParams.OutputFileName = Arrange_BigOutputFileName();
 
-            Assert.IsFalse(RunTask());
+            AssertThrowsException_BigOutputFileName(() => RunTask());
         }
 
         [TestMethod]

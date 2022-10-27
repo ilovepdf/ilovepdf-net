@@ -12,7 +12,7 @@ name: Release Preview (RC)
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ feature ]
     
 env:
   VERSION_FILE: build-config.json
@@ -52,6 +52,9 @@ jobs:
       
     - name: Build
       run: dotnet build -c Release -p:Version=${{ env.RELEASE_VERSION }}
+      
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
       
     - name: Push to NuGet
       run: dotnet nuget push "*src/**/*.nupkg" --api-key ${{secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json

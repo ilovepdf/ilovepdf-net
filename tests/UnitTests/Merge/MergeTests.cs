@@ -105,21 +105,16 @@ namespace Tests.Merge
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException),
-            "OutputFileName bigger than allowed was inappropriately processed.")]
-        public void Merge_BigFileName_ShouldThrowException()
+        public void Merge_BigOutputFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
             for (var i = 0; i < 2; i++)
                 AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
 
-            var outputFileName = @"";
-            for (var j = 0; j < Settings.MaxCharactersInFilename; j++)
-                outputFileName = $"{outputFileName}a";
-            TaskParams.OutputFileName = $"{outputFileName}.jpg";
+            TaskParams.OutputFileName = Arrange_BigOutputFileName();
 
-            Assert.IsFalse(RunTask());
+            AssertThrowsException_BigOutputFileName(() => RunTask());
         }
 
         [TestMethod]

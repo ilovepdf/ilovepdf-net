@@ -79,7 +79,19 @@ namespace Tests.HtmlToPdf
 
             Assert.IsTrue(RunTask());
         }
- 
+
+        [TestMethod]
+        public void HtmlToPdf_BigOutputFileName_ShouldThrowException()
+        {
+            InitApiWithRightCredentials();
+
+            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
+
+            TaskParams.OutputFileName = Arrange_BigOutputFileName();
+
+            AssertThrowsException_BigOutputFileName(() => RunTask());
+        }
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), "Wrong Delay param was inappropriately processed.")]
         public void HtmlToPdf_WrongDelay_ShouldThrowException()

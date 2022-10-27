@@ -93,20 +93,15 @@ namespace Tests.PdfToJpg
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException),
-            "OutputFileName bigger than allowed was inappropriately processed.")]
-        public void PdfToJpg_BigFileName_ShouldThrowException()
+        public void PdfToJpg_BigOutputFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
             AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
 
-            var outputFileName = @"";
-            for (var i = 0; i < Settings.MaxCharactersInFilename; i++)
-                outputFileName = $"{outputFileName}a";
-            TaskParams.OutputFileName = $"{outputFileName}.pdf";
+            TaskParams.OutputFileName = Arrange_BigOutputFileName();
 
-            Assert.IsFalse(RunTask());
+            AssertThrowsException_BigOutputFileName(() => RunTask());
         }
 
         [TestMethod]
