@@ -41,5 +41,12 @@ namespace LovePdf.Helpers
             callAsyncTask.Wait();
             return callAsyncTask.Result;
         }
+
+        public static void RunAsSync(Task taskForRun)
+        {
+            if (taskForRun == null) return; 
+            var callAsyncTask = Task.Run(() => taskForRun);
+            callAsyncTask.Wait(); 
+        }
     }
 }

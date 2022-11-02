@@ -29,8 +29,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LovePdf.Core
-{
-    internal class RequestHelper
+{ 
+    internal partial class RequestHelper 
     { 
         private readonly Int16 _jwtDelay = 5400;
         private byte[] _privateKey;
@@ -144,31 +144,35 @@ namespace LovePdf.Core
             var response = HttpClient.Delete(link);
             return ProccessHttpResponse<DeleteTaskResponse>(response);
         }
+
         #endregion Tasks
 
         #region FileManipulations
         public void Download(Uri serverUrl, string taskId, string destinationPath)
         {
             var link = GetUri($"{serverUrl}{Settings.V1}/download/{taskId}");
+            TaskHelper.RunAsSync(DownloadFileAsync(link, destinationPath));
+        }
 
+        public async Task<string> DownloadFileAsync(Uri link, string destinationPath)
+        {
             using (var request = new HttpRequestMessage(HttpMethod.Get, link))
             {
-                var response = HttpClient.Send(request);
-
-                var responseContent = GetContent(response);
+                var response = await HttpClient.SendAsync(request); 
                 response.EnsureSuccessStatusCode();
 
-                var responseContentStream = TaskHelper.RunAsSync(response.Content.ReadAsStreamAsync());
+                var responseContentStream =  await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
 
                 var fileName = response.Content.Headers.ContentDisposition.FileName
                     .Replace("\"", string.Empty);
 
+                var filePath = Path.Combine(destinationPath, fileName);
                 using (var outputStream = new FileStream(
-                    Path.Combine(destinationPath, fileName),
-                    FileMode.Create, FileAccess.Write, FileShare.Read))
+                    filePath, FileMode.Create, FileAccess.Write, FileShare.Read))
                 {
-                    responseContentStream.CopyTo(outputStream);
+                    await responseContentStream.CopyToAsync(outputStream).ConfigureAwait(false);
                 }
+                return filePath;
             }
         }
 
@@ -395,7 +399,7 @@ namespace LovePdf.Core
                 throw ParseRequestErrors(response, responseContent, e);
             }
         }
-
+         
         private static async Task<byte[]> ProccessHttpResponseAsync(HttpResponseMessage response)
         {
             if (response == null)
@@ -611,7 +615,7 @@ namespace LovePdf.Core
         {
             return new Uri(StringHelpers.Invariant(link));
         }
-
+         
         private static string GetContent(HttpResponseMessage response)
         {
             var task = response?.Content?.ReadAsStringAsync();
@@ -659,7 +663,7 @@ namespace LovePdf.Core
                 return new ServerErrorException(responseContent, exception);
 
             return exception;
-        }
+        } 
 
         #endregion
     }

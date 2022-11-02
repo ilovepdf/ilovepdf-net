@@ -25,7 +25,7 @@ namespace LovePdf.Model.Task
         /// </summary>
         public String TaskId { get; set; }
 
-        private List<FileModel> Files { get; set; }
+        protected List<FileModel> Files { get; set; }
 
         /// <summary>
         ///     Get current running tool name
@@ -370,6 +370,7 @@ namespace LovePdf.Model.Task
 
             return executeResult;
         }
+
 
         /// <summary>
         ///     Download output files(s) from ILovePDF server to the specific location.

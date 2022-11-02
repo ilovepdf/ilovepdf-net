@@ -94,5 +94,10 @@ namespace LovePdf.Model.Enums
         /// Edit
         /// </summary>
         [Description("editpdf")] Edit = 16,
+
+        /// <summary>
+        /// Edit
+        /// </summary>
+        [Description("sign")] Sign = 17,
     }
 }
