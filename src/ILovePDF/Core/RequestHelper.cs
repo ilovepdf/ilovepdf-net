@@ -647,7 +647,13 @@ namespace LovePdf.Core
                 if (parsedContent.error.type == EnumExtensions.GetEnumDescription(LovePdfErrors.UploadError))
                     return new UploadException(responseContent, exception);
 
-                return exception;
+                if (parsedContent.error.type == EnumExtensions.GetEnumDescription(LovePdfErrors.StartError))
+                    return new SignStartException(responseContent, exception);
+
+                if (parsedContent.error.type == EnumExtensions.GetEnumDescription(LovePdfErrors.SignatureError))
+                    return new SignatureException(responseContent, exception);
+
+                return new UndefinedException(responseContent, exception); 
             }
 
             if (response.StatusCode == HttpStatusCode.Unauthorized) // 401 Unauthorized

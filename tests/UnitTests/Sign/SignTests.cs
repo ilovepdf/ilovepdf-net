@@ -1,7 +1,9 @@
-﻿using LovePdf.Model.Exception;
+﻿using LovePdf.Core;
+using LovePdf.Model.Exception;
 using LovePdf.Model.Task;
 using LovePdf.Model.TaskParams;
 using LovePdf.Model.TaskParams.Edit;
+using LovePdf.Model.TaskParams.Sign.Elements;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Security.Authentication;
@@ -55,7 +57,7 @@ namespace Tests.Edit
         [TestMethod]
         [ExpectedException(typeof(AuthenticationException),
             "A user with invalid credentials should not be allowed, but it was")]
-        public void Edit_WrongCredentials_ShouldThrowException()
+        public void Sign_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
 
@@ -66,7 +68,7 @@ namespace Tests.Edit
 
         [TestMethod]
         [ExpectedException(typeof(ProcessingException), "A Damaged File should was inappropriately processed.")]
-        public void Edit_WrongFile_ShouldThrowException()
+        public void Sign_WrongFile_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
@@ -77,7 +79,7 @@ namespace Tests.Edit
 
         [TestMethod]
         [ExpectedException(typeof(UploadException), "More files than allowed were inappropriately processed.")]
-        public void Edit_MaxFilesAdded_ShouldThrowException()
+        public void Sign_MaxFilesAdded_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
@@ -88,7 +90,7 @@ namespace Tests.Edit
         }
 
         [TestMethod]
-        public void Edit_BigOutputFileName_ShouldThrowException()
+        public void Sign_BigOutputFileName_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
@@ -101,7 +103,7 @@ namespace Tests.Edit
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), "Wrong Encryption Key was inappropriately processed.")]
-        public void Edit_WrongEncryptionKey_ShouldThrowException()
+        public void Sign_WrongEncryptionKey_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
@@ -113,7 +115,7 @@ namespace Tests.Edit
         }
 
         [TestMethod]
-        public void Edit_ProvidingEncryptKey_ShouldProcessOk()
+        public void Sign_ProvidingEncryptKey_ShouldProcessOk()
         {
             InitApiWithRightCredentials();
 
@@ -127,7 +129,7 @@ namespace Tests.Edit
 
         [TestMethod]
         [ExpectedException(typeof(ProcessingException), "Mistaken Password was inappropriately processed.")]
-        public void Edit_WrongPassword_ShouldThrowException()
+        public void Sign_WrongPassword_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
@@ -137,7 +139,7 @@ namespace Tests.Edit
         }
 
         [TestMethod]
-        public void Edit_RightPassword_ShouldProcessOk()
+        public void Sign_RightPassword_ShouldProcessOk()
         {
             InitApiWithRightCredentials();
 
@@ -149,7 +151,7 @@ namespace Tests.Edit
         }
 
         [TestMethod]
-        public void Edit_ProvidingPackageName_ShouldProcessOk()
+        public void Sign_ProvidingPackageName_ShouldProcessOk()
         {
             InitApiWithRightCredentials();
 
@@ -164,7 +166,7 @@ namespace Tests.Edit
 
         [TestMethod]
         [ExpectedException(typeof(ProcessingException), "Elements cannot be blank.")]
-        public void Edit_DefaultParams_ShouldThrowException()
+        public void Sign_DefaultParams_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
@@ -172,5 +174,38 @@ namespace Tests.Edit
 
             Assert.IsTrue(RunTask());
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ProcessingException), "Elements cannot be blank.")]
+        public void Sign_2()
+        {
+            var api = new LovePdfApi("project_public_c0ac272c966a051c024a9efcd05e0837_lGE_M521c52f2c0421da14164986b6a281270",
+              "secret_key_7f1d69768ded72ab078cd21f555088b3_PUd5_0ecef4507c55c30a28c22bd42ce4f408");
+
+            // Create sign task
+            var task = api.CreateTask<SignTask>();
+
+            // File variable contains server file name
+            var file = task.AddFile(@"C:\Users\Conqueror\source\repos\ilovepdf-net-fork\tests\UnitTests\Data\should-work.pdf");
+
+            // Create task params
+            var signParams = new SignParams();
+
+            // Create a signer
+            var signer = signParams.AddSigner("Signer", "abdurahim.khudoyberdiev@gmail.com");
+
+            // Add file that a receiver of type signer needs to sign.
+            var signerFile = signer.AddFile(file.ServerFileName);
+
+            // Add signers and their elements;
+            var signatureElement = signerFile.AddSignature();
+            signatureElement.Position = new Position(20, -20);
+            signatureElement.Pages = "1";
+            signatureElement.Size = 40;
+
+            // Lastly send the signature request
+            var signature = task.RequestSignatureAsync(signParams).Result;
+        }
+
     }
 }

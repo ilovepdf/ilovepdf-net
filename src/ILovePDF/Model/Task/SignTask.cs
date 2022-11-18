@@ -23,7 +23,7 @@ namespace LovePdf.Model.Task
             var signatureResponse = await RequestHelper.Instance
                 .CreateSignatureRequestAsync(ServerUrl, TaskId, Files, ToolName, parameters);
 
-            //Remove files after each task execute. To prevent processing same files.
+            // Remove files after each task execute. To prevent processing same files.
             Files.Clear();
 
             return signatureResponse;
