@@ -10,8 +10,8 @@ namespace LovePdf.Model.TaskParams.Sign.Elements
     /// </summary>
     public class Position
     {
-        private float y;
         private float x;
+        private float y;
 
         /// <summary>
         /// Width of the element

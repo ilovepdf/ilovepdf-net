@@ -5,7 +5,7 @@ using Newtonsoft.Json.Converters;
 
 namespace LovePdf.Model.TaskParams.Sign.Signers
 {
-    public class BaseSignSigner : ISignSigner
+    public abstract class BaseSignSigner : ISignSigner
     {
         public BaseSignSigner(SignSignerType signerType, string name, string email)
         {

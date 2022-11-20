@@ -9,7 +9,7 @@ namespace LovePdf.Model.TaskParams
     public abstract class BaseParams
     {
         /// <summary>
-        ///     Constructor
+        /// Constructor
         /// </summary>
         protected BaseParams()
         {
@@ -17,20 +17,20 @@ namespace LovePdf.Model.TaskParams
         }
 
         /// <summary>
-        ///     Ignore Errors
+        /// Ignore Errors
         /// </summary>
         [JsonProperty("ignore_errors")]
         public Boolean IgnoreErrors { get; set; }
 
         /// <summary>
-        ///     Ignore Password
+        /// Ignore Password
         /// </summary>
         [JsonProperty("ignore_password")]
         public Boolean IgnorePassword { get; set; }
 
         /// <summary>
-        ///     {date}=current date, {n}=file number, {filename}=original filename, {tool}=the current processing action. Example:
-        ///     file_{n}_{date}
+        /// {date}=current date, {n}=file number, {filename}=original filename, {tool}=the current processing action. Example:
+        /// file_{n}_{date}
         /// </summary>
         [JsonProperty("output_filename")]
         public String OutputFileName { get; set; }
@@ -67,7 +67,7 @@ namespace LovePdf.Model.TaskParams
     }
 
     /// <summary>
-    ///     Office To Pdf Params
+    /// Office To Pdf Params
     /// </summary>
     public class OfficeToPdfParams : BaseParams
     {

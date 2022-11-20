@@ -73,7 +73,7 @@ namespace LovePdf.Core
         /// <param name="request"></param>
         /// <returns></returns>
         public Task<List<SignatureResponse>> ListSignaturesAsync(Uri serverUrl, ListRequest request) =>
-           GetAsync<List<SignatureResponse>>(serverUrl, $"list?page={request.Page}&per-page={request.PerPage}");
+           GetAsync<List<SignatureResponse>>(serverUrl, $"signature/list?page={request.Page}&per-page={request.PerPage}");
 
         /// <summary>
         /// Get Signature status
@@ -82,7 +82,7 @@ namespace LovePdf.Core
         /// <param name="tokenRequester"></param>
         /// <returns></returns>
         public Task<SignatureResponse> GetSignatureStatusAsync(Uri serverUrl, string tokenRequester) =>
-            GetAsync<SignatureResponse>(serverUrl, $"requesterview/{tokenRequester}");
+            GetAsync<SignatureResponse>(serverUrl, $"signature/requesterview/{tokenRequester}");
 
         /// <summary>
         /// Get Receiver info
@@ -91,7 +91,7 @@ namespace LovePdf.Core
         /// <param name="receiverTokenRequester">Receiver TokenRequester</param>
         /// <returns></returns>
         public Task<ReceiverInfoResponse> GetReceiverInfoAsync(Uri serverUrl, string receiverTokenRequester) =>
-            GetAsync<ReceiverInfoResponse>(serverUrl, $"receiver/info/{receiverTokenRequester}");
+            GetAsync<ReceiverInfoResponse>(serverUrl, $"signature/receiver/info/{receiverTokenRequester}");
 
         /// <summary>
         /// Use this to correct the receiver's email address in the event 
@@ -102,7 +102,7 @@ namespace LovePdf.Core
         /// <param name="email">New valid email for the receiver</param>
         /// <returns></returns>
         public Task<ReceiverInfoResponse> FixReceiverEmailAsync(Uri serverUrl, string receiverTokenRequester, string email) =>
-           PutAsync<ReceiverInfoResponse>(serverUrl, $"receiver/fix-email/{receiverTokenRequester}", nameof(email), email);
+           PutAsync<ReceiverInfoResponse>(serverUrl, $"signature/receiver/fix-email/{receiverTokenRequester}", nameof(email), email);
 
         /// <summary>
         /// Use this to correct the signers's mobile number in the event that the SMS was not delivered to a valid mobile number.
@@ -112,7 +112,7 @@ namespace LovePdf.Core
         /// <param name="phone">New valid mobile number for the signer.</param>
         /// <returns></returns>
         public Task<ReceiverInfoResponse> FixSignerPhoneAsync(Uri serverUrl, string receiverTokenRequester, string phone) =>
-            PutAsync<ReceiverInfoResponse>(serverUrl, $"signer/fix-phone/{receiverTokenRequester}", nameof(phone), phone);
+            PutAsync<ReceiverInfoResponse>(serverUrl, $"signature/signer/fix-phone/{receiverTokenRequester}", nameof(phone), phone);
 
         /// <summary>
         /// It voids a signature that it is currently in progress. Once voided, it will not be accessible for any receiver of the request.
@@ -121,7 +121,7 @@ namespace LovePdf.Core
         /// <param name="tokenRequester">TokenRequester</param>
         /// <returns></returns>
         public Task<SignatureResponse> VoidSignatureAsync(Uri serverUrl, string tokenRequester) =>
-            PutAsync<SignatureResponse>(serverUrl, $"void/{tokenRequester}");
+            PutAsync<SignatureResponse>(serverUrl, $"signature/void/{tokenRequester}");
 
         /// <summary>
         /// Increase the number of days in order to prevent the request from 
@@ -134,7 +134,7 @@ namespace LovePdf.Core
         /// </param>
         /// <returns></returns>
         public Task<ReceiverInfoResponse> IncreaseExpirationDaysAsync(Uri serverUrl, string tokenRequester, string days) =>
-           PutAsync<ReceiverInfoResponse>(serverUrl, $"increase-expiration-days/{tokenRequester}", nameof(days), days);
+           PutAsync<ReceiverInfoResponse>(serverUrl, $"signature/increase-expiration-days/{tokenRequester}", nameof(days), days);
 
         /// <summary>
         /// It downloads the audit PDF file.
@@ -145,7 +145,7 @@ namespace LovePdf.Core
         /// <param name="destinationPath"></param>
         /// <returns></returns>
         public Task<string> DownloadAuditAsync(Uri serverUrl, string tokenRequester, string destinationPath) =>
-            DownloadAsync(serverUrl, $"{tokenRequester}/download-audit", destinationPath);
+            DownloadAsync(serverUrl, $"signature/{tokenRequester}/download-audit", destinationPath);
 
         /// <summary>
         /// It downloads the original files.
@@ -157,7 +157,7 @@ namespace LovePdf.Core
         /// <param name="destinationPath"></param>
         /// <returns></returns>
         public Task<string> DownloadOriginalFilesAsync(Uri serverUrl, string tokenRequester, string destinationPath) =>
-            DownloadAsync(serverUrl, $"{tokenRequester}/download-original", destinationPath);
+            DownloadAsync(serverUrl, $"signature/{tokenRequester}/download-original", destinationPath);
 
         /// <summary>
         /// It downloads the signed files.
@@ -175,26 +175,26 @@ namespace LovePdf.Core
         /// <param name="destinationPath"></param>
         /// <returns></returns>
         public Task<string> DownloadSignedFilesAsync(Uri serverUrl, string tokenRequester, string destinationPath) =>
-            DownloadAsync(serverUrl, $"{tokenRequester}/download-signed", destinationPath);
+            DownloadAsync(serverUrl, $"signature/{tokenRequester}/download-signed", destinationPath);
 
         #region PrivateHttpHelpers
 
         private Task<string> DownloadAsync(Uri serverUrl, string path, string destinationPath)
         {
-            var link = GetUri($"{serverUrl}{Settings.V1}/${path}");
+            var link = GetUri($"{serverUrl}{Settings.V1}/{path}");
             return DownloadFileAsync(link, destinationPath);
         }
 
         private async Task<T> GetAsync<T>(Uri serverUrl, string path)
         {
-            var link = GetUri($"{serverUrl}{Settings.V1}/${path}");
+            var link = GetUri($"{serverUrl}{Settings.V1}/{path}");
             var response = await HttpClient.GetAsync(link);
             return await ProccessHttpResponseAsync<T>(response);
         }
 
         private async Task<T> PutAsync<T>(Uri serverUrl, string path, string paramName = null, string paramValue = null)
         {
-            var link = GetUri($"{serverUrl}{Settings.V1}/${path}");
+            var link = GetUri($"{serverUrl}{Settings.V1}/{path}");
             var multipartFormDataContent = new MultipartFormDataContent();
 
             if (paramName != null)
