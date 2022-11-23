@@ -19,7 +19,7 @@ namespace LovePdf.Model.Enums
         /// the signing process once it is completed. The validator
         /// can validate or reject a document.
         /// </summary>
-        [EnumMember(Value = "validator ")] Validator,
+        [EnumMember(Value = "validator")] Validator,
 
         /// <summary>
         /// The viewer (also called witness in the rest of the 
@@ -29,6 +29,6 @@ namespace LovePdf.Model.Enums
         /// and view the document but they don't need to take any
         /// action on it.
         /// </summary>
-        [EnumMember(Value = "viewer ")] Viewer, 
+        [EnumMember(Value = "viewer")] Viewer, 
     }
 }

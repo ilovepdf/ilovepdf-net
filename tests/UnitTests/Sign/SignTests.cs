@@ -1,18 +1,22 @@
 ﻿using LovePdf.Core;
+using LovePdf.Model.Enums;
 using LovePdf.Model.Exception;
 using LovePdf.Model.Task;
 using LovePdf.Model.TaskParams;
+using LovePdf.Model.TaskParams.Sign;
 using LovePdf.Model.TaskParams.Sign.Elements;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
+using System.Linq;
 using System.Security.Authentication;
+using System.Threading.Tasks;
 
 namespace Tests.Edit
 {
     [TestClass]
     public class SignTests : BaseTest
-    {
-        private const string GoodTokenRequester = "43addb156a605e14d230ab65704170eb_CxMHa3eaa803997c598ae48e418c431b3955a";
+    {  
         public SignTests()
         {
             TaskParams = new SignParams();
@@ -78,7 +82,6 @@ namespace Tests.Edit
             Assert.IsFalse(RunTask());
         }
 
-
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), "Wrong Encryption Key was inappropriately processed.")]
         public void Sign_WrongEncryptionKey_ShouldThrowException()
@@ -90,55 +93,82 @@ namespace Tests.Edit
             TaskParams.FileEncryptionKey = Settings.WrongEncryptionKey;
 
             Assert.IsFalse(RunTask());
-        }
+        } 
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "Elements cannot be blank.")]
-        public void Sign_2()
+        public async Task Sign_ComplexTest_ShouldProcessOk()
         {
-            var api = new LovePdfApi("project_public_c0ac272c966a051c024a9efcd05e0837_lGE_M521c52f2c0421da14164986b6a281270",
-              "secret_key_7f1d69768ded72ab078cd21f555088b3_PUd5_0ecef4507c55c30a28c22bd42ce4f408");
+            InitApiWithRightCredentials();
 
-            // Create sign task
-            var task = api.CreateTask<SignTask>();
+            CreateApiTask(false);
 
-            var result = task.DownloadSignedFilesAsync(GoodTokenRequester, "./").GetAwaiter().GetResult();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "Elements cannot be blank.")]
-        public void Sign_1()
-        {
-            var api = new LovePdfApi("project_public_c0ac272c966a051c024a9efcd05e0837_lGE_M521c52f2c0421da14164986b6a281270",
-              "secret_key_7f1d69768ded72ab078cd21f555088b3_PUd5_0ecef4507c55c30a28c22bd42ce4f408");
-
-            // Create sign task
-            var task = api.CreateTask<SignTask>();
-
-            var result = task.DownloadSignedFilesAsync(GoodTokenRequester, "./").GetAwaiter().GetResult();
-
-            //// File variable contains server file name
-            var file = task.AddFile(@"C:\Users\Conqueror\source\repos\ilovepdf-net-fork\tests\UnitTests\Data\should-work.pdf");
+            // File variable contains server file name
+            var file = Task.AddFile($"{Settings.DataPath}{Path.DirectorySeparatorChar}{Settings.GoodPdfFile}");
 
             // Create task params
             var signParams = new SignParams();
+            signParams.ExpirationDays = 10;
 
             // Create a signer
-            var signer = signParams.AddSigner("Signer", "abdurahim.khudoyberdiev@gmail.com");
+            var signerEmail = "signer@example.com";
+            var signer = signParams.AddSigner("Signer", signerEmail);
 
             // Add file that a receiver of type signer needs to sign.
             var signerFile = signer.AddFile(file.ServerFileName);
 
             // Add signers and their elements;
             var signatureElement = signerFile.AddSignature();
-            signatureElement.Position = new Position(20, -20);
+            signatureElement.Position = new Position(200, -20);
+            signatureElement.Pages = "1";
+            signatureElement.Size = 40;
+
+            var validator = signParams.AddValidator("Validator", "validator@example.com");
+
+            // Lastly send the signature request
+            var signature = await (Task as SignTask).RequestSignatureAsync(signParams);
+
+            var response = await (Task as SignTask).GetSignatureStatusAsync(signature.TokenRequester);
+            Assert.AreEqual("sent", response.Status);
+             
+            var increaseResonse = await (Task as SignTask).IncreaseExpirationDaysAsync(signature.TokenRequester, 10);
+            Assert.AreEqual(Convert.ToDateTime(signature.Expires).AddDays(10).Date,  Convert.ToDateTime(increaseResonse.Expires).Date);
+
+            var downloadedFile = await (Task as SignTask).DownloadOriginalFilesAsync(signature.TokenRequester, "./");
+            Assert.IsTrue(File.Exists(downloadedFile));
+
+            var signatures = await (Task as SignTask).GetSignaturesAsync(new ListRequest(0, 100));
+            Assert.IsTrue(signatures.Count > 0);
+        }
+
+        [TestMethod]
+        public async Task Sign_RequestSignature_ShouldProccessOk()
+        {
+            InitApiWithRightCredentials();
+
+            CreateApiTask(false);
+
+            // File variable contains server file name
+            var file = Task.AddFile($"{Settings.DataPath}{Path.DirectorySeparatorChar}{Settings.GoodPdfFile}");
+
+            // Create task params
+            var signParams = new SignParams();
+
+            // Create a signer
+            var signerEmail = "signer@example.com";
+            var signer = signParams.AddSigner("Signer", signerEmail);
+
+            // Add file that a receiver of type signer needs to sign.
+            var signerFile = signer.AddFile(file.ServerFileName);
+
+            // Add signers and their elements;
+            var signatureElement = signerFile.AddSignature();
+            signatureElement.Position = new Position(200, -20);
             signatureElement.Pages = "1";
             signatureElement.Size = 40;
 
             // Lastly send the signature request
-            var signature = task.RequestSignatureAsync(signParams).GetAwaiter().GetResult();
-
-        }
-
+            var signature = await (Task as SignTask).RequestSignatureAsync(signParams);
+            Assert.AreEqual(signerEmail, signature.Signers.First().Email);
+        } 
     }
 }

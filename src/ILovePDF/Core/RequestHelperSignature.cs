@@ -133,8 +133,8 @@ namespace LovePdf.Core
         /// The signature cannot have an expiration date bigger than 130 days from now.
         /// </param>
         /// <returns></returns>
-        public Task<ReceiverInfoResponse> IncreaseExpirationDaysAsync(Uri serverUrl, string tokenRequester, string days) =>
-           PutAsync<ReceiverInfoResponse>(serverUrl, $"signature/increase-expiration-days/{tokenRequester}", nameof(days), days);
+        public Task<SignatureResponse> IncreaseExpirationDaysAsync(Uri serverUrl, string tokenRequester, string days) =>
+           PutAsync<SignatureResponse>(serverUrl, $"signature/increase-expiration-days/{tokenRequester}", nameof(days), days);
 
         /// <summary>
         /// It downloads the audit PDF file.

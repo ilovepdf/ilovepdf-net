@@ -38,7 +38,7 @@ namespace LovePdf.Model.TaskParams
         /// - value  must be between 0 and 20
         /// - default is 10
         /// </summary> 
-        [JsonProperty("navigation_timeout ")]
+        [JsonProperty("navigation_timeout")]
         public int NavigationTimeout 
         { 
             get => navigationTimeout;

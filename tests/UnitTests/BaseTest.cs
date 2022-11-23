@@ -26,7 +26,7 @@ namespace Tests
 
         protected LovePdfApi Api { get; private set; }
 
-        protected LovePdfTask Task { private get; set; }
+        protected LovePdfTask Task {  get; set; }
 
         protected Boolean IsTaskSetted => Task != null;
 

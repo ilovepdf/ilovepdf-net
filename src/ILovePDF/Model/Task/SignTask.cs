@@ -72,7 +72,7 @@ namespace LovePdf.Model.Task
         }
 
         /// <inheritdoc cref="RequestHelper.IncreaseExpirationDaysAsync"/>
-        public System.Threading.Tasks.Task<ReceiverInfoResponse> IncreaseExpirationDaysAsync(string tokenRequester, int days)
+        public System.Threading.Tasks.Task<SignatureResponse> IncreaseExpirationDaysAsync(string tokenRequester, int days)
         {
             return RequestHelper.Instance.IncreaseExpirationDaysAsync(ServerUrl, tokenRequester, days.ToString(CultureInfo.InvariantCulture));
         }
