@@ -149,56 +149,6 @@ namespace Tests.Edit
         }
 
         [TestMethod]
-        public void Edit_ProvidingEncryptKey_ShouldProcessOk()
-        {
-            InitApiWithRightCredentials();
-
-            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
-
-            TaskParams.IgnoreErrors = false;
-            TaskParams.FileEncryptionKey = Settings.RightEncryptionKey;
-
-            Assert.IsTrue(RunTask());
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "Mistaken Password was inappropriately processed.")]
-        public void Edit_WrongPassword_ShouldThrowException()
-        {
-            InitApiWithRightCredentials();
-
-            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFilePasswordProtected, Settings.WrongPassword);
-
-            Assert.IsFalse(RunTask());
-        }
-
-        [TestMethod]
-        public void Edit_RightPassword_ShouldProcessOk()
-        {
-            InitApiWithRightCredentials();
-
-            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFilePasswordProtected, Settings.RightPassword);
-
-            TaskParams.IgnoreErrors = false;
-
-            Assert.IsTrue(RunTask());
-        }
-
-        [TestMethod]
-        public void Edit_ProvidingPackageName_ShouldProcessOk()
-        {
-            InitApiWithRightCredentials();
-
-            for (var i = 0; i < 5; i++)
-                AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
-
-            TaskParams.PackageFileName = @"package";
-            TaskParams.IgnoreErrors = false;
-
-            Assert.IsTrue(RunTask());
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(ProcessingException), "Elements cannot be blank.")]
         public void Edit_DefaultParams_ShouldThrowException()
         {

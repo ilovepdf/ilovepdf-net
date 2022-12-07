@@ -23,7 +23,7 @@ namespace LovePdf.Model.Task
             var signatureResponse = await RequestHelper.Instance
                 .CreateSignatureRequestAsync(ServerUrl, TaskId, Files, ToolName, parameters);
 
-            //Remove files after each task execute. To prevent processing same files.
+            // Remove files after each task execute. To prevent processing same files.
             Files.Clear();
 
             return signatureResponse;
@@ -72,7 +72,7 @@ namespace LovePdf.Model.Task
         }
 
         /// <inheritdoc cref="RequestHelper.IncreaseExpirationDaysAsync"/>
-        public System.Threading.Tasks.Task<ReceiverInfoResponse> IncreaseExpirationDaysAsync(string tokenRequester, int days)
+        public System.Threading.Tasks.Task<SignatureResponse> IncreaseExpirationDaysAsync(string tokenRequester, int days)
         {
             return RequestHelper.Instance.IncreaseExpirationDaysAsync(ServerUrl, tokenRequester, days.ToString(CultureInfo.InvariantCulture));
         }

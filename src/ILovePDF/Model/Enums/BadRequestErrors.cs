@@ -20,6 +20,17 @@ namespace LovePdf.Model.Enums
         /// <summary>
         ///     Download error
         /// </summary>
-        [Description("DownloadError")] DownloadError
+        [Description("DownloadError")] DownloadError,
+
+
+        /// <summary>
+        /// StartError
+        /// </summary>
+        [Description("StartError")] StartError,
+
+        /// <summary>
+        /// SignatureError
+        /// </summary>
+        [Description("SignatureError")] SignatureError
     }
 }

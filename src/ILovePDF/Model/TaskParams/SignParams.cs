@@ -1,4 +1,5 @@
-﻿using LovePdf.Model.Enums;
+﻿using LovePdf.Attributes;
+using LovePdf.Model.Enums;
 using LovePdf.Model.TaskParams.Sign.Elements;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -48,6 +49,7 @@ namespace LovePdf.Model.TaskParams
         /// <para><b>true</b> = receivers of signer type must sign sequentially in order.</para>
         /// </summary>
         [JsonProperty("lock_order")]
+        [JsonConverter(typeof(BoolConverter))]
         public bool LockOrder { get; set; }
 
         /// <summary> 

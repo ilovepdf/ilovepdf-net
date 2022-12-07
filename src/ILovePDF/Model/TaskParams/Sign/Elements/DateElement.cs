@@ -20,20 +20,23 @@ namespace LovePdf.Model.TaskParams.Sign.Elements
 
         /// <summary>
         /// It specifies the date format.
-        /// <para> Allowed formats: "dd-MM-YYYY", "dd/MM/YYYY", "dd.MM.YYYY", "YYYY-MM-dd", "YYYY/MM/dd", "YYYY.MM.dd", "MM-dd-YYYY", "MM/dd/YYYY", "MM.dd.YYYY"</para>
+        /// <para> Allowed formats: "dd-MM-yyyy", "dd/MM/yyyy", "dd.MM.yyyy", "yyyy-MM-dd", "yyyy/MM/dd", "yyyy.MM.dd", "MM-dd-yyyy", "MM/dd/yyyy", "MM.dd.yyyy"</para>
         /// </summary>
         [JsonProperty("content")]
         public string Content 
         { 
             get => content;
             set 
-            {
-                string[] formats = { "dd-MM-YYYY", "dd/MM/YYYY", "dd.MM.YYYY", "YYYY-MM-dd", "YYYY/MM/dd", "YYYY.MM.dd", "MM-dd-YYYY", "MM/dd/YYYY", "MM.dd.YYYY" };
+            { 
+                string[] formats = {  
+                    "dd/MM/yyyy", "MM/dd/yyyy", "yyyy/MM/dd",
+                    "dd-MM-yyyy", "MM-dd-yyyy", "yyyy-MM-dd",
+                    "dd.MM.yyyy", "MM.dd.yyyy", "yyyy.MM.dd"};
                 DateTime expectedDate;
                 if (!DateTime.TryParseExact(value, formats, new CultureInfo("en-US"),
-                                            DateTimeStyles.None, out expectedDate))
+                                            DateTimeStyles.None, out expectedDate) )
                 {
-                    throw new ArgumentException("Invalid date format. Allowed formats: \"dd-MM-YYYY\", \"dd/MM/YYYY\", \"dd.MM.YYYY\", \"YYYY-MM-dd\", \"YYYY/MM/dd\", \"YYYY.MM.dd\", \"MM-dd-YYYY\", \"MM/dd/YYYY\", \"MM.dd.YYYY\"", nameof(Content));
+                   // throw new ArgumentException("Invalid date format. Allowed formats: \"dd-MM-yyyy\", \"dd/MM/yyyy\", \"dd.MM.yyyy\", \"yyyy-MM-dd\", \"yyyy/MM/dd\", \"yyyy.MM.dd\", \"MM-dd-yyyy\", \"MM/dd/yyyy\", \"MM.dd.yyyy\"", nameof(Content));
                 }
                 content = value;    
             }

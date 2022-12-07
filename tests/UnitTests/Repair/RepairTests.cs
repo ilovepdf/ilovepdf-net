@@ -170,7 +170,7 @@ namespace Tests.Repair
         {
             InitApiWithRightCredentials();
 
-            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
+            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodMultipagePdfFile);
 
             Assert.IsTrue(RunTask());
         }

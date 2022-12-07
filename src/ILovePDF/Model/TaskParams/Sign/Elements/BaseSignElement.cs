@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 
 namespace LovePdf.Model.TaskParams.Sign.Elements
 {
-    public class BaseSignElement : ISignElement
+    public abstract class BaseSignElement : ISignElement
     {
         private string pages;
 
@@ -59,10 +59,12 @@ namespace LovePdf.Model.TaskParams.Sign.Elements
 
         /// <summary>
         /// Position of the element in X and Y coordinates.
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        [JsonProperty("position")]
+        /// </summary>  
+        [JsonIgnore]
         public Position Position { get; set; }
+
+        [JsonProperty("position")]
+        public string PositionString => $"{Position.X} {Position.Y}";
 
         /// <summary>
         /// Element size. It corresponds to the height of the element. Width will adapt automatically according to its content

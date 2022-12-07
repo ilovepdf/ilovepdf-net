@@ -35,7 +35,7 @@ namespace LovePdf.Model.TaskParams.Sign.Signers
         /// <summary> 
         /// Files that a receiver of type signer needs to sign.
         /// </summary>
-        [JsonProperty("files")]
+        [JsonIgnore] // [JsonProperty("files")]
         public List<SignerFile> Files { get; set; } = new List<SignerFile>();
 
         /// <summary>

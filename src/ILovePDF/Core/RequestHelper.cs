@@ -13,6 +13,8 @@ using LovePdf.Helpers;
 using LovePdf.Model.Enums;
 using LovePdf.Model.Exception;
 using LovePdf.Model.TaskParams;
+using LovePdf.Model.TaskParams.Sign.Elements;
+using LovePdf.Model.TaskParams.Sign.Signers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -158,7 +160,12 @@ namespace LovePdf.Core
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, link))
             {
-                var response = await HttpClient.SendAsync(request); 
+                var response = await HttpClient.SendAsync(request);
+                if (!response.IsSuccessStatusCode)
+                {
+                    await ProccessHttpResponseAsync(response).ConfigureAwait(false);
+                } 
+
                 response.EnsureSuccessStatusCode();
 
                 var responseContentStream =  await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
@@ -594,6 +601,36 @@ namespace LovePdf.Core
                 }
             }
 
+            if (@params is SignParams signParams)
+            {
+                var signers = signParams.Signers;
+                for (var index = 0; index < signers.Count; index++)
+                {
+                    var signerItem = signers[index];
+
+                    initialValues.AddRange(
+                        InitialValueHelper.GetInitialValues(signerItem, $"signers[{index}]"));
+
+                    if (signerItem is Signer signer)
+                    {
+                        for (var fileIndex = 0; fileIndex < signer.Files.Count; fileIndex++)
+                        { 
+                            var file = signer.Files[fileIndex];
+                            initialValues.AddRange(
+                                InitialValueHelper.GetInitialValues(file, $"signers[{index}][files][{fileIndex}]"));
+
+                            for (var elementIndex = 0; elementIndex < file.Elements.Count; elementIndex++)
+                            {
+                                var element = file.Elements[elementIndex];
+                                initialValues.AddRange(
+                                    InitialValueHelper.GetInitialValues(element, $"signers[{index}][files][{fileIndex}][elements][{elementIndex}]"));
+                            }
+                        } 
+                    } 
+                }
+            }
+
+
             for (var i = 0; i < files.Count; i++)
             {
                 initialValues.AddItem($"files[{i}][filename]", files[i].FileName);
@@ -647,7 +684,13 @@ namespace LovePdf.Core
                 if (parsedContent.error.type == EnumExtensions.GetEnumDescription(LovePdfErrors.UploadError))
                     return new UploadException(responseContent, exception);
 
-                return exception;
+                if (parsedContent.error.type == EnumExtensions.GetEnumDescription(LovePdfErrors.StartError))
+                    return new SignStartException(responseContent, exception);
+
+                if (parsedContent.error.type == EnumExtensions.GetEnumDescription(LovePdfErrors.SignatureError))
+                    return new SignatureException(responseContent, exception);
+
+                return new UndefinedException(responseContent, exception); 
             }
 
             if (response.StatusCode == HttpStatusCode.Unauthorized) // 401 Unauthorized

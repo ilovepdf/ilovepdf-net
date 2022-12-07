@@ -1,19 +1,25 @@
-﻿using LovePdf.Model.Exception;
+﻿using LovePdf.Core;
+using LovePdf.Model.Enums;
+using LovePdf.Model.Exception;
 using LovePdf.Model.Task;
 using LovePdf.Model.TaskParams;
-using LovePdf.Model.TaskParams.Edit;
+using LovePdf.Model.TaskParams.Sign;
+using LovePdf.Model.TaskParams.Sign.Elements;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
+using System.Linq;
 using System.Security.Authentication;
+using System.Threading.Tasks;
 
 namespace Tests.Edit
 {
     [TestClass]
     public class SignTests : BaseTest
-    {
+    {  
         public SignTests()
         {
-            TaskParams = new SignParams(); 
+            TaskParams = new SignParams();
             TaskParams.OutputFileName = @"result.pdf";
         }
 
@@ -55,7 +61,7 @@ namespace Tests.Edit
         [TestMethod]
         [ExpectedException(typeof(AuthenticationException),
             "A user with invalid credentials should not be allowed, but it was")]
-        public void Edit_WrongCredentials_ShouldThrowException()
+        public void Sign_WrongCredentials_ShouldThrowException()
         {
             InitApiWithWrongCredentials();
 
@@ -65,19 +71,8 @@ namespace Tests.Edit
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "A Damaged File should was inappropriately processed.")]
-        public void Edit_WrongFile_ShouldThrowException()
-        {
-            InitApiWithRightCredentials();
-
-            AddFile($"{Guid.NewGuid()}.pdf", Settings.BadPdfFile);
-
-            Assert.IsFalse(RunTask());
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(UploadException), "More files than allowed were inappropriately processed.")]
-        public void Edit_MaxFilesAdded_ShouldThrowException()
+        public void Sign_MaxFilesAdded_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
@@ -88,20 +83,8 @@ namespace Tests.Edit
         }
 
         [TestMethod]
-        public void Edit_BigOutputFileName_ShouldThrowException()
-        {
-            InitApiWithRightCredentials();
-
-            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
-
-            TaskParams.OutputFileName = Arrange_BigOutputFileName();
-
-            AssertThrowsException_BigOutputFileName(() => RunTask());
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), "Wrong Encryption Key was inappropriately processed.")]
-        public void Edit_WrongEncryptionKey_ShouldThrowException()
+        public void Sign_WrongEncryptionKey_ShouldThrowException()
         {
             InitApiWithRightCredentials();
 
@@ -110,67 +93,82 @@ namespace Tests.Edit
             TaskParams.FileEncryptionKey = Settings.WrongEncryptionKey;
 
             Assert.IsFalse(RunTask());
-        }
+        } 
 
         [TestMethod]
-        public void Edit_ProvidingEncryptKey_ShouldProcessOk()
+        public async Task Sign_ComplexTest_ShouldProcessOk()
         {
             InitApiWithRightCredentials();
 
-            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
+            CreateApiTask(false);
 
-            TaskParams.IgnoreErrors = false;
-            TaskParams.FileEncryptionKey = Settings.RightEncryptionKey;
+            // File variable contains server file name
+            var file = Task.AddFile($"{Settings.DataPath}{Path.DirectorySeparatorChar}{Settings.GoodPdfFile}");
 
-            Assert.IsTrue(RunTask());
+            // Create task params
+            var signParams = new SignParams();
+            signParams.ExpirationDays = 10;
+
+            // Create a signer
+            var signerEmail = "signer@example.com";
+            var signer = signParams.AddSigner("Signer", signerEmail);
+
+            // Add file that a receiver of type signer needs to sign.
+            var signerFile = signer.AddFile(file.ServerFileName);
+
+            // Add signers and their elements;
+            var signatureElement = signerFile.AddSignature();
+            signatureElement.Position = new Position(200, -20);
+            signatureElement.Pages = "1";
+            signatureElement.Size = 40;
+
+            var validator = signParams.AddValidator("Validator", "validator@example.com");
+
+            // Lastly send the signature request
+            var signature = await (Task as SignTask).RequestSignatureAsync(signParams);
+
+            var response = await (Task as SignTask).GetSignatureStatusAsync(signature.TokenRequester);
+            Assert.AreEqual("sent", response.Status);
+             
+            var increaseResonse = await (Task as SignTask).IncreaseExpirationDaysAsync(signature.TokenRequester, 10);
+            Assert.AreEqual(Convert.ToDateTime(signature.Expires).AddDays(10).Date,  Convert.ToDateTime(increaseResonse.Expires).Date);
+
+            var downloadedFile = await (Task as SignTask).DownloadOriginalFilesAsync(signature.TokenRequester, "./");
+            Assert.IsTrue(File.Exists(downloadedFile));
+
+            var signatures = await (Task as SignTask).GetSignaturesAsync(new ListRequest(0, 100));
+            Assert.IsTrue(signatures.Count > 0);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "Mistaken Password was inappropriately processed.")]
-        public void Edit_WrongPassword_ShouldThrowException()
+        public async Task Sign_RequestSignature_ShouldProccessOk()
         {
             InitApiWithRightCredentials();
 
-            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFilePasswordProtected, Settings.WrongPassword);
+            CreateApiTask(false);
 
-            Assert.IsFalse(RunTask());
-        }
+            // File variable contains server file name
+            var file = Task.AddFile($"{Settings.DataPath}{Path.DirectorySeparatorChar}{Settings.GoodPdfFile}");
 
-        [TestMethod]
-        public void Edit_RightPassword_ShouldProcessOk()
-        {
-            InitApiWithRightCredentials();
+            // Create task params
+            var signParams = new SignParams();
 
-            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFilePasswordProtected, Settings.RightPassword);
+            // Create a signer
+            var signerEmail = "signer@example.com";
+            var signer = signParams.AddSigner("Signer", signerEmail);
 
-            TaskParams.IgnoreErrors = false;
+            // Add file that a receiver of type signer needs to sign.
+            var signerFile = signer.AddFile(file.ServerFileName);
 
-            Assert.IsTrue(RunTask());
-        }
+            // Add signers and their elements;
+            var signatureElement = signerFile.AddSignature();
+            signatureElement.Position = new Position(200, -20);
+            signatureElement.Pages = "1";
+            signatureElement.Size = 40;
 
-        [TestMethod]
-        public void Edit_ProvidingPackageName_ShouldProcessOk()
-        {
-            InitApiWithRightCredentials();
-
-            for (var i = 0; i < 5; i++)
-                AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
-
-            TaskParams.PackageFileName = @"package";
-            TaskParams.IgnoreErrors = false;
-
-            Assert.IsTrue(RunTask());
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "Elements cannot be blank.")]
-        public void Edit_DefaultParams_ShouldThrowException()
-        {
-            InitApiWithRightCredentials();
-
-            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
-
-            Assert.IsTrue(RunTask());
-        }
+            // Lastly send the signature request
+            var signature = await (Task as SignTask).RequestSignatureAsync(signParams);
+            Assert.AreEqual(signerEmail, signature.Signers.First().Email);
+        } 
     }
 }
