@@ -4,6 +4,7 @@ using LovePdf.Model.TaskParams;
 using LovePdf.Model.TaskParams.Edit;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
 using System.Reflection;
 using System.Runtime.ConstrainedExecution;
 using System.Security.Authentication;
@@ -16,11 +17,6 @@ namespace Tests.Edit
         public EditTests()
         {  
             TaskParams = new EditParams();
-
-            // Add basic element 
-            TaskParams.AddText("Text for test");
-
-            TaskParams.OutputFileName = @"result.pdf";
         }
 
         private new EditParams TaskParams { get; }
@@ -31,10 +27,10 @@ namespace Tests.Edit
             Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
             CreateApiTask(encryptUsingBuiltinIfNoKeyPresent);
+                     
+            var taskWasOk = AddFilesToTask(addFilesByChunks);
 
             base.TaskParams = TaskParams;
-
-            var taskWasOk = AddFilesToTask(addFilesByChunks);
 
             if (taskWasOk)
                 taskWasOk = ProcessTask();
@@ -47,15 +43,12 @@ namespace Tests.Edit
 
         protected void CreateApiTask(Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
-            if (!IsTaskSetted)
-            {
-                if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
-                    Task = encryptUsingBuiltinIfNoKeyPresent
-                        ? Api.CreateTask<EditTask>(null, true)
-                        : Api.CreateTask<EditTask>();
-                else
-                    Task = Api.CreateTask<EditTask>(TaskParams.FileEncryptionKey);
-            }
+            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
+                Task = encryptUsingBuiltinIfNoKeyPresent
+                    ? Api.CreateTask<EditTask>(null, true)
+                    : Api.CreateTask<EditTask>();
+            else
+                Task = Api.CreateTask<EditTask>(TaskParams.FileEncryptionKey);
         }
 
         [TestMethod]
@@ -90,23 +83,26 @@ namespace Tests.Edit
 
             TaskParams.Clear();
             TaskParams.AddText("Text for test");
-              
+                        
             Assert.IsTrue(RunTask());
         }
 
         [TestMethod]
         public void Edit_UploadFileFromServer_AndAddImageElement_ShouldProcessOk()
         {
-            InitApiWithRightCredentials();
+            TaskParams.Clear();
+            TaskParams.OutputFileName = @"result.pdf";
 
+            InitApiWithRightCredentials();
+          
             AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
 
-            CreateApiTask(false);
-            var upload = AddFileToTask(new UriForTest { FileUri = new Uri(Settings.GoodJpgUrl) }, false);
-
-            TaskParams.Clear();
-            var image = TaskParams.AddImage(upload.ServerFileName);
-            image.Dimensions = new Dimension(200, 200);
+            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodJpgUrl) }, serverFileName => {
+                TaskParams.Elements.Clear();
+                var image = TaskParams.AddImage(serverFileName);
+                image.Dimensions = new Dimension(200, 200);
+                image.Coordinates = new Coordinate(1, 1);               
+            });          
 
             Assert.IsTrue(RunTask());
         }

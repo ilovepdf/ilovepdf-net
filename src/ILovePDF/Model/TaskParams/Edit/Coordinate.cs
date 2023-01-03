@@ -32,6 +32,18 @@ namespace LovePdf.Model.TaskParams.Edit
         }
 
         /// <summary>
+        ///  
+        /// </summary>
+        [JsonProperty("units")]
+        public float Units { get; set; }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        [JsonProperty("coord_frame")]
+        public float CoordFrame { get; set; }
+
+        /// <summary>
         /// Height of the element
         /// </summary>
         [JsonProperty("y")]
@@ -56,7 +68,7 @@ namespace LovePdf.Model.TaskParams.Edit
         public Coordinate(float x, float y)
         {
             this.X = x;
-            this.Y = y;
+            this.Y = y; 
         }
     }
 }
