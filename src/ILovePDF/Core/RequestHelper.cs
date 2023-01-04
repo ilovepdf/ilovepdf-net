@@ -630,7 +630,6 @@ namespace LovePdf.Core
                 }
             }
 
-
             for (var i = 0; i < files.Count; i++)
             {
                 initialValues.AddItem($"files[{i}][filename]", files[i].FileName);
@@ -645,7 +644,6 @@ namespace LovePdf.Core
                 var content = new StringContent(formDataValues.Value);
                 postMultipartFormDataContent.Add(content, StringHelpers.Invariant($"\"{formDataValues.Key}\""));
             }
-
         }
 
         private static Uri GetUri(string link)

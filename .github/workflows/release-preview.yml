@@ -1,6 +1,6 @@
 name: Release Preview (RC)
 
-# This workflow:
+    # This workflow:
 # - automatically increments the Prerelease (RC, beta, alfa) version of the library
 # - will create a new NuGet package
 # - publishes to nuget.org

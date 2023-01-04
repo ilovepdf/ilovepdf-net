@@ -47,6 +47,14 @@ namespace LovePdf.Model.TaskParams.Edit
         [JsonProperty("zindex")]
         public int ZIndex { get; set; } = 1;
 
+
+        /// <summary>
+        ///  
+        /// </summary>
+        [JsonProperty("gravity")]
+        public string Gravity { get; set; } = "Center";
+
+
         /// <summary>
         /// Size of the element.
         /// </summary>

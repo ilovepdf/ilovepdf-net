@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Authentication;
 using LovePdf.Model.Enums;
 using LovePdf.Model.Exception;
@@ -19,23 +20,18 @@ namespace Tests.WaterMark
             };
         }
 
-        private new WaterMarkParams TaskParams { get; }
+        private new WaterMarkParams TaskParams { get; set; }
 
         protected override Boolean DoRunTask(
             Boolean addFilesByChunks,
             Boolean downloadFileAsByteArray,
             Boolean encryptUsingBuiltinIfNoKeyPresent)
         {
-            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
-                Task = encryptUsingBuiltinIfNoKeyPresent
-                    ? Api.CreateTask<WaterMarkTask>(null, true)
-                    : Api.CreateTask<WaterMarkTask>();
-            else
-                Task = Api.CreateTask<WaterMarkTask>(TaskParams.FileEncryptionKey);
-
-            base.TaskParams = TaskParams;
+            CreateApiTask(encryptUsingBuiltinIfNoKeyPresent);
 
             var taskWasOk = AddFilesToTask(addFilesByChunks);
+
+            base.TaskParams = TaskParams;
 
             if (taskWasOk)
                 taskWasOk = ProcessTask();
@@ -44,6 +40,16 @@ namespace Tests.WaterMark
                 taskWasOk = DownloadResult(downloadFileAsByteArray);
 
             return taskWasOk;
+        }
+
+        private void CreateApiTask(bool encryptUsingBuiltinIfNoKeyPresent)
+        {
+            if (String.IsNullOrWhiteSpace(TaskParams.FileEncryptionKey))
+                Task = encryptUsingBuiltinIfNoKeyPresent
+                    ? Api.CreateTask<WaterMarkTask>(null, true)
+                    : Api.CreateTask<WaterMarkTask>();
+            else
+                Task = Api.CreateTask<WaterMarkTask>(TaskParams.FileEncryptionKey);
         }
 
         [TestMethod]
@@ -74,7 +80,7 @@ namespace Tests.WaterMark
         {
             InitApiWithRightCredentials();
 
-            AddFile(new UriForTest {FileUri = new Uri(Settings.GoodPdfUrl)});
+            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
 
             Assert.IsTrue(RunTask());
         }
@@ -148,7 +154,7 @@ namespace Tests.WaterMark
 
             AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFilePasswordProtected, Settings.WrongPassword);
 
-            TaskParams.Mode = (WaterMarkModes) 255;
+            TaskParams.Mode = (WaterMarkModes)255;
 
             Assert.IsFalse(RunTask());
         }
@@ -199,8 +205,13 @@ namespace Tests.WaterMark
 
             AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
 
-            TaskParams.Mode = WaterMarkModes.Image;
-            TaskParams.Image = Settings.GoodJpgUrl;
+            AddFile($"{Guid.NewGuid()}.png", Settings.GoodPngFile, null, serverFileName =>
+            {
+                TaskParams = new WaterMarkParams(new WatermarkModeImage(serverFileName));
+                TaskParams.Mode = WaterMarkModes.Image;
+                TaskParams.Image = serverFileName;
+                TaskParams.OutputFileName = @"result.pdf";
+            }); 
 
             Assert.IsTrue(RunTask());
         }
@@ -212,11 +223,18 @@ namespace Tests.WaterMark
 
             AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
 
-            TaskParams.Mode = WaterMarkModes.Multi;
-            TaskParams.Elements.Add(new WaterMarkParamsElement(
-                new WatermarkModeImage(Settings.GoodJpgUrl)));
-            TaskParams.Elements.Add(new WaterMarkParamsElement(
-                new WatermarkModeText(Settings.WaterMarkText)));
+            AddFile(new UriForTest { FileUri = new Uri(Settings.GoodJpgUrl) }, serverFileName =>
+            {
+                var elements = new List<WaterMarkParamsElement>()
+                {
+                    new WaterMarkParamsElement(new WatermarkModeImage(serverFileName)),
+                    new WaterMarkParamsElement(new WatermarkModeText(Settings.WaterMarkText))
+                };
+
+                TaskParams = new WaterMarkParams(elements);
+                TaskParams.Mode = WaterMarkModes.Multi;
+                TaskParams.OutputFileName = @"result.pdf";
+            });
 
             Assert.IsTrue(RunTask());
         }

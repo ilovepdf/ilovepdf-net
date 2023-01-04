@@ -10,6 +10,6 @@ namespace Tests
         }
 
         public String Password { get; set; }
-        public LovePdf.Model.Enums.Rotate Rotation { get; set; }
+        public LovePdf.Model.Enums.Rotate Rotation { get; set; } 
     }
 }
