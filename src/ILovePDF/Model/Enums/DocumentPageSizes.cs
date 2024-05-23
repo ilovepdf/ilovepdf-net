@@ -36,7 +36,7 @@ namespace LovePdf.Model.Enums
         /// <summary>
         /// Your final document will have an A6 standard size and your web page will fit in that size.
         /// </summary>
-        [EnumMember(Value = "A5")] A6,
+        [EnumMember(Value = "A6")] A6,
 
         /// <summary>
         /// Your final document will have Letter standard size and your web page will fit in that size.
