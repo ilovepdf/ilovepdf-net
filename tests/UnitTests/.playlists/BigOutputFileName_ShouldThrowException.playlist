@@ -1,0 +1,286 @@
+<Playlist Version="2.0">
+  <Rule Name="Includes" Match="Any">
+    <Rule Match="All">
+      <Property Name="Solution" />
+      <Rule Match="Any">
+        <Rule Match="All">
+          <Property Name="Project" Value="Tests" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.Compress" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="CompressTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.Compress.CompressTests.Compress_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Compress_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.Edit" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="EditTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.Edit.EditTests.Edit_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Edit_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.Rotate" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="RotateTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.Rotate.RotateTests.Rotate_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Rotate_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.Unlock" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="UnlockTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.Unlock.UnlockTests.Unlock_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Unlock_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.HtmlToPdf" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="HtmlToPdfTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.HtmlToPdf.HtmlToPdfTests.HtmlToPdf_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="HtmlToPdf_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.WaterMark" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="WaterMarkTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.WaterMark.WaterMarkTests.WaterMark_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="WaterMark_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.Merge" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="MergeTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.Merge.MergeTests.Merge_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Merge_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.PageNumbers" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="PageNumbersTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.PageNumbers.PageNumbersTests.PageNumbers_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="PageNumbers_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.OfficeToPdf" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="OfficeToPdfTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.OfficeToPdf.OfficeToPdfTests.OfficeToPdf_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="OfficeToPdf_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.PdfToJpg" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="PdfToJpgTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.PdfToJpg.PdfToJpgTests.PdfToJpg_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="PdfToJpg_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.Repair" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="RepairTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.Repair.RepairTests.Repair_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Repair_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.ImageToPdf" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="OfficeToPdfTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.ImageToPdf.OfficeToPdfTests.ImageToPdf_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ImageToPdf_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.Protect" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ProtectTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.Protect.ProtectTests.Protect_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Protect_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.PdfToPdfA" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="PdfToPdfATests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.PdfToPdfA.PdfToPdfATests.PdfToPdfA_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="PdfToPdfA_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.ValidatePdfA" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ValidatePdfATests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.ValidatePdfA.ValidatePdfATests.ValidatePdfA_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ValidatePdfA_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.Split" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="SplitTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.Split.SplitTests.Split_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Split_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Tests.Extract" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ExtractTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Tests.Extract.ExtractTests.Extract_BigOutputFileName_ShouldThrowException" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Extract_BigOutputFileName_ShouldThrowException" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Playlist>
