@@ -38,8 +38,6 @@ namespace Tests
         public const String GoodHtmlUrl = @"http://www.orimi.com/";
         public const String BadHtmlUrl = @"http://www.orimi.com:8888/";
 
-        public const String GoodHtmlUrl = @"https://www.w3.org/Index.html";
-        public const String BadHtmlUrl = @"http://w6.com/";
 
         public const String GoodMultipagePdfUrl =
             @"https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf";
