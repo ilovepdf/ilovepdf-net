@@ -99,5 +99,10 @@ namespace LovePdf.Model.Enums
         /// Edit
         /// </summary>
         [Description("sign")] Sign = 17,
+
+        /// <summary>
+        /// Edit
+        /// </summary>
+        [Description("pdfocr")] Pdfocr = 18,
     }
 }
