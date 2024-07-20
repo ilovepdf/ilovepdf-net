@@ -53,6 +53,8 @@ namespace LovePdf.Core
         private RequestHelper()
         {
             _xHttpClient = new HttpClient();
+            _xHttpClient.Timeout = TimeSpan.FromSeconds(30);
+
         }
 
         private string JwtToken { get; set; }
@@ -66,7 +68,6 @@ namespace LovePdf.Core
         {
             get
             {
-                _xHttpClient.Timeout = TimeSpan.FromSeconds(30);
                 AddAuthorizationHeader(_xHttpClient);
                 return _xHttpClient;
             }
