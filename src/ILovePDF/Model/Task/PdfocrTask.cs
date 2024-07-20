@@ -22,7 +22,7 @@ namespace LovePdf.Model.Task
         /// <returns></returns>
         public ExecuteTaskResponse Process()
         {
-            var parameters = new CompressParams();
+            var parameters = new PDFOCRParams();
 
             return base.Process(parameters);
         }
@@ -33,10 +33,10 @@ namespace LovePdf.Model.Task
         /// <param name="parameters"></param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
-        public ExecuteTaskResponse Process(CompressParams parameters)
+        public ExecuteTaskResponse Process(PDFOCRParams parameters)
         {
             if (parameters == null)
-                parameters = new CompressParams();
+                parameters = new PDFOCRParams();
 
             return base.Process(parameters);
         }

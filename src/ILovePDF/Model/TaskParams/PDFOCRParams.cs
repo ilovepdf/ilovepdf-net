@@ -4,6 +4,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static LovePdf.Model.Enums.OCRLanguage;
 
 namespace LovePdf.Model.TaskParams
 {
@@ -25,11 +26,15 @@ namespace LovePdf.Model.TaskParams
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("ocr_languages")]
-        public CompressionLevels CompressionLevel { get; set; }
+        public List<OCRLanguage> OCRLanguages { get; set; }
 
         private void setDefaultValues()
         {
-            CompressionLevel = CompressionLevels.Recommended;
+            OCRLanguages = new List<OCRLanguage>()
+            {
+               OCRLanguage.Eng
+            };
+
         }
     }
 }

@@ -87,8 +87,7 @@ namespace LovePdf.Model.Enums
         /// <summary>
         /// Html To Pdf
         /// </summary>
-        [Description("htmlpdf")]
-        HtmlToPdf = 15,
+        [Description("htmlpdf")] HtmlToPdf = 15,
 
         /// <summary>
         /// Edit
