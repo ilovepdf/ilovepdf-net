@@ -20,6 +20,11 @@ namespace LovePdf.Model.Enums
         /// <summary>
         ///     Low
         /// </summary>
-        [EnumMember(Value = "low")] Low
+        [EnumMember(Value = "low")] Low,
+
+        /// <summary>
+        ///     SuperLow
+        /// </summary>
+        [EnumMember(Value = "superlow")] SuperLow
     }
 }
