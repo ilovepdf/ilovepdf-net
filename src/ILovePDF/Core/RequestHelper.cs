@@ -66,6 +66,7 @@ namespace LovePdf.Core
         {
             get
             {
+                _xHttpClient.Timeout = TimeSpan.FromSeconds(30);
                 AddAuthorizationHeader(_xHttpClient);
                 return _xHttpClient;
             }
