@@ -3,6 +3,7 @@ using LovePdf.Model.Enums;
 using LovePdf.Model.Task;
 using LovePdf.Model.TaskParams;
 using LovePdf.Model.TaskParams.Sign.Elements;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -39,7 +40,7 @@ namespace Samples
 
             // Set brand
             var logo = task.AddFile("path/to/file/logo.png");
-            signParams.SetBrand("My brand name", logo.ServerFileName);
+            signParams.SetBrand("My brand name", new Uri(""), task);
 
             ///////////////
             // RECEIVERS //

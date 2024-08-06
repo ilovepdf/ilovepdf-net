@@ -108,12 +108,62 @@ namespace LovePdf.Model.Task
         /// <summary>
         ///     Upload file to the ILovePdf server from local drive.
         /// </summary>
+        /// <param name="UriFile"></param>
+        /// <param name="taskId">if no task provided will be used last one from create task method.</param>
+        /// <param name="serverUrl"></param>
+        /// <returns>Server file name</returns>
+        [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
+        public UploadTaskResponse AddFileLogo(Uri UriFile, String taskId, Uri serverUrl)
+        {
+            return AddFileLogo(UriFile, taskId, serverUrl, Rotate.Degrees0);
+        }
+
+        /// <summary>
+        ///     Upload file to the ILovePdf server from local drive.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="taskId">if no task provided will be used last one from create task method.</param>
+        /// <param name="serverUrl"></param>
+        /// <param name="rotate"></param>
+        /// <returns>Server file name</returns>
+        [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
+        public UploadTaskResponse AddFileLogo(Uri UriFile, String taskId, Uri serverUrl, Rotate rotate)
+        {
+            if (UriFile == null)
+                throw new ArgumentException("cannot be null", nameof(UriFile));
+
+            var requestTaskId = String.IsNullOrWhiteSpace(taskId) ? TaskId : taskId;
+
+            var response = RequestHelper.Instance.UploadFile(serverUrl, UriFile, requestTaskId);
+
+            //TODO check filename
+            var fileName = Path.GetFileName(UriFile.AbsoluteUri);
+
+            if (string.IsNullOrEmpty(fileName))
+            {
+                var host = UriFile.Host;
+                if (host.Contains('.'))
+                {
+                    var parts = UriFile.Host.Split('.');
+                    fileName = parts[parts.Length - 2];
+                }
+                else
+                {
+                    fileName = host;
+                }
+            }
+
+            return response;
+        }
+        /// <summary>
+        ///     Upload file to the ILovePdf server from local drive.
+        /// </summary>
         /// <param name="path"></param>
         /// <param name="taskId">if no task provided will be used last one from create task method.</param>
         /// <param name="serverUrl"></param>
         /// <returns>Server file name</returns>
         [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
-        public UploadTaskResponse AddFileLogo(Uri path, String taskId, Uri serverUrl)
+        public UploadTaskResponse AddFileLogo(string path, String taskId, Uri serverUrl)
         {
             return AddFileLogo(path, taskId, serverUrl, Rotate.Degrees0);
         }
@@ -127,31 +177,12 @@ namespace LovePdf.Model.Task
         /// <param name="rotate"></param>
         /// <returns>Server file name</returns>
         [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
-        public UploadTaskResponse AddFileLogo(Uri cloudLink, String taskId, Uri serverUrl, Rotate rotate)
+        public UploadTaskResponse AddFileLogo(string path, String taskId, Uri serverUrl, Rotate rotate)
         {
-            if (cloudLink == null)
-                throw new ArgumentException("cannot be null", nameof(cloudLink));
+            var fileInfo = new FileInfo(path);
+            if (!fileInfo.Exists) throw new FileNotFoundException("File not found", fileInfo.FullName);
 
-            var requestTaskId = String.IsNullOrWhiteSpace(taskId) ? TaskId : taskId;
-
-            var response = RequestHelper.Instance.UploadFile(serverUrl, cloudLink, requestTaskId);
-
-            //TODO check filename
-            var fileName = Path.GetFileName(cloudLink.AbsoluteUri);
-
-            if (string.IsNullOrEmpty(fileName))
-            {
-                var host = cloudLink.Host;
-                if (host.Contains('.'))
-                {
-                    var parts = cloudLink.Host.Split('.');
-                    fileName = parts[parts.Length - 2];
-                }
-                else
-                {
-                    fileName = host;
-                }
-            }
+            var response = RequestHelper.Instance.UploadFile(serverUrl, fileInfo, taskId);
 
             return response;
         }
