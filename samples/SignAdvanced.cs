@@ -40,7 +40,7 @@ namespace Samples
 
             // Set brand
             signParams.SetBrand("My brand name", new Uri(""), task);
-            signParams.SetBrand("My brand name", "path/to/file/document.jpg", task);
+            //signParams.SetBrand("My brand name", "path/to/file/document.jpg", task);
 
             ///////////////
             // RECEIVERS //
