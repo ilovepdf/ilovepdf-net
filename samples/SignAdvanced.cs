@@ -39,8 +39,8 @@ namespace Samples
             signParams.UuidVisible = true;
 
             // Set brand
-            var logo = task.AddFile("path/to/file/logo.png");
             signParams.SetBrand("My brand name", new Uri(""), task);
+            signParams.SetBrand("My brand name", "path/to/file/document.jpg", task);
 
             ///////////////
             // RECEIVERS //
