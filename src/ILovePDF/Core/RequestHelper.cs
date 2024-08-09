@@ -32,7 +32,7 @@ using System.Threading.Tasks;
 
 namespace LovePdf.Core
 { 
-    internal partial class RequestHelper 
+    internal sealed partial class RequestHelper 
     { 
         private readonly Int16 _jwtDelay = 5400;
         private byte[] _privateKey;

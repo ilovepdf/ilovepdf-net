@@ -6,7 +6,7 @@ namespace LovePdf.Core
     /// <summary>
     ///     File Parameter
     /// </summary>
-    internal class FileParameter
+    internal sealed class FileParameter
     {
         /// <summary>
         ///     File Parameter Constructor
