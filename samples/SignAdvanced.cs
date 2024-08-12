@@ -88,7 +88,7 @@ namespace Samples
             nameElement.Pages = "1";
 
             var textElement = signerFile.AddText("This is a text field");
-            textElement.Position = new Position("70", "-70");
+            textElement.Position = new Position("left", "bottom");
             textElement.Size = 40;
             textElement.Pages = "1";
 
