@@ -65,30 +65,30 @@ namespace Samples
             // - you can define multiple ranges, e.g. "1,2,3-6"
 
             var signatureElement = signerFile.AddSignature();
-            signatureElement.Position = new Position(20, -20);
+            signatureElement.Position = new Position("20", "-20");
             signatureElement.Pages = "1,2";
 
             var dateElement = signerFile.AddDate("12/12/2022");
-            dateElement.Position = new Position(30, -30);
+            dateElement.Position = new Position("30", "-30");
             dateElement.Pages = "1-3";
 
             var initialsElement = signerFile.AddInitials();
-            initialsElement.Position = new Position(40, -40);
+            initialsElement.Position = new Position("40", "-40");
             initialsElement.Pages = "1,2,3-6";
 
             var inputElement = signerFile.AddInput();
-            inputElement.Position = new Position(50, -50);
+            inputElement.Position = new Position("50", "-50");
             inputElement.Label = "Passport Number";
             inputElement.Description = "Please put your passport number";
             inputElement.Pages = "1";
 
             var nameElement = signerFile.AddName();
-            nameElement.Position = new Position(60, -60);
+            nameElement.Position = new Position("60", "-60");
             nameElement.Size = 40;
             nameElement.Pages = "1";
 
             var textElement = signerFile.AddText("This is a text field");
-            textElement.Position = new Position(70, -70);
+            textElement.Position = new Position("70", "-70");
             textElement.Size = 40;
             textElement.Pages = "1";
 

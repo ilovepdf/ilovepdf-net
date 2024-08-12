@@ -30,7 +30,7 @@ namespace LovePdf.Model.TaskParams.Sign.Signers
         /// <inheritdoc cref="SignElementTypes.Text"/>
         public TextElement AddText(string text)
         {
-            var element = new TextElement(text, "1", new Position(50, -50));
+            var element = new TextElement(text, "1", new Position("50", "-50"));
             Elements.Add(element);
             return element;
         }
@@ -38,7 +38,7 @@ namespace LovePdf.Model.TaskParams.Sign.Signers
         /// <inheritdoc cref="SignElementTypes.Date"/>
         public DateElement AddDate(string date)
         {
-            var element = new DateElement(date, "1", new Position(50, -50));
+            var element = new DateElement(date, "1", new Position("50", "-50"));
             Elements.Add(element);
             return element;
         }
@@ -46,7 +46,7 @@ namespace LovePdf.Model.TaskParams.Sign.Signers
         /// <inheritdoc cref="SignElementTypes.Initials"/>
         public InitialsElement AddInitials()
         {
-            var element = new InitialsElement("1", new Position(50, -50));
+            var element = new InitialsElement("1", new Position("50", "-50"));
             Elements.Add(element);
             return element;
         }
@@ -54,7 +54,7 @@ namespace LovePdf.Model.TaskParams.Sign.Signers
         /// <inheritdoc cref="SignElementTypes.Input"/>
         public InputElement AddInput()
         {
-            var element = new InputElement("1", new Position(50, -50));
+            var element = new InputElement("1", new Position("50", "-50"));
             Elements.Add(element);
             return element;
         }
@@ -62,7 +62,7 @@ namespace LovePdf.Model.TaskParams.Sign.Signers
         /// <inheritdoc cref="SignElementTypes.Name"/>
         public NameElement AddName()
         {
-            var element = new NameElement("1", new Position(50, -50));
+            var element = new NameElement("1", new Position("50", "-50"));
             Elements.Add(element);
             return element;
         }
@@ -70,7 +70,7 @@ namespace LovePdf.Model.TaskParams.Sign.Signers
         /// <inheritdoc cref="SignElementTypes.Signature"/>
         public SignatureElement AddSignature()
         {
-            var element = new SignatureElement("1", new Position(50, -50));
+            var element = new SignatureElement("1", new Position("50", "-50"));
             Elements.Add(element);
             return element;
         }

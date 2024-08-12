@@ -10,8 +10,8 @@ namespace LovePdf.Model.TaskParams.Sign.Elements
     /// </summary>
     public class Position
     {
-        private float x;
-        private float y;
+        private string x;
+        private string y;
 
         /// <summary>
         /// Width of the element
@@ -19,15 +19,11 @@ namespace LovePdf.Model.TaskParams.Sign.Elements
         [JsonProperty("x")]
         [Required]
         [Range(0, float.MaxValue)]
-        public float X
+        public string X
         {
             get => x;
             set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(X), "Invalid X value: it must be a number greater or equal to 0");
-                }
                 x = value;
             }
         }
@@ -38,15 +34,11 @@ namespace LovePdf.Model.TaskParams.Sign.Elements
         [JsonProperty("y")]
         [Required]
         [Range(float.MinValue, 0)]
-        public float Y
+        public string Y
         {
             get => y;
             set
             {
-                if (value > 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(Y), "Invalid Y value: it must be a number lower or equal to 0");
-                }
                 y = value;
             }
         } 
@@ -54,7 +46,7 @@ namespace LovePdf.Model.TaskParams.Sign.Elements
         /// <summary>
         /// Coordinate
         /// </summary>
-        public Position(float x, float y)
+        public Position(string x, string y)
         {
             this.X = x;
             this.Y = y;
