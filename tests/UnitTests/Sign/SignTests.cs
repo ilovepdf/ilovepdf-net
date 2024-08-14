@@ -118,7 +118,7 @@ namespace Tests.Edit
 
             // Add signers and their elements;
             var signatureElement = signerFile.AddSignature();
-            signatureElement.Position = new Position(200, -20);
+            signatureElement.Position = new Position("200", "-20");
             signatureElement.Pages = "1";
             signatureElement.Size = 40;
 
@@ -162,7 +162,7 @@ namespace Tests.Edit
 
             // Add signers and their elements;
             var signatureElement = signerFile.AddSignature();
-            signatureElement.Position = new Position(200, -20);
+            signatureElement.Position = new Position("200", "-20");
             signatureElement.Pages = "1";
             signatureElement.Size = 40;
 

@@ -125,32 +125,15 @@ namespace LovePdf.Model.TaskParams
         /// <param name="name">Name of your brand.</param>
         /// <param name="logoServerFileName">Server filename of the uploaded logo file.</param>
         /// <returns></returns>
-        public SignParams SetBrand(string name, Uri UriFile, SignTask signTask)
+        public SignParams SetBrand(string name, string serverFileName)
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(serverFileName))
             {
-                throw new ArgumentNullException(nameof(name), "Parameter name is mandatory.");
-            }           
-
-            var uploadTaskResponse = SignTask.Instance.AddFileLogo(UriFile, signTask.TaskId, signTask.ServerUrl);
+                throw new ArgumentNullException(nameof(name), "Parameters are mandatory.");
+            }         
 
             this.BrandName = name;
-            this.BrandLogo = uploadTaskResponse.ServerFileName;
-
-            return this;
-        }
-
-        public SignParams SetBrand(string name, string path, SignTask signTask)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ArgumentNullException(nameof(name), "Parameter name is mandatory.");
-            }
-
-            var uploadTaskResponse = SignTask.Instance.AddFileLogo(path, signTask.TaskId, signTask.ServerUrl);
-
-            this.BrandName = name;
-            this.BrandLogo = uploadTaskResponse.ServerFileName;
+            this.BrandLogo = serverFileName;
 
             return this;
         }

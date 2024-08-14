@@ -109,25 +109,23 @@ namespace LovePdf.Model.Task
         ///     Upload file to the ILovePdf server from local drive.
         /// </summary>
         /// <param name="UriFile"></param>
-        /// <param name="taskId">if no task provided will be used last one from create task method.</param>
-        /// <param name="serverUrl"></param>
         /// <returns>Server file name</returns>
         [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
-        public UploadTaskResponse AddFileLogo(Uri UriFile, String taskId, Uri serverUrl)
+        public UploadTaskResponse UploadBrandLogoFromUrl(Uri UriFile)
         {
-            return AddFileLogo(UriFile, taskId, serverUrl, Rotate.Degrees0);
+            return UploadBrandLogoFromUrl(UriFile, TaskId, ServerUrl, Rotate.Degrees0);
         }
 
         /// <summary>
         ///     Upload file to the ILovePdf server from local drive.
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="UriFile"></param>
         /// <param name="taskId">if no task provided will be used last one from create task method.</param>
         /// <param name="serverUrl"></param>
         /// <param name="rotate"></param>
         /// <returns>Server file name</returns>
         [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
-        public UploadTaskResponse AddFileLogo(Uri UriFile, String taskId, Uri serverUrl, Rotate rotate)
+        public UploadTaskResponse UploadBrandLogoFromUrl(Uri UriFile, String taskId, Uri serverUrl, Rotate rotate)
         {
             if (UriFile == null)
                 throw new ArgumentException("cannot be null", nameof(UriFile));
@@ -159,13 +157,11 @@ namespace LovePdf.Model.Task
         ///     Upload file to the ILovePdf server from local drive.
         /// </summary>
         /// <param name="path"></param>
-        /// <param name="taskId">if no task provided will be used last one from create task method.</param>
-        /// <param name="serverUrl"></param>
         /// <returns>Server file name</returns>
         [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
-        public UploadTaskResponse AddFileLogo(string path, String taskId, Uri serverUrl)
+        public UploadTaskResponse UploadBrandLogo(string path)
         {
-            return AddFileLogo(path, taskId, serverUrl, Rotate.Degrees0);
+            return UploadBrandLogo(path, TaskId, ServerUrl, Rotate.Degrees0);
         }
 
         /// <summary>
@@ -177,7 +173,7 @@ namespace LovePdf.Model.Task
         /// <param name="rotate"></param>
         /// <returns>Server file name</returns>
         [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
-        public UploadTaskResponse AddFileLogo(string path, String taskId, Uri serverUrl, Rotate rotate)
+        public UploadTaskResponse UploadBrandLogo(string path, string taskId, Uri serverUrl, Rotate rotate)
         {
             var fileInfo = new FileInfo(path);
             if (!fileInfo.Exists) throw new FileNotFoundException("File not found", fileInfo.FullName);
