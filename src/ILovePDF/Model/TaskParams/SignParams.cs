@@ -1,10 +1,12 @@
 ﻿using LovePdf.Attributes;
 using LovePdf.Model.Enums;
+using LovePdf.Model.Task;
 using LovePdf.Model.TaskParams.Sign.Elements;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LovePdf.Model.TaskParams
 {
@@ -13,8 +15,6 @@ namespace LovePdf.Model.TaskParams
     /// </summary>
     public partial class SignParams : BaseParams
     {
-        private string name;
-        private string logoServerFileName;
         private int expirationDays = 120;
 
         public SignParams(List<ISignSigner> signers = null)
@@ -29,13 +29,13 @@ namespace LovePdf.Model.TaskParams
         /// Name of your brand. Update value using "SetBrand" method.
         /// </summary> 
         [JsonProperty("brand_name")]
-        public string BrandName => name;
+        public string BrandName { get; set; }
 
         /// <summary>
         /// Server filename of the uploaded logo file.
         /// </summary> 
         [JsonProperty("brand_logo")]
-        public string BrandLogo => logoServerFileName;
+        public string BrandLogo { get; set; }
 
         /// <summary>
         /// Receivers will receive emails in the provided language.
@@ -125,19 +125,15 @@ namespace LovePdf.Model.TaskParams
         /// <param name="name">Name of your brand.</param>
         /// <param name="logoServerFileName">Server filename of the uploaded logo file.</param>
         /// <returns></returns>
-        public SignParams SetBrand(string name, string logoServerFileName)
+        public SignParams SetBrand(string name, string serverFileName)
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(serverFileName))
             {
-                throw new ArgumentNullException(nameof(name), "Parameter name is mandatory.");
-            }
-            else if (string.IsNullOrEmpty(logoServerFileName))
-            {
-                throw new ArgumentNullException(nameof(logoServerFileName), "Parameter logoServerFileName is mandatory.");
-            }
+                throw new ArgumentNullException(nameof(name), "Parameters are mandatory.");
+            }         
 
-            this.name = name;
-            this.logoServerFileName = logoServerFileName;
+            this.BrandName = name;
+            this.BrandLogo = serverFileName;
 
             return this;
         }

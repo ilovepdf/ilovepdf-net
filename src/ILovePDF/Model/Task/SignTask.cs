@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using LovePdf.Core.Sign;
 using LovePdf.Model.TaskParams.Sign;
 using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace LovePdf.Model.Task
 {
@@ -14,6 +18,8 @@ namespace LovePdf.Model.Task
     /// </summary>
     public class SignTask : LovePdfTask
     {
+        private static SignTask _instance;
+        public static SignTask Instance => _instance ?? (_instance = new SignTask());
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.Sign);
 
@@ -97,6 +103,84 @@ namespace LovePdf.Model.Task
         public System.Threading.Tasks.Task<ReceiverInfoResponse> SendRemindersAsync(string tokenRequester)
         {
             return RequestHelper.Instance.SendRemindersAsync(ServerUrl, tokenRequester);
+        }
+
+        /// <summary>
+        ///     Upload file to the ILovePdf server from local drive.
+        /// </summary>
+        /// <param name="UriFile"></param>
+        /// <returns>Server file name</returns>
+        [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
+        public UploadTaskResponse UploadBrandLogoFromUrl(Uri UriFile)
+        {
+            return UploadBrandLogoFromUrl(UriFile, TaskId, ServerUrl, Rotate.Degrees0);
+        }
+
+        /// <summary>
+        ///     Upload file to the ILovePdf server from local drive.
+        /// </summary>
+        /// <param name="UriFile"></param>
+        /// <param name="taskId">if no task provided will be used last one from create task method.</param>
+        /// <param name="serverUrl"></param>
+        /// <param name="rotate"></param>
+        /// <returns>Server file name</returns>
+        [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
+        public UploadTaskResponse UploadBrandLogoFromUrl(Uri UriFile, String taskId, Uri serverUrl, Rotate rotate)
+        {
+            if (UriFile == null)
+                throw new ArgumentException("cannot be null", nameof(UriFile));
+
+            var requestTaskId = String.IsNullOrWhiteSpace(taskId) ? TaskId : taskId;
+
+            var response = RequestHelper.Instance.UploadFile(serverUrl, UriFile, requestTaskId);
+
+            //TODO check filename
+            var fileName = Path.GetFileName(UriFile.AbsoluteUri);
+
+            if (string.IsNullOrEmpty(fileName))
+            {
+                var host = UriFile.Host;
+                if (host.Contains('.'))
+                {
+                    var parts = UriFile.Host.Split('.');
+                    fileName = parts[parts.Length - 2];
+                }
+                else
+                {
+                    fileName = host;
+                }
+            }
+
+            return response;
+        }
+        /// <summary>
+        ///     Upload file to the ILovePdf server from local drive.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns>Server file name</returns>
+        [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
+        public UploadTaskResponse UploadBrandLogo(string path)
+        {
+            return UploadBrandLogo(path, TaskId, ServerUrl, Rotate.Degrees0);
+        }
+
+        /// <summary>
+        ///     Upload file to the ILovePdf server from local drive.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="taskId">if no task provided will be used last one from create task method.</param>
+        /// <param name="serverUrl"></param>
+        /// <param name="rotate"></param>
+        /// <returns>Server file name</returns>
+        [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
+        public UploadTaskResponse UploadBrandLogo(string path, string taskId, Uri serverUrl, Rotate rotate)
+        {
+            var fileInfo = new FileInfo(path);
+            if (!fileInfo.Exists) throw new FileNotFoundException("File not found", fileInfo.FullName);
+
+            var response = RequestHelper.Instance.UploadFile(serverUrl, fileInfo, taskId);
+
+            return response;
         }
 
         #region Unsupported methods 

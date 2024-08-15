@@ -3,6 +3,7 @@ using LovePdf.Model.Enums;
 using LovePdf.Model.Task;
 using LovePdf.Model.TaskParams;
 using LovePdf.Model.TaskParams.Sign.Elements;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -38,8 +39,12 @@ namespace Samples
             signParams.UuidVisible = true;
 
             // Set brand
-            var logo = task.AddFile("path/to/file/logo.png");
-            signParams.SetBrand("My brand name", logo.ServerFileName);
+            //Upload brand logo file FromUrl
+            var logoFile = task.UploadBrandLogoFromUrl(new Uri("https://UriToFile/document.jpg"));
+            //Upload brand logo file from local path
+            //var logoFile = task.UploadBrandLogo("path/to/file/document.jpg");
+            //Set brand params
+            signParams.SetBrand("My brand name", logoFile.ServerFileName);
 
             ///////////////
             // RECEIVERS //
@@ -64,30 +69,30 @@ namespace Samples
             // - you can define multiple ranges, e.g. "1,2,3-6"
 
             var signatureElement = signerFile.AddSignature();
-            signatureElement.Position = new Position(20, -20);
+            signatureElement.Position = new Position("20", "-20");
             signatureElement.Pages = "1,2";
 
             var dateElement = signerFile.AddDate("12/12/2022");
-            dateElement.Position = new Position(30, -30);
+            dateElement.Position = new Position("30", "-30");
             dateElement.Pages = "1-3";
 
             var initialsElement = signerFile.AddInitials();
-            initialsElement.Position = new Position(40, -40);
+            initialsElement.Position = new Position("40", "-40");
             initialsElement.Pages = "1,2,3-6";
 
             var inputElement = signerFile.AddInput();
-            inputElement.Position = new Position(50, -50);
+            inputElement.Position = new Position("50", "-50");
             inputElement.Label = "Passport Number";
             inputElement.Description = "Please put your passport number";
             inputElement.Pages = "1";
 
             var nameElement = signerFile.AddName();
-            nameElement.Position = new Position(60, -60);
+            nameElement.Position = new Position("60", "-60");
             nameElement.Size = 40;
             nameElement.Pages = "1";
 
             var textElement = signerFile.AddText("This is a text field");
-            textElement.Position = new Position(70, -70);
+            textElement.Position = new Position("left", "bottom");
             textElement.Size = 40;
             textElement.Pages = "1";
 
