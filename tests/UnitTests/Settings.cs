@@ -34,7 +34,7 @@ namespace Tests
         public const String BadPngFile = @"should-fail.png";
         public const String GoodTiffFile = @"should-work.tiff";
         public const String BadTiffFile = @"should-fail.tiff";
-        public const String GoodPdfUrl = @"https://www.gemini.com/documents/credit/Test_PDF.pdf";
+        public const String GoodPdfUrl = @"https://hutchesonlab.fiu.edu/wp-content/uploads/sample-pdf.pdf";
         public const String GoodHtmlUrl = @"http://www.orimi.com/";
         public const String BadHtmlUrl = @"http://www.orimi.com:8888/";
 
@@ -56,7 +56,7 @@ namespace Tests
         public const Int32 MaxCharactersInFilename = 130;
         public const Int32 TimeoutSeconds = 60;
         public const String DefaultMultipageOutput = "output.zip";
-        public const String DefaultSinglepageOutput = "result.pdf";
+        public const String DefaultSinglepageOutput = "sample-pdf.pdf";
         public static String BasePath => $"{AppDomain.CurrentDomain.SetupInformation.ApplicationBase}";
         public static String DataPath => $"{BasePath}{Path.DirectorySeparatorChar}Data";
     }

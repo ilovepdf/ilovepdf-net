@@ -81,6 +81,7 @@ namespace Tests.Edit
 
             AddFile(new UriForTest { FileUri = new Uri(Settings.GoodPdfUrl) });
 
+            TaskParams.OutputFileName = @"result.pdf";
             TaskParams.Clear();
             TaskParams.AddText("Text for test");
                         
