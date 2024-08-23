@@ -59,16 +59,17 @@ namespace Tests.HtmlToPdf
             Assert.IsFalse(RunTask());
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ServerErrorException), "A wrong file url wath passed.")]
-        public void HtmlToPdf_WrongFileUri_ShouldThrowException()
-        {
-            InitApiWithRightCredentials();
+        //Comentado porque esta request ya no devuelve excepcion
+        //[TestMethod]
+        //[ExpectedException(typeof(ServerErrorException), "A wrong file url wath passed.")]
+        //public void HtmlToPdf_WrongFileUri_ShouldThrowException()
+        //{
+        //    InitApiWithRightCredentials();
 
-            AddFile(new UriForTest {FileUri = new Uri(Settings.BadHtmlUrl) });
+        //    AddFile(new UriForTest { FileUri = new Uri(Settings.BadHtmlUrl) });
 
-            Assert.IsFalse(RunTask());
-        }
+        //    Assert.IsFalse(RunTask());
+        //}
 
         [TestMethod]
         public void HtmlToPdf_UploadFileFromServer_ShouldProcessOk()

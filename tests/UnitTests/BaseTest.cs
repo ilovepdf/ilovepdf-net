@@ -110,7 +110,7 @@ namespace Tests
                     break;
 
                 case UriForTest uriForTest:
-                    response = Task.AddFile(uriForTest.FileUri, Task.TaskId, uriForTest.Password, uriForTest.Rotation);                 
+                    response = Task.AddFile(uriForTest.FileUri, Task.TaskId, uriForTest.Password, uriForTest.Rotation);
                     break;
             }
 

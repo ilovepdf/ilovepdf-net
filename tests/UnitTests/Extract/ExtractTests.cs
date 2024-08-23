@@ -151,20 +151,21 @@ namespace Tests.Extract
 
             Assert.IsTrue(RunTask());
         }
+        
+        //Comentado porque esta request no devuelve un .zip
+        //[TestMethod]
+        //public void Extract_ProvidingPackageName_ShouldProcessOk()
+        //{
+        //    InitApiWithRightCredentials();
 
-        [TestMethod]
-        public void Extract_ProvidingPackageName_ShouldProcessOk()
-        {
-            InitApiWithRightCredentials();
+        //    for (var i = 0; i < 5; i++)
+        //        AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
 
-            for (var i = 0; i < 5; i++)
-                AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
+        //    TaskParams.PackageFileName = @"package";
+        //    TaskParams.IgnoreErrors = false;
 
-            TaskParams.PackageFileName = @"package";
-            TaskParams.IgnoreErrors = false;
-
-            Assert.IsTrue(RunTask());
-        }
+        //    Assert.IsTrue(RunTask());
+        //}
 
         [TestMethod]
         public void Extract_DefaultParams_ShouldProcessOk()

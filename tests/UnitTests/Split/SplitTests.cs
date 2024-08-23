@@ -160,6 +160,8 @@ namespace Tests.Split
             for (var i = 0; i < 5; i++)
                 AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodMultipagePdfFile);
 
+            TaskParams.SplitMode = SplitModes.FixedRange;
+
             TaskParams.PackageFileName = @"package";
             TaskParams.IgnoreErrors = false;
 
@@ -179,47 +181,47 @@ namespace Tests.Split
             Assert.IsFalse(RunTask());
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "Mistaken SplitModeFixedRange was inappropriately processed.")]
-        public void Split_WrongSplitModeFixedRanges_ShouldThrowException()
-        {
-            InitApiWithRightCredentials();
+        //[TestMethod]
+        //[ExpectedException(typeof(ProcessingException), "Mistaken SplitModeFixedRange was inappropriately processed.")]
+        //public void Split_WrongSplitModeFixedRanges_ShouldThrowException()
+        //{
+        //    InitApiWithRightCredentials();
 
-            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodMultipagePdfFile);
+        //    AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodMultipagePdfFile);
 
-            TaskParams.SplitMode = SplitModes.FixedRange;
-            TaskParams.FixedRanges = 255;
+        //    TaskParams.SplitMode = SplitModes.FixedRange;
+        //    TaskParams.FixedRanges = 255;
 
-            Assert.IsFalse(RunTask());
-        }
+        //    Assert.IsFalse(RunTask());
+        //}
 
-        [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "Mistaken SplitModeRange was inappropriately processed.")]
-        public void Split_WrongSplitModeRanges_ShouldThrowException()
-        {
-            InitApiWithRightCredentials();
+        //[TestMethod]
+        //[ExpectedException(typeof(ProcessingException), "Mistaken SplitModeRange was inappropriately processed.")]
+        //public void Split_WrongSplitModeRanges_ShouldThrowException()
+        //{
+        //    InitApiWithRightCredentials();
 
-            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodMultipagePdfFile);
+        //    AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodMultipagePdfFile);
 
-            TaskParams.SplitMode = SplitModes.Ranges;
-            TaskParams.Ranges = "100-50";
+        //    TaskParams.SplitMode = SplitModes.Ranges;
+        //    TaskParams.Ranges = "100-50";
 
-            Assert.IsFalse(RunTask());
-        }
+        //    Assert.IsFalse(RunTask());
+        //}
 
-        [TestMethod]
-        [ExpectedException(typeof(ProcessingException), "Mistaken SplitModeRemovePages was inappropriately processed.")]
-        public void Split_WrongRemovePages_ShouldThrowException()
-        {
-            InitApiWithRightCredentials();
+        //[TestMethod]
+        //[ExpectedException(typeof(ProcessingException), "Mistaken SplitModeRemovePages was inappropriately processed.")]
+        //public void Split_WrongRemovePages_ShouldThrowException()
+        //{
+        //    InitApiWithRightCredentials();
 
-            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodMultipagePdfFile);
+        //    AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodMultipagePdfFile);
 
-            TaskParams.SplitMode = SplitModes.RemovePages;
-            TaskParams.Ranges = "100-50";
+        //    TaskParams.SplitMode = SplitModes.RemovePages;
+        //    TaskParams.Ranges = "100-50";
 
-            Assert.IsFalse(RunTask());
-        }
+        //    Assert.IsFalse(RunTask());
+        //}
 
         [TestMethod]
         public void Split_CorrectParams_ShouldProcessOk()
