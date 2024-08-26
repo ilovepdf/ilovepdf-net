@@ -69,7 +69,8 @@ namespace Samples
             // - you can define multiple ranges, e.g. "1,2,3-6"
 
             var signatureElement = signerFile.AddSignature();
-            signatureElement.Position = new Position("20", "-20");
+            //signatureElement.Position = new Position("20", "-20");
+            signatureElement.SetGravityPosition("right", "bottom", 3, -2);
             signatureElement.Pages = "1,2";
 
             var dateElement = signerFile.AddDate("12/12/2022");
