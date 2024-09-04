@@ -1,8 +1,8 @@
-﻿using LovePdf.Model.TaskParams.Sign.Elements;
+﻿using iLovePdf.Model.TaskParams.Sign.Elements;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace LovePdf.Model.TaskParams.Sign.Signers
+namespace iLovePdf.Model.TaskParams.Sign.Signers
 {
     /// <summary>
     /// File that a receiver of type signer needs to sign.

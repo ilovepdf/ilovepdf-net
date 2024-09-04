@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
-using LovePdf.Core;
-using LovePdf.Model.Task;
-using LovePdf.Model.TaskParams;
+using iLovePdf.Core;
+using iLovePdf.Model.Task;
+using iLovePdf.Model.TaskParams;
 
 namespace Samples
 {

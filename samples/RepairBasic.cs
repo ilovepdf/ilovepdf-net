@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using LovePdf.Core;
-using LovePdf.Model.Task;
+using iLovePdf.Core;
+using iLovePdf.Model.Task;
 
 namespace Samples
 {

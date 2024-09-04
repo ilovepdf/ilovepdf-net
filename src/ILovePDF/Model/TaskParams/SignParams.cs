@@ -1,14 +1,14 @@
-﻿using LovePdf.Attributes;
-using LovePdf.Model.Enums;
-using LovePdf.Model.Task;
-using LovePdf.Model.TaskParams.Sign.Elements;
+﻿using iLovePdf.Attributes;
+using iLovePdf.Model.Enums;
+using iLovePdf.Model.Task;
+using iLovePdf.Model.TaskParams.Sign.Elements;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace LovePdf.Model.TaskParams
+namespace iLovePdf.Model.TaskParams
 {
     /// <summary>
     /// EditParams

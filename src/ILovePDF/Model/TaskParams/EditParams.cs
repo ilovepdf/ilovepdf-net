@@ -1,11 +1,11 @@
-﻿using LovePdf.Model.TaskParams.Edit;
+﻿using iLovePdf.Model.TaskParams.Edit;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace LovePdf.Model.TaskParams
+namespace iLovePdf.Model.TaskParams
 {
     /// <summary>
     /// EditParams

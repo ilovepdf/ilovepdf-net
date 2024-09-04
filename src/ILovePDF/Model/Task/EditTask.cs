@@ -1,12 +1,12 @@
-﻿using LovePdf.Core;
-using LovePdf.Model.Enums;
-using LovePdf.Model.TaskParams;
-using LovePdf.Model.TaskParams.Edit;
+﻿using iLovePdf.Core;
+using iLovePdf.Model.Enums;
+using iLovePdf.Model.TaskParams;
+using iLovePdf.Model.TaskParams.Edit;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace LovePdf.Model.Task
+namespace iLovePdf.Model.Task
 {
     /// <summary>
     /// Try to edit PDFs

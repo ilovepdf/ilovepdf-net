@@ -1,8 +1,8 @@
-﻿using LovePdf.Core;
-using LovePdf.Model.Enums;
-using LovePdf.Model.Task;
-using LovePdf.Model.TaskParams;
-using LovePdf.Model.TaskParams.Sign.Elements;
+﻿using iLovePdf.Core;
+using iLovePdf.Model.Enums;
+using iLovePdf.Model.Task;
+using iLovePdf.Model.TaskParams;
+using iLovePdf.Model.TaskParams.Sign.Elements;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;

@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace LovePdf.Model.TaskParams.Edit
+namespace iLovePdf.Model.TaskParams.Edit
 {
     /// <summary>
     ///  Size of the element

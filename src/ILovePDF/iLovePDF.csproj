@@ -5,7 +5,7 @@
 
 		<!-- Assembly metadata -->
 		<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
-		<RootNamespace>LovePdf</RootNamespace>
+		<RootNamespace>iLovePdf</RootNamespace>
 		<AssemblyName>ILovePdf</AssemblyName>
 		<AssemblyTitle>iLovePDF</AssemblyTitle>
 		<Product>iLovePDF</Product>
@@ -16,7 +16,7 @@
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<!-- Frameworks and language features -->
-		<TargetFrameworks>netstandard1.5;netstandard2.0;net45;net46;net6.0;</TargetFrameworks>
+		<TargetFrameworks>netstandard1.5;netstandard2.0;net45;net46;</TargetFrameworks>
 		<LangVersion>9.0</LangVersion>
 		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 		<AnalysisLevel>latest</AnalysisLevel>
@@ -32,7 +32,7 @@
 		<PackageTags>ILOVEPDF Merge PDF Split convert Office to pdf PDf JPG Images unlock Pdf repair rotate pdf</PackageTags>
 		<PackageIcon>packageIcon.png</PackageIcon>
 		<PackageIconUrl>https://www.ilovepdf.com/img/app-icon.png</PackageIconUrl>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+		
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<EmbedAllSources>true</EmbedAllSources>

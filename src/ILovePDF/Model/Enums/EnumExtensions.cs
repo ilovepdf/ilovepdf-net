@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace LovePdf.Model.Enums
+namespace iLovePdf.Model.Enums
 {
     /// <summary>
     ///     EnumExtensions

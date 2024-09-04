@@ -1,4 +1,4 @@
-﻿using LovePdf.Model.Enums;
+﻿using iLovePdf.Model.Enums;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace LovePdf.Model.TaskParams.Sign.Elements
+namespace iLovePdf.Model.TaskParams.Sign.Elements
 {
     public class DateElement : BaseSignElement
     {

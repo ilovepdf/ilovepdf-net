@@ -1,10 +1,10 @@
-﻿using LovePdf.Model.Enums;
+﻿using iLovePdf.Model.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 using System.IO;
 
-namespace LovePdf.Model.TaskParams.Sign.Signers
+namespace iLovePdf.Model.TaskParams.Sign.Signers
 {
     /// <inheritdoc cref="SignSignerType.Signer"/>
     public class Signer : BaseSignSigner

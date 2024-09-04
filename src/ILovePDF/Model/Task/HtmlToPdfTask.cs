@@ -1,12 +1,12 @@
-﻿using LovePdf.Core;
-using LovePdf.Model.Enums;
-using LovePdf.Model.TaskParams;
+﻿using iLovePdf.Core;
+using iLovePdf.Model.Enums;
+using iLovePdf.Model.TaskParams;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace LovePdf.Model.Task
+namespace iLovePdf.Model.Task
 {
     /// <summary>
     /// Html To Pdf
