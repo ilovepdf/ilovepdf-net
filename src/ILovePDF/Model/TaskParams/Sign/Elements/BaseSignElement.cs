@@ -15,6 +15,8 @@ namespace LovePdf.Model.TaskParams.Sign.Elements
 {
     public abstract class BaseSignElement : ISignElement
     {
+        private static readonly string[] VALID_X_GRAVITY_POSITIONS = { "left", "center", "right" };
+        private static readonly string[] VALID_Y_GRAVITY_POSITIONS = { "top", "center", "bottom" };
         private string pages;
 
         public BaseSignElement(SignElementTypes type, string pages, Position position, int size = 18)
@@ -70,6 +72,37 @@ namespace LovePdf.Model.TaskParams.Sign.Elements
         /// Element size. It corresponds to the height of the element. Width will adapt automatically according to its content
         /// </summary>
         [JsonProperty("size")]
-        public int Size { get; set; } 
+        public int Size { get; set; }
+
+        /// <summary>
+        /// Allows you to position the element on the left, in the center or on the right of the page.Accepted values: left, center, right.
+        /// </summary>
+        [JsonProperty("horizontal_adjustment")]
+        public int HorizontalAdjustment { get; set; }
+
+        /// <summary>
+        /// Define if page element will be at top or bottom. Accepted values: bottom, top.
+        /// </summary>
+        [JsonProperty("vertical_adjustment")]
+        public int VerticalAdjustment { get; set; }
+
+        public void SetGravityPosition(string positionX, string positionY, int horizontalAdjustment = 0, int verticalAdjustment = 0)
+        {
+            if (Array.IndexOf(VALID_X_GRAVITY_POSITIONS, positionX) == -1)
+            {
+                throw new ArgumentException($"Invalid X value, valid positions are: {string.Join(", ", VALID_X_GRAVITY_POSITIONS)}");
+            }
+
+            if (Array.IndexOf(VALID_Y_GRAVITY_POSITIONS, positionY) == -1)
+            {
+                throw new ArgumentException($"Invalid Y value, valid positions are: {string.Join(", ", VALID_Y_GRAVITY_POSITIONS)}");
+            }
+
+            this.Position.X = positionX;
+            this.Position.Y = positionY;
+            this.HorizontalAdjustment = horizontalAdjustment;
+            this.VerticalAdjustment = verticalAdjustment;
+        }
     }
+
 }
