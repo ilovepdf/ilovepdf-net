@@ -1,8 +1,8 @@
-﻿using LovePdf.Helpers;
+﻿using iLovePdf.Helpers;
 using System;
 using System.Net.Http;
 
-namespace LovePdf.Extensions
+namespace iLovePdf.Extensions
 {
     static class HttpClientExtension
     {

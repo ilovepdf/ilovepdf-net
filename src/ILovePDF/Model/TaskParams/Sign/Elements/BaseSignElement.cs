@@ -1,17 +1,17 @@
-﻿using LovePdf.Model.TaskParams.Edit;
+﻿using iLovePdf.Model.TaskParams.Edit;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
-using LovePdf.Model.TaskParams.Sign.Elements;
+using iLovePdf.Model.TaskParams.Sign.Elements;
 using Newtonsoft.Json.Converters;
-using LovePdf.Model.Enums;
+using iLovePdf.Model.Enums;
 using System.Xml.Linq;
 using System.Text.RegularExpressions;
 
-namespace LovePdf.Model.TaskParams.Sign.Elements
+namespace iLovePdf.Model.TaskParams.Sign.Elements
 {
     public abstract class BaseSignElement : ISignElement
     {

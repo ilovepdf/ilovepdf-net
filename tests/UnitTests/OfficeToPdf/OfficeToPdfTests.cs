@@ -1,8 +1,8 @@
 using System;
 using System.Security.Authentication;
-using LovePdf.Model.Exception;
-using LovePdf.Model.Task;
-using LovePdf.Model.TaskParams;
+using iLovePdf.Model.Exception;
+using iLovePdf.Model.Task;
+using iLovePdf.Model.TaskParams;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.OfficeToPdf

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LovePdf.Core.Sign
+namespace iLovePdf.Core.Sign
 { 
     public class ReceiverInfoResponse
     {

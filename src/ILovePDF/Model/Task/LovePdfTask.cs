@@ -4,11 +4,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using LovePdf.Core;
-using LovePdf.Model.Enums;
-using LovePdf.Model.TaskParams;
+using iLovePdf.Core;
+using iLovePdf.Model.Enums;
+using iLovePdf.Model.TaskParams;
 
-namespace LovePdf.Model.Task
+namespace iLovePdf.Model.Task
 {
     /// <summary>
     ///     ILovePdf Task

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System; 
 
-namespace LovePdf.Attributes
+namespace iLovePdf.Attributes
 {
     public class BoolConverter : JsonConverter
     {

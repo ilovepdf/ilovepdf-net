@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace LovePdf.Model.Enums
+namespace iLovePdf.Model.Enums
 {
     public enum OCRLanguage
     {

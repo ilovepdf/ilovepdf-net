@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace LovePdf.Core
+namespace iLovePdf.Core
 {
     /// <summary>
     ///     Delete Task Response

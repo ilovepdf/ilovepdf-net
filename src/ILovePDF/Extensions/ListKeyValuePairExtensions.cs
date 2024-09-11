@@ -1,10 +1,10 @@
-﻿using LovePdf.Core;
+﻿using iLovePdf.Core;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace LovePdf.Extensions
+namespace iLovePdf.Extensions
 {
     static class ListKeyValuePairExtensions
     {

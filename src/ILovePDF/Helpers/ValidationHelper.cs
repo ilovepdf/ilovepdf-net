@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace LovePdf.Helpers
+namespace iLovePdf.Helpers
 {
     /// <summary>
     /// Validation Helper

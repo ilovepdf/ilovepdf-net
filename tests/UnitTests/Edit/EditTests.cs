@@ -1,7 +1,7 @@
-﻿using LovePdf.Model.Exception;
-using LovePdf.Model.Task;
-using LovePdf.Model.TaskParams;
-using LovePdf.Model.TaskParams.Edit;
+﻿using iLovePdf.Model.Exception;
+using iLovePdf.Model.Task;
+using iLovePdf.Model.TaskParams;
+using iLovePdf.Model.TaskParams.Edit;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;

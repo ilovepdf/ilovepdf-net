@@ -1,9 +1,9 @@
-﻿using LovePdf.Model.Enums;
-using LovePdf.Model.TaskParams.Sign.Elements;
+﻿using iLovePdf.Model.Enums;
+using iLovePdf.Model.TaskParams.Sign.Elements;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace LovePdf.Model.TaskParams.Sign.Signers
+namespace iLovePdf.Model.TaskParams.Sign.Signers
 {
     public abstract class BaseSignSigner : ISignSigner
     {

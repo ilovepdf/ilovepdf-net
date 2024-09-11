@@ -1,9 +1,9 @@
 ﻿using System;
-using LovePdf.Model.Enums;
+using iLovePdf.Model.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace LovePdf.Core
+namespace iLovePdf.Core
 {
     /// <summary>
     ///     File Model

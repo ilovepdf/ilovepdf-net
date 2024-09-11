@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace LovePdf.Helpers
+namespace iLovePdf.Helpers
 {
     public static class TaskHelper
     {

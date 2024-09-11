@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using LovePdf.Core;
-using LovePdf.Model.Enums;
-using LovePdf.Model.Task;
-using LovePdf.Model.TaskParams;
+using iLovePdf.Core;
+using iLovePdf.Model.Enums;
+using iLovePdf.Model.Task;
+using iLovePdf.Model.TaskParams;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
@@ -189,7 +189,7 @@ namespace Tests
             });
         }
 
-        protected void AddFile(String addedFileName, String originalFileName, LovePdf.Model.Enums.Rotate rotation,
+        protected void AddFile(String addedFileName, String originalFileName, iLovePdf.Model.Enums.Rotate rotation,
             String password = null, Action<string> callback = null)
         {
             File.Copy($"{Settings.DataPath}{Path.DirectorySeparatorChar}{originalFileName}",

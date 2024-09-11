@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace LovePdf.Core
+namespace iLovePdf.Core
 {
     /// <summary>
     ///     File Parameter

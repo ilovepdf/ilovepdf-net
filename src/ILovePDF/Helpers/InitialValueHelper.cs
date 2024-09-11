@@ -1,11 +1,11 @@
-﻿using LovePdf.Core;
-using LovePdf.Model.TaskParams;
+﻿using iLovePdf.Core;
+using iLovePdf.Model.TaskParams;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LovePdf.Helpers
+namespace iLovePdf.Helpers
 {
     public static class InitialValueHelper
     {

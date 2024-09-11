@@ -1,7 +1,7 @@
 ﻿using System;
-using LovePdf.Model.Task;
+using iLovePdf.Model.Task;
 
-namespace LovePdf.Core
+namespace iLovePdf.Core
 {
     /// <summary>
     ///     ILove Pdf API

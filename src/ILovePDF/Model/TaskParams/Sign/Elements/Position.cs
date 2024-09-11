@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
-using LovePdf.Model.TaskParams.Edit;
+using iLovePdf.Model.TaskParams.Edit;
 
-namespace LovePdf.Model.TaskParams.Sign.Elements
+namespace iLovePdf.Model.TaskParams.Sign.Elements
 {
     /// <summary>
     /// X and Y position
