@@ -1,14 +1,14 @@
-﻿using LovePdf.Core.Sign;
-using LovePdf.Extensions;
-using LovePdf.Model.TaskParams;
-using LovePdf.Model.TaskParams.Sign;
+﻿using iLovePdf.Core.Sign;
+using iLovePdf.Extensions;
+using iLovePdf.Model.TaskParams;
+using iLovePdf.Model.TaskParams.Sign;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace LovePdf.Core
+namespace iLovePdf.Core
 {
     internal partial class RequestHelper
     {

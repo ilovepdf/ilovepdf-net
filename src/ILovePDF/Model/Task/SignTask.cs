@@ -1,17 +1,17 @@
-﻿using LovePdf.Core;
-using LovePdf.Model.Enums;
-using LovePdf.Model.TaskParams;
+﻿using iLovePdf.Core;
+using iLovePdf.Model.Enums;
+using iLovePdf.Model.TaskParams;
 using System;
 using System.Collections.Generic;
-using LovePdf.Core.Sign;
-using LovePdf.Model.TaskParams.Sign;
+using iLovePdf.Core.Sign;
+using iLovePdf.Model.TaskParams.Sign;
 using System.Globalization;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace LovePdf.Model.Task
+namespace iLovePdf.Model.Task
 {
     /// <summary>
     /// Try to sign PDFs

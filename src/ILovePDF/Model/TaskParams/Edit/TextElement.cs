@@ -1,12 +1,12 @@
-﻿using LovePdf.Attributes;
-using LovePdf.Helpers;
-using LovePdf.Model.Enums;
+﻿using iLovePdf.Attributes;
+using iLovePdf.Helpers;
+using iLovePdf.Model.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace LovePdf.Model.TaskParams.Edit
+namespace iLovePdf.Model.TaskParams.Edit
 {
     /// <summary>
     /// Text element

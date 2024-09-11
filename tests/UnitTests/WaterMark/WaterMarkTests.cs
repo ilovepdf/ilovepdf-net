@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Security.Authentication;
 using System.Threading.Tasks;
-using LovePdf.Core;
-using LovePdf.Model.Enums;
-using LovePdf.Model.Exception;
-using LovePdf.Model.Task;
-using LovePdf.Model.TaskParams;
+using iLovePdf.Core;
+using iLovePdf.Model.Enums;
+using iLovePdf.Model.Exception;
+using iLovePdf.Model.Task;
+using iLovePdf.Model.TaskParams;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.WaterMark

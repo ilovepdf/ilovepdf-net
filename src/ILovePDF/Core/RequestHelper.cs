@@ -8,13 +8,13 @@
 // #define REMOTE_API_DEBUG_ENABLED
 //
 using Jose;
-using LovePdf.Extensions;
-using LovePdf.Helpers;
-using LovePdf.Model.Enums;
-using LovePdf.Model.Exception;
-using LovePdf.Model.TaskParams;
-using LovePdf.Model.TaskParams.Sign.Elements;
-using LovePdf.Model.TaskParams.Sign.Signers;
+using iLovePdf.Extensions;
+using iLovePdf.Helpers;
+using iLovePdf.Model.Enums;
+using iLovePdf.Model.Exception;
+using iLovePdf.Model.TaskParams;
+using iLovePdf.Model.TaskParams.Sign.Elements;
+using iLovePdf.Model.TaskParams.Sign.Signers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -30,7 +30,7 @@ using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LovePdf.Core
+namespace iLovePdf.Core
 { 
     internal sealed partial class RequestHelper 
     { 

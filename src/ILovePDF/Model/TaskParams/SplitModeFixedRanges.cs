@@ -1,6 +1,6 @@
 using System;
 
-namespace LovePdf.Model.TaskParams
+namespace iLovePdf.Model.TaskParams
 {
     /// <summary>
     ///     Split Mode Fixed Ranges

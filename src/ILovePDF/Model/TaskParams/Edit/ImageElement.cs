@@ -1,7 +1,7 @@
-﻿using LovePdf.Model.Enums;
+﻿using iLovePdf.Model.Enums;
 using Newtonsoft.Json;
 
-namespace LovePdf.Model.TaskParams.Edit
+namespace iLovePdf.Model.TaskParams.Edit
 {
     /// <summary>
     /// Image element

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Security.Authentication;
-using LovePdf.Model.Exception;
-using LovePdf.Model.Task;
-using LovePdf.Model.TaskParams;
+using iLovePdf.Model.Exception;
+using iLovePdf.Model.Task;
+using iLovePdf.Model.TaskParams;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.Rotate
@@ -170,7 +170,7 @@ namespace Tests.Rotate
         {
             InitApiWithRightCredentials();
 
-            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile, LovePdf.Model.Enums.Rotate.Degrees90);
+            AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile, iLovePdf.Model.Enums.Rotate.Degrees90);
 
             Assert.IsTrue(RunTask());
         }

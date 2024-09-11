@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace LovePdf.Model.Exception
+namespace iLovePdf.Model.Exception
 {
     /// <summary>
     ///     Not Found Excepcion

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LovePdf.Model.Enums
+namespace iLovePdf.Model.Enums
 {
     /// <summary>
     ///     Conformance Values for Pdf Versions

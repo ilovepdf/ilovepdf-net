@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace LovePdf.Model.Enums
+namespace iLovePdf.Model.Enums
 {
     /// <summary>
     ///     iLovelPdf errors

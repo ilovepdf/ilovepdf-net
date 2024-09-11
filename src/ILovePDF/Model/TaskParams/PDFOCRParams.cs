@@ -1,12 +1,12 @@
-﻿using LovePdf.Model.Enums;
+﻿using iLovePdf.Model.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static LovePdf.Model.Enums.OCRLanguage;
+using static iLovePdf.Model.Enums.OCRLanguage;
 
-namespace LovePdf.Model.TaskParams
+namespace iLovePdf.Model.TaskParams
 {
     /// <summary>
     ///     PDFOCRParams Params

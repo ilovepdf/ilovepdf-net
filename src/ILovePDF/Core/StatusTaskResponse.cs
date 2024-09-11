@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace LovePdf.Core
+namespace iLovePdf.Core
 {
     /// <summary>
     ///     Status Task Response

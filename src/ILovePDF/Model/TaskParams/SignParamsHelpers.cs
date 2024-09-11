@@ -1,9 +1,9 @@
-﻿using LovePdf.Core.Sign;
-using LovePdf.Model.Enums;
-using LovePdf.Model.TaskParams.Sign.Elements;
-using LovePdf.Model.TaskParams.Sign.Signers;
+﻿using iLovePdf.Core.Sign;
+using iLovePdf.Model.Enums;
+using iLovePdf.Model.TaskParams.Sign.Elements;
+using iLovePdf.Model.TaskParams.Sign.Signers;
 
-namespace LovePdf.Model.TaskParams
+namespace iLovePdf.Model.TaskParams
 {
     /// <summary>
     ///  

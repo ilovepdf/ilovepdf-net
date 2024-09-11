@@ -1,9 +1,9 @@
-﻿using LovePdf.Model.Enums;
+﻿using iLovePdf.Model.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 
-namespace LovePdf.Model.TaskParams
+namespace iLovePdf.Model.TaskParams
 {
     /// <summary>
     ///  Html to PDF Params

@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json; 
 using System.Collections.Generic; 
-using LovePdf.Core.Sign;
+using iLovePdf.Core.Sign;
 
-namespace LovePdf.Core.Sign
+namespace iLovePdf.Core.Sign
 {
     public class SignatureResponse
     {

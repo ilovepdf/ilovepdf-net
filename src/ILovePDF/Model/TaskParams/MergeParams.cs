@@ -1,4 +1,4 @@
-﻿namespace LovePdf.Model.TaskParams
+﻿namespace iLovePdf.Model.TaskParams
 {
     /// <summary>
     ///     Merge Params
