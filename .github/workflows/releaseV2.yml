@@ -35,7 +35,7 @@ jobs:
         run: dotnet test --no-restore --verbosity normal --filter "FullyQualifiedName!=Tests.Edit.SignTests.Sign_RequestSignature_ShouldProccessOk&FullyQualifiedName!=Tests.Edit.SignTests.Sign_ComplexTest_ShouldProcessOk"
 
       - name: Pack the project
-        run: dotnet pack --configuration Release --no-build --output ./artifacts
+        run: dotnet pack --configuration Release ./src/ILovePDF/iLovePDF.csproj --output ./nupkg
 
       - name: Publish to NuGet
         env:
