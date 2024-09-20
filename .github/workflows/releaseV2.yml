@@ -40,5 +40,4 @@ jobs:
 
       - name: Publish to NuGet
         env:
-          NUGET_API_KEY: ${{ secrets.NUGET_TOKEN }}
-        run: dotnet nuget push ./nupkg/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+            run: dotnet nuget push "*src/**/*.nupkg" --api-key ${{secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json
