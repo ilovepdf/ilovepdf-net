@@ -234,7 +234,7 @@ namespace iLovePdf.Core
             }
         }
 
-        public UploadTaskResponse UploadFile(Uri serverUrl, FileInfo file, string taskId)
+        public UploadTaskResponse UploadFile(Uri serverUrl, FileInfo file, string taskId, BaseExtraUploadParams extraParams = null)
         {
             var link = GetUri($"{serverUrl}{Settings.V1}/upload");
 
@@ -244,6 +244,13 @@ namespace iLovePdf.Core
                 var uploadRequest = new BaseTaskRequest();
                 uploadRequest.FormData.Add("file", new FileParameter(fs, file.Name));
                 uploadRequest.FormData.Add("task", taskId);
+                if (extraParams != null)
+                {
+                    foreach (var param in extraParams.GetValues())
+                    {
+                        uploadRequest.FormData.Add(param.Key, param.Value);
+                    }
+                }
 
                 SetMultiPartFormData(uploadRequest.FormData, multipartFormData);
 
