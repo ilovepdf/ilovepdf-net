@@ -52,9 +52,9 @@ namespace iLovePdf.Model.Task
         /// <param name="path"></param>
         /// <returns>Server file name</returns>
         [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
-        public UploadTaskResponse AddFile(String path)
+        public UploadTaskResponse AddFile(String path, BaseExtraUploadParams extraParams = null)
         {
-            return AddFile(path, TaskId);
+            return AddFile(path, TaskId, extraParams);
         }
 
         /// <summary>
@@ -64,9 +64,9 @@ namespace iLovePdf.Model.Task
         /// <param name="taskId">if no task provided will be used last one from create task method.</param>
         /// <returns>Server file name</returns>
         [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
-        public UploadTaskResponse AddFile(String path, String taskId)
+        public UploadTaskResponse AddFile(String path, String taskId, BaseExtraUploadParams extraParams = null)
         {
-            return AddFile(path, taskId, String.Empty);
+            return AddFile(path, taskId, String.Empty, extraParams);
         }
 
         /// <summary>
@@ -77,9 +77,9 @@ namespace iLovePdf.Model.Task
         /// <param name="password"></param>
         /// <returns>Server file name</returns>
         [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
-        public UploadTaskResponse AddFile(String path, String taskId, String password)
+        public UploadTaskResponse AddFile(String path, String taskId, String password, BaseExtraUploadParams extraParams = null)
         {
-            return AddFile(path, taskId, password, Rotate.Degrees0);
+            return AddFile(path, taskId, password, Rotate.Degrees0, extraParams);
         }
 
         /// <summary>
@@ -109,12 +109,12 @@ namespace iLovePdf.Model.Task
         /// <param name="rotate"></param>
         /// <returns>Server file name</returns>
         [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
-        public UploadTaskResponse AddFile(String path, String taskId, String password, Rotate rotate)
+        public UploadTaskResponse AddFile(String path, String taskId, String password, Rotate rotate, BaseExtraUploadParams extraParams = null)
         {
             var fileInfo = new FileInfo(path);
             if (!fileInfo.Exists) throw new FileNotFoundException("File not found", fileInfo.FullName);
 
-            var response = RequestHelper.Instance.UploadFile(ServerUrl, fileInfo, taskId);
+            var response = RequestHelper.Instance.UploadFile(ServerUrl, fileInfo, taskId, extraParams);
 
             Files.Add(new FileModel
             {
