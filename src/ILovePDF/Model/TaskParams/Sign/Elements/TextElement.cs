@@ -13,10 +13,11 @@ namespace iLovePdf.Model.TaskParams.Sign.Elements
         {
             if (string.IsNullOrEmpty(textContent))
             {
-                throw new ArgumentNullException(nameof(textContent), "Content can't be null or empty");
+                Text = "";
+                //throw new ArgumentNullException(nameof(textContent), "Content can't be null or empty");
             }
-             
-            Text = textContent;  
+            
+            Text = textContent;
         }
 
         /// <summary>

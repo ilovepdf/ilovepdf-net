@@ -8,10 +8,10 @@ namespace iLovePdf.Model.TaskParams.Sign.Elements
 {
     public class InputElement : BaseSignElement
     { 
-        public InputElement(string pages, Position position, int size = 18) 
+        public InputElement(string pages, Position position, int size = 18, string label = null)
             : base(SignElementTypes.Input, pages, position, size)
-        { 
-        } 
+        {
+        }
 
         /// <summary> 
         /// It must be a JSON string where you can define the attributes of that element, 
@@ -40,5 +40,10 @@ namespace iLovePdf.Model.TaskParams.Sign.Elements
         /// </summary>
         [JsonIgnore]
         public string Description { set; get; }
+
+        public void SetLabel (string label)
+        {
+            this.Label = label;
+        }
     }
 }
