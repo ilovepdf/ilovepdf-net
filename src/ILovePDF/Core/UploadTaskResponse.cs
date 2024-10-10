@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace iLovePdf.Core
 {
@@ -45,15 +47,18 @@ namespace iLovePdf.Core
             foreach (var pdfFormElement in PdfForms)
             {
                 pdfFormElement.TryGetValue("page", out x);
-                var pdfpageinfo = GetPdfPageInfo((int)x);
+
+                int number = Convert.ToInt32(x);
+
+                var pdfpageinfo = GetPdfPageInfo(number);
                 foreach (var page in pdfpageinfo) 
                 {
-                    pdfPageInfo.Add(page.Key, page.Value);
+                    pdfFormElement.Add(page.Key, page.Value);
                 }                
             }
         }
 
-        public Dictionary<string, int> GetPdfPageInfo(int pageNumber)
+        public Dictionary<string, double> GetPdfPageInfo(int pageNumber)
         {
             var pdfPages = GetSanitizedPdfPages();
             if (pdfPages == null)
@@ -64,9 +69,9 @@ namespace iLovePdf.Core
             return pdfPages[pageNumber - 1];
         }
 
-        public List<Dictionary<string, int>> GetSanitizedPdfPages()
+        public List<Dictionary<string, double>> GetSanitizedPdfPages()
         {
-            var result = new List<Dictionary<string, int>>();
+            var result = new List<Dictionary<string, double>>();
 
             if (PdfPages == null)
             {
@@ -77,10 +82,10 @@ namespace iLovePdf.Core
             foreach(var pdfPage in PdfPages)
             {
                 var dimensions = pdfPage.Split('x');
-                int width = int.Parse(dimensions[0]);
-                int height = int.Parse(dimensions[1]);
+                double width = Convert.ToDouble(dimensions[0], CultureInfo.InvariantCulture);
+                double height = Convert.ToDouble(dimensions[1], CultureInfo.InvariantCulture);
 
-                result.Add(new Dictionary<string, int>
+                result.Add(new Dictionary<string, double>
                 {
                     { "width", width },
                     { "height", height }
