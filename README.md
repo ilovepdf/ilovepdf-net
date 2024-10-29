@@ -22,9 +22,9 @@ PM-> Install-Package ILove_PDF
 ```
 ### Simple usage looks like:
 ```csharp
-var lovePdfAPi = new LovePdfApi("project_public_id", "project_secret_key");
+var ilovePdfAPi = new iLovePdfApi("project_public_id", "project_secret_key");
 
-var task = lovePdfAPi.CreateTask<CompressTask>();
+var task = ilovePdfAPi.CreateTask<CompressTask>();
 var file = task.AddFile("file1.pdf")
 var time = task.Process();
 task.DownloadFile("directory-to-download");
