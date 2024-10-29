@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk"> 
 	<PropertyGroup>
 		<!-- Version patched by Github Workflow Actions, modify on build config if needed -->
-		<Version>1.5.1</Version>
+		<Version>1.6.0</Version>
 
 		<!-- Assembly metadata -->
 		<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
