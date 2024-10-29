@@ -14,7 +14,7 @@ namespace Samples
         {
             try
             {
-                var api = new LovePdfApi("PUBLIC_KEY", "SECRET_KEY");
+                var api = new iLovePdfApi("PUBLIC_KEY", "SECRET_KEY");
 
                 //create split task
                 var task = api.CreateTask<SplitTask>();

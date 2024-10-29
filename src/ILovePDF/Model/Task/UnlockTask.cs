@@ -9,7 +9,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     Unlock PDFs
     /// </summary>
-    public class UnlockTask : LovePdfTask
+    public class UnlockTask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.Unlock);

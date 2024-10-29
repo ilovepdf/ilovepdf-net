@@ -16,7 +16,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     /// Try to sign PDFs
     /// </summary>
-    public class SignTask : LovePdfTask
+    public class SignTask : iLovePdfTask
     {
         private static SignTask _instance;
         public static SignTask Instance => _instance ?? (_instance = new SignTask());

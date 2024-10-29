@@ -25,9 +25,9 @@ namespace Tests
         /// </summary>
         protected TestContext TestContext { get; set; }
 
-        protected LovePdfApi Api { get; private set; }
+        protected iLovePdfApi Api { get; private set; }
 
-        protected LovePdfTask Task {  get; set; }
+        protected iLovePdfTask Task {  get; set; }
 
         protected Boolean IsTaskSetted => Task != null;
 
@@ -44,12 +44,12 @@ namespace Tests
 
         protected void InitApiWithWrongCredentials()
         {
-            Api = new LovePdfApi(Settings.WrongPublicKey, Settings.WrongSecretKey);
+            Api = new iLovePdfApi(Settings.WrongPublicKey, Settings.WrongSecretKey);
         }
 
         protected void InitApiWithRightCredentials()
         {
-            Api = new LovePdfApi(Settings.RightPublicKey, Settings.RightSecretKey);
+            Api = new iLovePdfApi(Settings.RightPublicKey, Settings.RightSecretKey);
         }
 
         protected Boolean ProcessTask()

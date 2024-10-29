@@ -9,7 +9,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     Validate PDFA compliance
     /// </summary>
-    public class ValidatePdfATask : LovePdfTask
+    public class ValidatePdfATask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.ValidatePdfA);

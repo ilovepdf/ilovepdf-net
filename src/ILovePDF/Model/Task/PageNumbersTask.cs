@@ -9,7 +9,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     Add Page Numbers
     /// </summary>
-    public class PageNumbersTask : LovePdfTask
+    public class PageNumbersTask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.PageNumber);

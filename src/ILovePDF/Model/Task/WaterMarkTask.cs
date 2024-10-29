@@ -11,7 +11,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     Add watermark to PDFs
     /// </summary>
-    public class WaterMarkTask : LovePdfTask
+    public class WaterMarkTask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.WaterMark);

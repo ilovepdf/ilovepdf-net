@@ -9,7 +9,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     Convert Office Documents To PDF
     /// </summary>
-    public class OfficeToPdfTask : LovePdfTask
+    public class OfficeToPdfTask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.OfficeToPdf);

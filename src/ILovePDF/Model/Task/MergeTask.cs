@@ -9,7 +9,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     Merge Pdf Documents
     /// </summary>
-    public class MergeTask : LovePdfTask
+    public class MergeTask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.Merge);

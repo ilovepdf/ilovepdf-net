@@ -11,7 +11,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     /// Try to edit PDFs
     /// </summary>
-    public class EditTask : LovePdfTask
+    public class EditTask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.Edit);
