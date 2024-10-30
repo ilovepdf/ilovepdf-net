@@ -9,7 +9,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     Split PDFs
     /// </summary>
-    public class SplitTask : LovePdfTask
+    public class SplitTask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.Split);

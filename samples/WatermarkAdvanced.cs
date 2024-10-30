@@ -11,7 +11,7 @@ namespace Samples
     {
         public void DoTask()
         {
-            var api = new LovePdfApi("PUBLIC_KEY", "SECRET_KEY");
+            var api = new iLovePdfApi("PUBLIC_KEY", "SECRET_KEY");
 
             //create watermark task
             var task = api.CreateTask<WaterMarkTask>();

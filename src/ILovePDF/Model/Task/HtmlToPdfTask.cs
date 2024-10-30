@@ -11,7 +11,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     /// Html To Pdf
     /// </summary>
-    public class HtmlToPdfTask : LovePdfTask
+    public class HtmlToPdfTask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.HtmlToPdf);

@@ -6,13 +6,13 @@ namespace iLovePdf.Core
     /// <summary>
     ///     ILove Pdf API
     /// </summary>
-    public class LovePdfApi
+    public class iLovePdfApi
     {
         /// <summary>
         ///     Make request to the ILovePDF Api
         /// </summary>
         /// <returns></returns>
-        public T CreateTask<T>() where T : LovePdfTask
+        public T CreateTask<T>() where T : iLovePdfTask
         {
             var instance = (T) Activator.CreateInstance(typeof(T));
 
@@ -32,7 +32,7 @@ namespace iLovePdf.Core
         /// </summary>
         /// <param name="encryptKey">encryption key for files. Only keys of sizes 16, 24 or 32 are supported.</param>
         /// <returns></returns>
-        public T CreateTask<T>(String encryptKey) where T : LovePdfTask
+        public T CreateTask<T>(String encryptKey) where T : iLovePdfTask
         {
             var instance = (T) Activator.CreateInstance(typeof(T));
 
@@ -54,7 +54,7 @@ namespace iLovePdf.Core
         /// <param name="encryptKey">encryption key for files. Only keys of sizes 16, 24 or 32 are supported.</param>
         /// <param name="shouldUseBuiltInGenerator">create encrypt key, using build in generator</param>
         /// <returns></returns>
-        public T CreateTask<T>(String encryptKey, Boolean shouldUseBuiltInGenerator) where T : LovePdfTask
+        public T CreateTask<T>(String encryptKey, Boolean shouldUseBuiltInGenerator) where T : iLovePdfTask
         {
             var instance = (T) Activator.CreateInstance(typeof(T));
 
@@ -70,7 +70,7 @@ namespace iLovePdf.Core
             return instance;
         }
 
-        internal static T ConnectTask<T>(LovePdfTask parent) where T : LovePdfTask
+        internal static T ConnectTask<T>(iLovePdfTask parent) where T : iLovePdfTask
         {
             var instance = (T) Activator.CreateInstance(typeof(T));
 
@@ -100,7 +100,7 @@ namespace iLovePdf.Core
         /// </summary>
         /// <param name="publicKey">project public key</param>
         /// <param name="privateKey">project private key</param>
-        public LovePdfApi(String publicKey, String privateKey)
+        public iLovePdfApi(String publicKey, String privateKey)
         {
             if (String.IsNullOrWhiteSpace(publicKey))
                 throw new ArgumentOutOfRangeException(nameof(publicKey));

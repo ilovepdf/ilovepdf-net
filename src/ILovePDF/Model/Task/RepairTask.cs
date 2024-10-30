@@ -9,7 +9,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     Try to repair PDFs
     /// </summary>
-    public class RepairTask : LovePdfTask
+    public class RepairTask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.Repair);

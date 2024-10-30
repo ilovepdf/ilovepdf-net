@@ -13,7 +13,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     ILovePdf Task
     /// </summary>
-    public abstract class LovePdfTask
+    public abstract class iLovePdfTask
     {
         /// <summary>
         ///     Server URL
@@ -469,9 +469,9 @@ namespace iLovePdf.Model.Task
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public T Next<T>()
-            where T : LovePdfTask
+            where T : iLovePdfTask
         {
-            return LovePdfApi.ConnectTask<T>(this);
+            return iLovePdfApi.ConnectTask<T>(this);
         }
 
         /// <summary>

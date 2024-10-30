@@ -9,7 +9,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     Rotate PDFs
     /// </summary>
-    public class RotateTask : LovePdfTask
+    public class RotateTask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.Rotate);

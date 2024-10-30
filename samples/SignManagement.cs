@@ -11,7 +11,7 @@ namespace Samples
     {
         public async Task DoTask()
         {
-            var api = new LovePdfApi("PUBLIC_KEY", "SECRET_KEY");
+            var api = new iLovePdfApi("PUBLIC_KEY", "SECRET_KEY");
 
             // Create sign management task
             var request = api.CreateTask<SignTask>();

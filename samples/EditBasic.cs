@@ -12,7 +12,7 @@ namespace Samples
     {
         public void DoTask()
         {
-            var api = new LovePdfApi("PUBLIC_KEY", "SECRET_KEY");
+            var api = new iLovePdfApi("PUBLIC_KEY", "SECRET_KEY");
 
             // Create edit task
             var task = api.CreateTask<EditTask>();

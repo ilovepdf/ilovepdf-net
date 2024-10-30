@@ -9,7 +9,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     Pdf To Jpg
     /// </summary>
-    public class PdfToJpgTask : LovePdfTask
+    public class PdfToJpgTask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.PdfToJpg);

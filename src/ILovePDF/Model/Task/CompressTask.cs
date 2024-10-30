@@ -9,7 +9,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     Compress PDFs
     /// </summary>
-    public class CompressTask : LovePdfTask
+    public class CompressTask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.Compress);

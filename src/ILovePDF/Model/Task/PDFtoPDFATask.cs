@@ -9,7 +9,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     Pdf To PdfA
     /// </summary>
-    public class PdfToPdfATask : LovePdfTask
+    public class PdfToPdfATask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.PdfToPdfA);

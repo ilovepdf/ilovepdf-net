@@ -11,7 +11,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     Pdfocr
     /// </summary>
-    public class PdfocrTask : LovePdfTask
+    public class PdfocrTask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.Pdfocr);

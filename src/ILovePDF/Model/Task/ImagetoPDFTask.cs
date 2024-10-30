@@ -9,7 +9,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     Convert Images To PDF
     /// </summary>
-    public class ImageToPdfTask : LovePdfTask
+    public class ImageToPdfTask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.ImagePdf);

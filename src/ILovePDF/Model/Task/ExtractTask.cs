@@ -9,7 +9,7 @@ namespace iLovePdf.Model.Task
     /// <summary>
     ///     Extract
     /// </summary>
-    public sealed class ExtractTask : LovePdfTask
+    public sealed class ExtractTask : iLovePdfTask
     {
         /// <inheritdoc />
         public override String ToolName => EnumExtensions.GetEnumDescription(TaskName.Extract);
