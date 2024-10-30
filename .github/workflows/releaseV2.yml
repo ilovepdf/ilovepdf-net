@@ -39,4 +39,4 @@ jobs:
         run: dotnet pack --configuration Release ./src/ILovePDF/iLovePDF.csproj --output ./nupkg
 
       - name: Publish to NuGet
-        run: dotnet nuget push "*src/**/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push "*src/**/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
