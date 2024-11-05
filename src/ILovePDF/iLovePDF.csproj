@@ -16,7 +16,7 @@
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<!-- Frameworks and language features -->
-		<TargetFrameworks>netstandard1.5;netstandard2.0;net45;net46;</TargetFrameworks>
+		<TargetFrameworks>netstandard1.5;netstandard2.0;net45;net46;net6.0</TargetFrameworks>
 		<LangVersion>9.0</LangVersion>
 		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 		<AnalysisLevel>latest</AnalysisLevel>
