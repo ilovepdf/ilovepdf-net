@@ -29,6 +29,7 @@ using System.Net.Http.Headers;
 using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
+using iLovePdf.Core;
 
 namespace iLovePdf.Core
 { 

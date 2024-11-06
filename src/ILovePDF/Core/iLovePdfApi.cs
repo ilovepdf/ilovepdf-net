@@ -1,5 +1,6 @@
 ﻿using System;
 using iLovePdf.Model.Task;
+using iLovePdf.Core;
 
 namespace iLovePdf.Core
 {

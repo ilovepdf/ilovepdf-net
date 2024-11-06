@@ -1,7 +1,8 @@
-﻿using iLovePdf.Attributes;
-using iLovePdf.Model.Enums;
+﻿using iLovePdf.Model.Enums;
 using iLovePdf.Model.Task;
 using iLovePdf.Model.TaskParams.Sign.Elements;
+using iLovePdf.Attributes;
+using iLovePdf.Model.TaskParams;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
