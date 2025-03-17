@@ -29,7 +29,10 @@ using System.Net.Http.Headers;
 using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using iLovePdf.Core;
+using System.Globalization;
+using iLovePdf.Helpers;
 
 namespace iLovePdf.Core
 { 
@@ -237,13 +240,15 @@ namespace iLovePdf.Core
 
         public UploadTaskResponse UploadFile(Uri serverUrl, FileInfo file, string taskId, BaseExtraUploadParams extraParams = null)
         {
+            var fileNameNormalized = TextHelper.RemoveAccents(file.Name);
+
             var link = GetUri($"{serverUrl}{Settings.V1}/upload");
 
             using (Stream fs = file.OpenRead())
             using (var multipartFormData = new MultipartFormDataContent())
             {
                 var uploadRequest = new BaseTaskRequest();
-                uploadRequest.FormData.Add("file", new FileParameter(fs, file.Name));
+                uploadRequest.FormData.Add("file", new FileParameter(fs, fileNameNormalized));
                 uploadRequest.FormData.Add("task", taskId);
                 if (extraParams != null)
                 {
@@ -256,6 +261,9 @@ namespace iLovePdf.Core
                 SetMultiPartFormData(uploadRequest.FormData, multipartFormData);
 
                 var response = HttpClient.Post(link, multipartFormData);
+
+                var responseString = response.Content.ReadAsStringAsync().Result;
+
                return ProccessHttpResponse<UploadTaskResponse>(response);
             }
         }
