@@ -1,4 +1,5 @@
 ﻿using iLovePdf.Model.Enums;
+using iLovePdf.Model.TaskParams.Sign.Elements;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

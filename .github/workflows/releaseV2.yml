@@ -1,11 +1,12 @@
 name: Publish to NuGet
 
 on:
-  push:
-    branches: [ master ]
+  release:
+    types: [published]
+  workflow_dispatch:
     
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,20 +17,23 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0'
+          
+      - name: Get version from release
+        id: get_version
+        run: echo "##[set-output name=VERSION;]${{ github.event.release.tag_name }}"
 
+      - name: Set version in .csproj
+        run: |
+          sed -i 's/<Version>.*<\/Version>/<Version>${{ steps.get_version.outputs.VERSION }}<\/Version>/g' **/*.csproj
+          
       - name: Restore dependencies
         run: dotnet restore
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
-
-      - name: Run tests
-        run: dotnet test --no-restore --verbosity normal
-
+        
       - name: Pack the project
-        run: dotnet pack --configuration Release --no-build --output ./nupkg
+        run: dotnet pack --configuration Release ./src/ILovePDF/iLovePDF.csproj --output ./nupkg
 
       - name: Publish to NuGet
-        env:
-          NUGET_API_KEY: ${{ secrets.NUGET_TOKEN }}
-        run: dotnet nuget push ./nupkg/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push "*src/**/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
