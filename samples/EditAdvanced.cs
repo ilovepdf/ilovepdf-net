@@ -23,8 +23,8 @@ namespace Samples
             var file = task.AddFile("path/to/file/document.pdf");
 
             // Upload Image files to Ilovepdf servers
-            var imageFile = task.AddFile("your_image.jpg");
-            var svgFile = task.AddFile("your_image.svg");
+            var imageFile = task.AddFile("path/to/your_image.jpg");
+            var svgFile = task.AddFile("path/to/your_image.svg");
              
             // Add elements to Editpdf task in order of drawing (important if elements overlap!)
 

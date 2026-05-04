@@ -20,12 +20,31 @@ namespace Samples
 
             //proces added files
             //time var will contains information about time spent in process
+            //Example of ranges split mode
             var time = task.Process
             (new SplitParams(new SplitModeRanges("2-4,6-8"))
             {
                 OutputFileName = "split"
             });
             task.DownloadFile("path");
+
+            //Example of fixed ranges split mode
+            //var time = task.Process
+            //(new SplitParams(new SplitModeFixedRanges(3))
+            //{
+            //    OutputFileName = "split"
+            //});
+            //task.DownloadFile("path");
+
+            //Example of remove pages split mode
+            //var time = task.Process
+            //(new SplitParams(new SplitModeRemovePages("2-4,6-8"))
+            //{
+            //    OutputFileName = "split"
+            //});
+            //task.DownloadFile("path");
+
+
         }
     }
 }

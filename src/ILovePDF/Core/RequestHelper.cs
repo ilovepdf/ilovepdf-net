@@ -31,8 +31,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using iLovePdf.Core;
-using System.Globalization;
-using iLovePdf.Helpers;
 
 namespace iLovePdf.Core
 { 

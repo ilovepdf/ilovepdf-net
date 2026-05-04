@@ -119,12 +119,12 @@ namespace iLovePdf.Model.TaskParams
         /// </summary>
         [JsonIgnore]
         public List<ISignSigner> Signers { get; private set; } = new List<ISignSigner>();
-         
+
         /// <summary>
         /// Displayed brand name and logo in email notifications. 
         /// </summary>
         /// <param name="name">Name of your brand.</param>
-        /// <param name="logoServerFileName">Server filename of the uploaded logo file.</param>
+        /// <param name="serverFileName">Server filename of the uploaded logo file.</param>
         /// <returns></returns>
         public SignParams SetBrand(string name, string serverFileName)
         {
