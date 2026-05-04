@@ -20,7 +20,8 @@ namespace Samples
 
             //proces added files
             //time var will contains information about time spent in process
-            var time = task.Process(new ProtectParams("test"));
+            //Here we set the password for the file
+            var time = task.Process(new ProtectParams("password"));
             task.DownloadFile("path");
         }
     }

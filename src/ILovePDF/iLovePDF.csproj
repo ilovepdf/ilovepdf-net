@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk"> 
 	<PropertyGroup>
 		<!-- Version patched by Github Workflow Actions, modify on build config if needed -->
-		<Version>1.6.1</Version>
+		<Version>1.6.3</Version>
 
 		<!-- Assembly metadata -->
 		<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
@@ -64,11 +64,11 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0">
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.203">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="jose-jwt" Version="5.0.0" />
+		<PackageReference Include="jose-jwt" Version="5.3.0" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
@@ -90,5 +90,17 @@
 		<PackageReference Include="System.Net.Security">
 			<Version>4.3.2</Version>
 		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+	  <PackageReference Include="Microsoft.NET.Test.Sdk">
+	    <Version>16.4.0</Version>
+	  </PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+	  <PackageReference Include="Microsoft.NET.Test.Sdk">
+	    <Version>16.4.0</Version>
+	  </PackageReference>
 	</ItemGroup>
 </Project>

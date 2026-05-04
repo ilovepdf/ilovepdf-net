@@ -8,7 +8,7 @@ namespace iLovePdf.Model.Enums
 {
     public enum OCRLanguage
     {
-        // <summary>
+        /// <summary>
         /// Inglés
         /// </summary>
         [EnumMember(Value = "eng")]
@@ -48,7 +48,7 @@ namespace iLovePdf.Model.Enums
         /// Azerí (Cirílico)
         /// </summary>
         [EnumMember(Value = "aze_cyrl")]
-        Aze_Cyrl,
+        AzeCyrl,
 
         /// <summary>
         /// Bielorruso
@@ -108,13 +108,13 @@ namespace iLovePdf.Model.Enums
         /// Chino Simplificado
         /// </summary>
         [EnumMember(Value = "chi_sim")]
-        Chi_Sim,
+        ChiSim,
 
         /// <summary>
         /// Chino Tradicional
         /// </summary>
         [EnumMember(Value = "chi_tra")]
-        Chi_Tra,
+        ChiTra,
 
         /// <summary>
         /// Cherokee
@@ -144,7 +144,7 @@ namespace iLovePdf.Model.Enums
         /// Danés (Fraktur)
         /// </summary>
         [EnumMember(Value = "dan_frak")]
-        Dan_Frak,
+        DanFrak,
 
         /// <summary>
         /// Alemán
@@ -156,7 +156,7 @@ namespace iLovePdf.Model.Enums
         /// Alemán (Fraktur)
         /// </summary>
         [EnumMember(Value = "deu_frak")]
-        Deu_Frak,
+        DeuFrak,
 
         /// <summary>
         /// Dzongkha
@@ -408,7 +408,7 @@ namespace iLovePdf.Model.Enums
         /// Coreano Vertical
         /// </summary>
         [EnumMember(Value = "kor_vert")]
-        Kor_Vert,
+        KorVert,
 
         /// <summary>
         /// Kurdo

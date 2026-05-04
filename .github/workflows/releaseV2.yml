@@ -33,7 +33,23 @@ jobs:
         run: dotnet build --configuration Release --no-restore
         
       - name: Pack the project
-        run: dotnet pack --configuration Release ./src/ILovePDF/iLovePDF.csproj --output ./nupkg
+        run: dotnet pack --configuration Release ./src/ILovePDF/iLovePDF.csproj
 
       - name: Publish to NuGet
-        run: dotnet nuget push "*src/**/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: |
+          echo "Searching for packages..."
+          find . -name "*.nupkg"
+      
+          PKG=$(find . -name "*.nupkg" | grep -v snupkg | head -n 1)
+      
+          if [ -z "$PKG" ]; then
+            echo "❌ No .nupkg found"
+            exit 1
+          fi
+      
+          echo "📦 Publishing $PKG"
+      
+          dotnet nuget push "$PKG" \
+            --api-key ${{ secrets.NUGET_TOKEN }} \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
