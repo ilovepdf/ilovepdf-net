@@ -19,6 +19,7 @@ namespace Samples
             var fileResponse = task.AddFile("/path/to/file.pdf");
 
             //specify repeaired paramters like output filename
+            //"TryPdfRepair" is set to true by default
             var time = task.Process(new RepairParams {OutputFileName = "repaired_filename"});
 
             //download file and save to specific directory

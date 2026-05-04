@@ -72,6 +72,7 @@ namespace Samples
             //signatureElement.Position = new Position("20", "-20");
             signatureElement.SetGravityPosition("right", "bottom", 3, -2);
             signatureElement.Pages = "1,2";
+            signatureElement.Size = 40;
 
             var dateElement = signerFile.AddDate("12/12/2022");
             dateElement.Position = new Position("30", "-30");

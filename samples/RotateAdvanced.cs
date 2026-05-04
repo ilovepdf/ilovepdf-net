@@ -17,6 +17,7 @@ namespace Samples
             var task = api.CreateTask<RotateTask>();
 
             //file variable contains server file name
+            //Here we set the rotation in the third parameter
             var file = task.AddFile("path/to/file/document.pdf", task.TaskId, Rotate.Degrees90);
 
             //proces added files
