@@ -46,7 +46,9 @@ jobs:
         run: dotnet build --configuration Release --no-restore
         
       - name: Pack the project
-        run: dotnet pack --configuration Release ./src/ILovePDF/iLovePDF.csproj --output ./nupkg
+        run: |
+          mkdir -p nupkg
+          dotnet pack --configuration Release ./src/ILovePDF/iLovePDF.csproj --output ./nupkg /p:Version=${{ steps.get_version.outputs.VERSION }}
 
       - name: Publish to NuGet
-        run: dotnet nuget push "./nupkg/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: dotnet nuget push "${{ github.workspace }}/nupkg/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
