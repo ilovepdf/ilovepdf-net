@@ -24,7 +24,8 @@ jobs:
 
       - name: Set version in .csproj
         run: |
-          sed -i 's/<Version>.*<\/Version>/<Version>${{ steps.get_version.outputs.VERSION }}<\/Version>/g' **/*.csproj
+          VERSION=${{ github.event.release.tag_name }}
+          echo "VERSION=${VERSION#v}" >> $GITHUB_OUTPUT
           
       - name: Restore dependencies
         run: dotnet restore
@@ -33,23 +34,15 @@ jobs:
         run: dotnet build --configuration Release --no-restore
         
       - name: Pack the project
-        run: dotnet pack --configuration Release ./src/ILovePDF/iLovePDF.csproj
+        run: |
+          dotnet pack ./src/ILovePDF/iLovePDF.csproj \
+            --configuration Release \
+            --output ./dist \
+            -p:PackageVersion=${{ steps.get_version.outputs.VERSION }}
 
       - name: Publish to NuGet
         run: |
-          echo "Searching for packages..."
-          find . -name "*.nupkg"
-      
-          PKG=$(find . -name "*.nupkg" | grep -v snupkg | head -n 1)
-      
-          if [ -z "$PKG" ]; then
-            echo "❌ No .nupkg found"
-            exit 1
-          fi
-      
-          echo "📦 Publishing $PKG"
-      
-          dotnet nuget push "$PKG" \
+          dotnet nuget push "./dist/*.nupkg" \
             --api-key ${{ secrets.NUGET_TOKEN }} \
             --source https://api.nuget.org/v3/index.json \
             --skip-duplicate
