@@ -48,7 +48,14 @@ jobs:
       - name: Pack the project
         run: |
           mkdir -p nupkg
-          dotnet pack --configuration Release ./src/ILovePDF/iLovePDF.csproj --output ./nupkg /p:Version=${{ steps.get_version.outputs.VERSION }}
+          dotnet pack ./src/ILovePDF/iLovePDF.csproj \
+            --configuration Release \
+            --output ./nupkg \
+            --force \
+            /p:Version=${{ steps.get_version.outputs.VERSION }}
+            
+      - name: Check generated files
+        run: ls -R ./nupkg
 
       - name: Publish to NuGet
         run: dotnet nuget push "${{ github.workspace }}/nupkg/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
