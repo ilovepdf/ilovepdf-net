@@ -50,14 +50,12 @@ jobs:
           mkdir -p nupkg
           dotnet pack ./src/ILovePDF/iLovePDF.csproj \
             -c Release \
-            -o ./nupkg \
+            -o "${{ github.workspace }}/nupkg" \
             /p:IsPackable=true \
-            /p:PackageId=iLovePDF \
-            /p:Version=${{ steps.get_version.outputs.VERSION }} \
-            /p:PackageOutputPath=./nupkg
+            /p:Version=${{ steps.get_version.outputs.VERSION }}
             
       - name: Check generated files
-        run: ls -R ./nupkg
+        run: ls -R "${{ github.workspace }}/nupkg"
 
       - name: Publish to NuGet
         run: dotnet nuget push "${{ github.workspace }}/nupkg/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
