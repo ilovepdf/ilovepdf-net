@@ -18,14 +18,12 @@ jobs:
         with:
           dotnet-version: '6.0'
           
-      - name: Get version from release
-        id: get_version
-        run: echo "##[set-output name=VERSION;]${{ github.event.release.tag_name }}"
-
-      - name: Set version in .csproj
+      - name: Get and Clean Version
+        id: vars
         run: |
-          VERSION=${{ github.event.release.tag_name }}
-          echo "VERSION=${VERSION#v}" >> $GITHUB_OUTPUT
+          RAW_VERSION=${{ github.event.release.tag_name }}
+          CLEAN_VERSION=${RAW_VERSION#v}
+          echo "VERSION=$CLEAN_VERSION" >> $GITHUB_OUTPUT
           
       - name: Restore dependencies
         run: dotnet restore
@@ -38,7 +36,7 @@ jobs:
           dotnet pack ./src/ILovePDF/iLovePDF.csproj \
             --configuration Release \
             --output ./dist \
-            -p:PackageVersion=${{ steps.get_version.outputs.VERSION }}
+            -p:PackageVersion=${{ steps.vars.outputs.VERSION }}
 
       - name: Publish to NuGet
         run: |
