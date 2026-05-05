@@ -43,8 +43,4 @@ jobs:
             -p:PackageVersion=${{ steps.vars.outputs.VERSION }}
 
       - name: Publish to NuGet
-        run: |
-          dotnet nuget push "./dist/*.nupkg" \
-            --api-key ${{ secrets.NUGET_TOKEN }} \
-            --source https://api.nuget.org/v3/index.json \
-            --skip-duplicate
+        run: dotnet nuget push "./nupkg/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
