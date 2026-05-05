@@ -21,7 +21,7 @@ jobs:
       - name: Get and Clean Version
         id: vars
         run: |
-          RAW_VERSION=${{ github.event.release.tag_name }}
+          RAW_VERSION="${{ github.event.release.tag_name }}"
           if [ -z "$RAW_VERSION" ]; then
             RAW_VERSION="1.6.3"
             echo "Aviso: Ejecución manual detectada, usando versión por defecto."
