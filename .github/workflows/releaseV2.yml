@@ -4,6 +4,11 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (Fallback if not a Release)'
+        required: true
+        default: '1.6.3'
     
 jobs:
   release:
@@ -18,16 +23,21 @@ jobs:
         with:
           dotnet-version: '6.0'
           
-      - name: Get and Clean Version
-        id: vars
+      - name: Get version
+        id: get_version
+        shell: bash
         run: |
-          RAW_VERSION="${{ github.event.release.tag_name }}"
-          if [ -z "$RAW_VERSION" ]; then
-            RAW_VERSION="1.6.3"
-            echo "Aviso: Ejecución manual detectada, usando versión por defecto."
+          if [ -n "${{ github.event.release.tag_name }}" ]; then
+            SELECTED_VERSION="${{ github.event.release.tag_name }}"
+          else
+            SELECTED_VERSION="${{ github.event.inputs.version }}"
           fi
-          CLEAN_VERSION=${RAW_VERSION#v}
+          CLEAN_VERSION=$(echo $SELECTED_VERSION | sed 's/^v//')
           echo "VERSION=$CLEAN_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Set version in .csproj
+        run: |
+          sed -i 's/<Version>.*<\/Version>/<Version>${{ steps.get_version.outputs.VERSION }}<\/Version>/g' **/*.csproj
           
       - name: Restore dependencies
         run: dotnet restore
@@ -36,11 +46,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
         
       - name: Pack the project
-        run: |
-          dotnet pack ./src/ILovePDF/iLovePDF.csproj \
-            --configuration Release \
-            --output ./dist \
-            -p:PackageVersion=${{ steps.vars.outputs.VERSION }}
+        run: dotnet pack --configuration Release ./src/ILovePDF/iLovePDF.csproj --output ./nupkg
 
       - name: Publish to NuGet
         run: dotnet nuget push "./nupkg/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
