@@ -49,10 +49,12 @@ jobs:
         run: |
           mkdir -p nupkg
           dotnet pack ./src/ILovePDF/iLovePDF.csproj \
-            --configuration Release \
-            --output ./nupkg \
-            --force \
-            /p:Version=${{ steps.get_version.outputs.VERSION }}
+            -c Release \
+            -o ./nupkg \
+            /p:IsPackable=true \
+            /p:PackageId=iLovePDF \
+            /p:Version=${{ steps.get_version.outputs.VERSION }} \
+            /p:PackageOutputPath=./nupkg
             
       - name: Check generated files
         run: ls -R ./nupkg
