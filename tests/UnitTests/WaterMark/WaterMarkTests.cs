@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Security.Authentication;
 using System.Threading.Tasks;
@@ -14,7 +14,6 @@ namespace Tests.WaterMark
     [TestClass]
     public class WaterMarkTests : BaseTest
     {
-        private bool uploadWaterMarkFile; 
         public WaterMarkTests()
         {
             TaskParams = new WaterMarkParams(new WatermarkModeText(Settings.WaterMarkText))
@@ -36,8 +35,9 @@ namespace Tests.WaterMark
 
             base.TaskParams = TaskParams;
 
-            if (uploadWaterMarkFile)
-                UploadWatermarkImage();
+            // Si necesitas subir una imagen de watermark desde un test, llama UploadWatermarkImage() desde ese test.
+            // if (uploadWaterMarkFile)
+            //     UploadWatermarkImage();
 
             if (taskWasOk)
                 taskWasOk = ProcessTask();
@@ -109,10 +109,10 @@ namespace Tests.WaterMark
         //public void WaterMark_MaxFilesAdded_ShouldThrowException()
         //{
         //    InitApiWithRightCredentials();
-
+        //
         //    for (var i = 0; i < Settings.MaxAllowedFiLes; i++)
         //        AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
-
+        //
         //    Assert.IsFalse(RunTask());
         //}
 
@@ -194,13 +194,13 @@ namespace Tests.WaterMark
         //public void WaterMark_ProvidingPackageName_ShouldProcessOk()
         //{
         //    InitApiWithRightCredentials();
-
+        //
         //    for (var i = 0; i < 5; i++)
         //        AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
-
+        //
         //    TaskParams.PackageFileName = @"package";
         //    TaskParams.IgnoreErrors = false;
-
+        //
         //    Assert.IsTrue(RunTask());
         //}
 
@@ -221,11 +221,12 @@ namespace Tests.WaterMark
         //public void WaterMark_ImageWaterMark_ShouldProcessOk()
         //{
         //    InitApiWithRightCredentials();
-
+        //
         //    AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
-
-        //    uploadWaterMarkFile = true;
-
+        //
+        //    // Llamar directamente para preparar el watermark por imagen
+        //    UploadWatermarkImage();
+        //
         //    Assert.IsTrue(RunTask());
         //}
 
@@ -234,9 +235,9 @@ namespace Tests.WaterMark
         //public void WaterMark_MultiWaterMark_ShouldProcessOk()
         //{
         //    InitApiWithRightCredentials();
-
+        //
         //    AddFile($"{Guid.NewGuid()}.pdf", Settings.GoodPdfFile);
-
+        //
         //    AddFile(new UriForTest { FileUri = new Uri(Settings.GoodJpgUrl) }, serverFileName =>
         //    {
         //        var elements = new List<WaterMarkParamsElement>()
@@ -244,12 +245,12 @@ namespace Tests.WaterMark
         //            new WaterMarkParamsElement(new WatermarkModeImage(serverFileName)),
         //            new WaterMarkParamsElement(new WatermarkModeText(Settings.WaterMarkText))
         //        };
-
+        //
         //        TaskParams = new WaterMarkParams(elements);
         //        TaskParams.Mode = WaterMarkModes.Multi;
         //        TaskParams.OutputFileName = @"result.pdf";
         //    });
-
+        //
         //    Assert.IsTrue(RunTask());
         //}
     }
