@@ -1,0 +1,42 @@
+graph TB
+    subgraph L1["Capa 1: Aplicación Cliente"]
+        A1["Código consumidor<br/>(samples, apps)"]
+    end
+
+    subgraph L2["Capa 2: Fachada Pública (SDK API)"]
+        B1["iLovePdfApi<br/>CreateTask&lt;T&gt;() inicia la tarea<br/>en el servidor remoto"]
+    end
+
+    subgraph L3["Capa 3: Modelo de Tareas (Task Layer)"]
+        C1["iLovePdfTask (abstract base)<br/>AddFile / Process / DownloadFile / DeleteTask"]
+        C2["Tasks concretas:<br/>CompressTask, MergeTask,<br/>WaterMarkTask, SignTask, etc."]
+        C1 --> C2
+    end
+
+    subgraph L4["Capa 4: Modelo de Parámetros"]
+        D1["BaseParams / *Params<br/>(WaterMarkParams, SignParams...)"]
+        D2["Elementos anidados<br/>(Signers, Elements, Coordinates)"]
+    end
+
+    subgraph L5["Capa 5: Infraestructura HTTP"]
+        E1["RequestHelper (singleton)<br/>arma requests, genera/renueva JWT,<br/>hace polling y descarga resultados"]
+        E2["RequestHelperSignature<br/>(partial class, endpoints de firma)"]
+        E3["BaseTaskRequest / FileParameter<br/>InitialValueHelper (serialización form-data)"]
+    end
+
+    subgraph L6["Capa 6: Transporte / Externo"]
+        F1["HttpClient (System.Net.Http)"]
+        F2["API REST iLovePdf<br/>(HTTPS, JWT Bearer)"]
+    end
+
+    A1 -->|"1. Crea instancia con public/private key"| B1
+    B1 -->|"2. Instancia tarea y obtiene taskId + serverUrl"| C1
+    C2 -->|"3. Construye parámetros específicos"| D1
+    D1 --> D2
+    C2 -->|"4. Sube archivos y ejecuta Process(parametros)"| E1
+    E1 -->|"usa para firma digital"| E2
+    E1 -->|"serializa multipart/form-data"| E3
+    E1 -->|"5. Envía request autenticado"| F1
+    F1 -->|"6. HTTP(S) request/response"| F2
+    F2 -.->|"7. Respuesta: taskId, status, archivo resultante"| E1
+    E1 -.->|"8. Resultado disponible para descarga"| C2

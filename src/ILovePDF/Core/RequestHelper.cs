@@ -517,12 +517,18 @@ namespace iLovePdf.Core
         /// <returns></returns>
         private string GetJwt()
         {
+            // iat", "nbf" and "exp" MUST be NumericDate values
+            // (integer seconds since Unix epoch), not DateTime/string values.
+            // "Payload iat must be a number".
+            var issuedAt = Math.Round(new TimeSpan(DateTime.UtcNow.AddSeconds(-_jwtDelay).Ticks).TotalSeconds -
+                                       new TimeSpan(epoch.Ticks).TotalSeconds);
+
             var payLoad = new Dictionary<string, Object>
             {
                 {"iss", ""},
                 {"aud", ""},
-                {"iat", DateTime.UtcNow.AddSeconds(-_jwtDelay)},
-                {"nbf", DateTime.UtcNow.AddSeconds(-_jwtDelay)},
+                {"iat", issuedAt},
+                {"nbf", issuedAt},
                 //Add 2 hours of expiration
                 {
                     "exp",

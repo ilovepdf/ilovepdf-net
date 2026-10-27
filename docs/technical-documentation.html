@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Documentación Técnica - Arquitectura del SDK iLovePdf .NET</title>
+<style>
+  @page {
+    size: A4;
+    margin: 2cm;
+  }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #222;
+    line-height: 1.5;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  h1 {
+    color: #1a3c6e;
+    border-bottom: 3px solid #1a3c6e;
+    padding-bottom: 8px;
+    font-size: 26px;
+  }
+  h2 {
+    color: #1a3c6e;
+    margin-top: 32px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 4px;
+    font-size: 20px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 12px 0 20px 0;
+    font-size: 13px;
+  }
+  th, td {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background-color: #1a3c6e;
+    color: #fff;
+  }
+  tr:nth-child(even) {
+    background-color: #f5f7fa;
+  }
+  code {
+    background-color: #eef1f5;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+  }
+  ul, ol {
+    margin: 8px 0;
+    padding-left: 24px;
+  }
+  li {
+    margin-bottom: 4px;
+  }
+  hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 24px 0;
+  }
+  .footer-note {
+    font-style: italic;
+    color: #666;
+    font-size: 12px;
+    margin-top: 40px;
+    text-align: center;
+  }
+  .section-number {
+    color: #1a3c6e;
+  }
+  table, tr, td, th {
+    page-break-inside: avoid;
+  }
+</style>
+</head>
+<body>
+
+<h1>Documentación Técnica &ndash; Arquitectura del SDK iLovePdf .NET</h1>
+
+<h2><span class="section-number">1.</span> Propósito</h2>
+<p>
+Este documento describe la arquitectura interna del SDK cliente <code>iLovePdf.Net</code>, una librería que
+envuelve la API REST de iLovePdf para permitir a aplicaciones .NET ejecutar operaciones sobre PDFs
+(comprimir, combinar, firmar, marca de agua, etc.) sin interactuar directamente con HTTP.
+</p>
+<p>
+Repositorio: <code>ilovepdf-net</code> &mdash; Proyectos multi-target: <code>.NET Standard 1.5</code>,
+<code>.NET Standard 2.0</code>, <code>.NET Framework 4.5</code>, <code>.NET Framework 4.6</code>, <code>.NET 6</code>.
+</p>
+
+<hr>
+
+<h2><span class="section-number">2.</span> Vista general de la arquitectura</h2>
+<p>
+La librería está organizada en capas, desde el consumidor final hasta el transporte HTTP con la API remota
+de iLovePdf. Ver diagrama adjunto (<code>architecture-diagram.png</code> / <code>.pdf</code>).
+</p>
+<table>
+<tr><th>Capa</th><th>Componentes principales</th><th>Responsabilidad</th></tr>
+<tr><td>1. Aplicación Cliente</td><td><code>samples/*</code></td><td>Código consumidor que usa el SDK</td></tr>
+<tr><td>2. Fachada Pública (SDK API)</td><td><code>iLovePdfApi</code></td><td>Punto de entrada único: creación y conexión de tareas</td></tr>
+<tr><td>3. Modelo de Tareas</td><td><code>iLovePdfTask</code> (abstracta) + tareas concretas (<code>CompressTask</code>, <code>MergeTask</code>, <code>WaterMarkTask</code>, <code>SignTask</code>, etc.)</td><td>Flujo común de subida, procesamiento y descarga de archivos</td></tr>
+<tr><td>4. Modelo de Parámetros</td><td><code>BaseParams</code> y derivados (<code>WaterMarkParams</code>, <code>SignParams</code>...)</td><td>Representan la configuración específica de cada herramienta</td></tr>
+<tr><td>5. Infraestructura HTTP</td><td><code>RequestHelper</code>, <code>RequestHelperSignature</code>, <code>BaseTaskRequest</code>, <code>InitialValueHelper</code></td><td>Construcción de requests HTTP, autenticación JWT, chunking, serialización</td></tr>
+<tr><td>6. Transporte / Externo</td><td><code>HttpClient</code>, API REST iLovePdf</td><td>Comunicación real sobre HTTPS</td></tr>
+</table>
+
+<hr>
+
+<h2><span class="section-number">3.</span> Patrones de diseño</h2>
+<table>
+<tr><th>Patrón</th><th>Dónde se aplica</th><th>Justificación</th></tr>
+<tr><td>Facade</td><td><code>iLovePdfApi</code></td><td>Expone una API simple (<code>CreateTask&lt;T&gt;()</code>) que oculta la complejidad de autenticación, inicio de tarea y manejo de servidor.</td></tr>
+<tr><td>Template Method / Herencia</td><td><code>iLovePdfTask</code> (clase abstracta) + tareas concretas</td><td>La clase base define el flujo común (<code>AddFile</code>, <code>Process</code>, <code>DownloadFile</code>, <code>DeleteTask</code>); cada subclase especializa <code>ToolName</code> y métodos propios.</td></tr>
+<tr><td>Singleton</td><td><code>RequestHelper.Instance</code></td><td>Centraliza el <code>HttpClient</code> y el estado de autenticación (JWT) para evitar múltiples clientes HTTP y repetir lógica de tokens.</td></tr>
+<tr><td>Builder / Fluent Interface</td><td><code>RequestHelper.SetKeys(...).SetEncryptKey(...).StartTask(...)</code></td><td>Permite configurar el helper de forma encadenada antes de ejecutar la acción.</td></tr>
+<tr><td>Strategy (implícito)</td><td>Modelos <code>*Params</code> con variantes (<code>WatermarkModeText</code> vs <code>WatermarkModeImage</code>, <code>SplitModeFixedRanges</code> vs <code>SplitModeRanges</code>)</td><td>Cada &quot;modo&quot; encapsula un comportamiento/parametrización distinta para la misma operación.</td></tr>
+<tr><td>Partial Classes</td><td><code>RequestHelper</code> / <code>RequestHelperSignature</code></td><td>Separa responsabilidades (tareas genéricas vs. endpoints de firma) manteniendo un mismo tipo lógico.</td></tr>
+<tr><td>DTO / Response Models</td><td><code>UploadTaskResponse</code>, <code>ExecuteTaskResponse</code>, <code>StatusTaskResponse</code>, <code>SignatureResponse</code></td><td>Representan contratos de datos de la API REST, deserializados con Newtonsoft.Json.</td></tr>
+</table>
+
+<hr>
+
+<h2><span class="section-number">4.</span> Tecnologías y dependencias clave</h2>
+<ul>
+<li><strong>Lenguaje/Runtime</strong>: C# 9.0, multi-targeting (<code>netstandard1.5</code>, <code>netstandard2.0</code>, <code>net45</code>, <code>net46</code>, <code>net6.0</code>) definido vía SDK-style <code>.csproj</code>.</li>
+<li><strong>HTTP</strong>: <code>System.Net.Http.HttpClient</code> (con referencia explícita a <code>System.Net.Http</code> en <code>net45</code>/<code>net46</code>).</li>
+<li><strong>Autenticación</strong>: JWT (JSON Web Token) generado y validado con la librería <code>jose-jwt</code>, firmado con <code>HS256</code> usando la clave privada del proyecto.</li>
+<li><strong>Serialización</strong>: <code>Newtonsoft.Json</code> para (de)serializar requests/responses y parsear errores (<code>JObject.Parse</code>).</li>
+<li><strong>Empaquetado</strong>: Generación automática de paquete NuGet (<code>GeneratePackageOnBuild</code>), símbolos <code>.snupkg</code>, firma fuerte con <code>iLovePdf.snk</code> (<code>AssemblyOriginatorKeyFile</code>).</li>
+<li><strong>Testing</strong>: MSTest (<code>Microsoft.VisualStudio.TestTools.UnitTesting</code>), con una clase base <code>BaseTest</code> que abstrae ejecución de tareas variando combinaciones (chunking, descarga como bytes, cifrado).</li>
+<li><strong>CI/CD</strong>: GitHub Actions (build multi-TFM, publicación a NuGet).</li>
+</ul>
+
+<hr>
+
+<h2><span class="section-number">5.</span> Flujo de ejecución (ciclo de vida de una request)</h2>
+<ol>
+<li><strong>Inicialización</strong>: el consumidor crea <code>new iLovePdfApi(publicKey, privateKey)</code>.</li>
+<li><strong>Creación de tarea</strong>: <code>CreateTask&lt;T&gt;()</code> instancia la tarea vía reflexión (<code>Activator.CreateInstance</code>), configura claves en <code>RequestHelper.Instance</code> y llama a <code>StartTask</code> (endpoint <code>/start/{tool}</code>), obteniendo <code>serverUrl</code> y <code>taskId</code>.</li>
+<li><strong>Carga de archivos</strong>: <code>AddFile(...)</code> soporta tres orígenes (ruta local, <code>byte[]</code>, <code>Uri</code> remota) y dos modos de subida (directo o por chunks vía <code>UploadFileByChunk</code>, útil para archivos grandes, con tamaño de chunk configurado en <code>Settings.MaxBytesPerChunk</code> = 2 MB).</li>
+<li><strong>Configuración de parámetros</strong>: se construye un objeto <code>*Params</code> específico de la herramienta; para operaciones complejas (Sign, Edit, WaterMark multi-elemento) se usan colecciones de &quot;elementos&quot; anidados.</li>
+<li><strong>Ejecución</strong>: <code>Process(parameters)</code> invoca <code>RequestHelper.ExecuteTask</code>, que serializa parámetros y archivos como <code>multipart/form-data</code> (usando <code>InitialValueHelper</code> para aplanar objetos anidados en claves tipo <code>elements[0][...]</code>).</li>
+<li><strong>Autenticación por request</strong>: cada llamada añade un header <code>Authorization: Bearer &lt;JWT&gt;</code>, regenerando el token si expiró (<code>IsExpiredJwt</code>).</li>
+<li><strong>Polling de estado</strong>: el consumidor (o <code>BaseTest</code> en pruebas) consulta <code>CheckTaskStatus</code> hasta <code>TaskSuccess</code> o error.</li>
+<li><strong>Descarga</strong>: <code>DownloadFile</code> o <code>DownloadFileAsByteArrayAsync</code> obtiene el resultado (archivo único o <code>.zip</code> si son múltiples).</li>
+<li><strong>Limpieza</strong>: <code>DeleteTask</code> / <code>DeleteFile</code> opcionalmente liberan recursos en el servidor.</li>
+<li><strong>Encadenamiento de herramientas</strong>: <code>Next&lt;T&gt;()</code> permite reutilizar los archivos resultantes de una tarea como entrada de otra sin volver a subirlos (<code>ConnectTask</code>).</li>
+</ol>
+
+<hr>
+
+<h2><span class="section-number">6.</span> Manejo de errores</h2>
+<p>
+<code>RequestHelper.ParseRequestErrors</code> traduce códigos HTTP y el campo <code>error.type</code> de la
+respuesta JSON en excepciones tipadas específicas del dominio:
+</p>
+<ul>
+<li><code>ProcessingException</code></li>
+<li><code>UploadException</code></li>
+<li><code>DownloadException</code></li>
+<li><code>AuthenticationException</code></li>
+<li><code>NotFoundException</code></li>
+<li><code>TooManyRequestsException</code></li>
+<li><code>ServerErrorException</code></li>
+<li><code>SignStartException</code></li>
+<li><code>SignatureException</code></li>
+</ul>
+<p>Esto permite a los consumidores capturar errores específicos sin parsear JSON manualmente.</p>
+
+<hr>
+
+<h2><span class="section-number">7.</span> Consideraciones de compatibilidad multi-target</h2>
+<ul>
+<li>Directivas de compilación condicional (<code>#if NETSTANDARD1_5</code>) adaptan APIs no disponibles en runtimes antiguos (ej. <code>Assembly.GetExecutingAssembly()</code> vs <code>TypeInfo</code>).</li>
+<li>Referencias condicionales en <code>.csproj</code> (<code>System.Net.Http</code> solo para <code>net45</code>/<code>net46</code>).</li>
+<li><strong>Implicación en CI</strong>: ejecutar pruebas de <code>net46</code> requiere un entorno Windows (o <code>mono</code> en Linux), a diferencia de <code>net6.0</code>/<code>netstandard2.0</code> que corren nativamente en cualquier runner con SDK de <code>dotnet</code>.</li>
+</ul>
+
+<hr>
+
+<h2><span class="section-number">8.</span> Puntos de extensión</h2>
+<ul>
+<li>Nuevas herramientas de PDF se agregan creando: una subclase de <code>iLovePdfTask</code>, un <code>*Params</code> correspondiente, y (si aplica) <code>*ModeX</code> para variantes de comportamiento &mdash; sin modificar el núcleo de <code>RequestHelper</code>.</li>
+<li>El uso de <code>BaseExtraUploadParams</code> permite adjuntar parámetros opcionales en la subida de archivos sin romper firmas existentes.</li>
+</ul>
+
+<hr>
+
+<h2><span class="section-number">9.</span> Nuevas herramientas incorporadas</h2>
+<p>
+Siguiendo el patrón de extensión descrito en la sección anterior, se incorporaron las siguientes herramientas
+al SDK. Cada una sigue el mismo flujo común (crear tarea &rarr; subir archivo &rarr; procesar con parámetros &rarr; descargar),
+heredando de <code>iLovePdfTask</code> y definiendo su propio <code>*Params</code> cuando aplica.
+</p>
+<table>
+<tr><th>Herramienta</th><th>Endpoint / ToolName</th><th>Clase de Tarea</th><th>Parámetros</th></tr>
+<tr>
+  <td>PDF a Markdown</td>
+  <td><code>pdfmarkdown</code></td>
+  <td><code>PdfMarkdownTask</code></td>
+  <td>Ninguno (<code>PdfMarkdownParams</code> vacío)</td>
+</tr>
+<tr>
+  <td>Split Smart</td>
+  <td><code>splitsmart</code></td>
+  <td><code>SplitSmartTask</code></td>
+  <td><code>prompt</code> (string): instrucciones en lenguaje natural para dividir el PDF</td>
+</tr>
+<tr>
+  <td>Translate</td>
+  <td><code>translate</code></td>
+  <td><code>TranslateTask</code></td>
+  <td>
+    <code>language_output</code> (string): idioma destino (ej. <code>eng</code>, <code>spa</code>)<br>
+    <code>translate_mode</code> (string): <code>layout</code> o <code>text</code>
+  </td>
+</tr>
+<tr>
+  <td>Forms Detect</td>
+  <td><code>formsdetect</code></td>
+  <td><code>FormsDetectTask</code></td>
+  <td>Ninguno (<code>FormsDetectParams</code> vacío)</td>
+</tr>
+<tr>
+  <td>Summarize</td>
+  <td><code>summarize</code></td>
+  <td><code>SummarizeTask</code></td>
+  <td>
+    <code>language</code> (string): idioma destino del resumen (ej. <code>eng</code>, <code>spa</code>)<br>
+    <code>output_format</code> (string): <code>pdf</code> o <code>md</code>
+  </td>
+</tr>
+</table>
+<p>
+Para cada herramienta se generaron además ejemplos de uso en <code>samples/</code> (p. ej. <code>PdfMarkdownBasic.cs</code>,
+<code>SplitSmartBasic.cs</code>, <code>TranslateBasic.cs</code>, <code>FormsDetectBasic.cs</code>, <code>SummarizeBasic.cs</code>)
+y pruebas unitarias en <code>tests/UnitTests/</code> siguiendo el mismo patrón que <code>CompressTests</code>
+(casos de credenciales inválidas y de procesamiento exitoso con parámetros por defecto).
+</p>
+
+<hr>
+
+<h2><span class="section-number">10.</span> Referencias de archivos clave</h2>
+<table>
+<tr><th>Archivo</th><th>Rol</th></tr>
+<tr><td><code>src/ILovePDF/Core/iLovePdfApi.cs</code></td><td>Fachada pública de entrada</td></tr>
+<tr><td><code>src/ILovePDF/Model/Task/iLovePdfTask.cs</code></td><td>Clase base de todas las tareas</td></tr>
+<tr><td><code>src/ILovePDF/Core/RequestHelper.cs</code></td><td>Motor HTTP, JWT, chunking, manejo de errores</td></tr>
+<tr><td><code>src/ILovePDF/Core/RequestHelperSignature.cs</code></td><td>Endpoints específicos de firma digital</td></tr>
+<tr><td><code>src/ILovePDF/Core/BaseTaskRequest.cs</code></td><td>Contenedor de form-data para requests</td></tr>
+<tr><td><code>src/ILovePDF/iLovePDF.csproj</code></td><td>Configuración de multi-targeting y empaquetado NuGet</td></tr>
+<tr><td><code>src/ILovePDF/Model/Task/PdfMarkdownTask.cs</code></td><td>Tarea: conversión de PDF a Markdown</td></tr>
+<tr><td><code>src/ILovePDF/Model/Task/SplitSmartTask.cs</code></td><td>Tarea: división inteligente de PDF vía prompt</td></tr>
+<tr><td><code>src/ILovePDF/Model/Task/TranslateTask</code></td><td>Tarea: traducción de documentos PDF</td></tr>
+<tr><td><code>src/ILovePDF/Model/Task/FormsDetectTask.cs</code></td><td>Tarea: detección de campos de formulario</td></tr>
+<tr><td><code>src/ILovePDF/Model/Task/SummarizeTask.cs</code></td><td>Tarea: resumen de documentos PDF</td></tr>
+</table>
+
+<p class="footer-note">Documento generado a partir del análisis del código fuente del repositorio <code>ilovepdf-net</code>.</p>
+
+</body>
+</html>
